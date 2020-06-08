@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxRouteDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxRouteEntity">
+		select * from nx_route where nx_route_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxRouteEntity">
+		select * from nx_route 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_route 
+	</select>
+	<select id="queryAll" resultType="com.nongxinle.entity.NxRouteEntity">
+		select * from nx_route;
+	</select>
+
+	<insert id="save" parameterType="com.nongxinle.entity.NxRouteEntity">
+		insert into nx_route
+		(
+			`nx_route_id`, 
+			`nx_route_name`
+		)
+		values
+		(
+			#{nxRouteId}, 
+			#{nxRouteName}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxRouteEntity">
+		update nx_route 
+		<set>
+			<if test="nxRouteName != null">`nx_route_name` = #{nxRouteName}</if>
+		</set>
+		where nx_route_id = #{nxRouteId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_route where nx_route_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_route where nx_route_id in 
+		<foreach item="nxRouteId" collection="array" open="(" separator="," close=")">
+			#{nxRouteId}
+		</foreach>
+	</delete>
+
+</mapper>

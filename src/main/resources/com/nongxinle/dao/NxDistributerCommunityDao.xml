@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxDistributerCommunityDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxDistributerCommunityEntity">
+		select * from nx_distributer_community where nx_DC_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxDistributerCommunityEntity">
+		select * from nx_distributer_community 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_distributer_community 
+	</select>
+
+	<resultMap id="community" type="NxCommunityEntity">
+		<id property="nxCommunityId" column="nx_community_id"/>
+		<result property="nxCommunityName" column="nx_community_name"/>
+
+	</resultMap>
+	<resultMap id="disCommunity" type="NxDistributerCommunityEntity">
+		<id property="nxDcId" column="nx_dc_id"/>
+		<association property="nxCommunityEntity" resultMap="community"/>
+
+	</resultMap>
+
+	<select id="queryCommunityByDistrbuterId" resultType="com.nongxinle.entity.NxCommunityEntity">
+		select * from nx_distributer_community as dc
+		left join nx_community as c on c.nx_community_id = dc.nx_DC_community_id
+		where nx_DC_distributer_id = #{distributerId}
+	</select>
+
+	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerCommunityEntity">
+		insert into nx_distributer_community
+		(
+			`nx_DC_id`, 
+			`nx_DC_community_id`, 
+			`nx_DC_distributer_id`
+		)
+		values
+		(
+			#{nxDcId}, 
+			#{nxDcCommunityId}, 
+			#{nxDcDistributerId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxDistributerCommunityEntity">
+		update nx_distributer_community 
+		<set>
+			<if test="nxDcCommunityId != null">`nx_DC_community_id` = #{nxDcCommunityId}, </if>
+			<if test="nxDcDistributerId != null">`nx_DC_distributer_id` = #{nxDcDistributerId}</if>
+		</set>
+		where nx_DC_id = #{nxDcId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_distributer_community where nx_DC_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_distributer_community where nx_DC_id in 
+		<foreach item="nxDcId" collection="array" open="(" separator="," close=")">
+			#{nxDcId}
+		</foreach>
+	</delete>
+
+</mapper>

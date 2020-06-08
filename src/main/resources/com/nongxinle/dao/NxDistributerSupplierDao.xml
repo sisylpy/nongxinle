@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxDistributerSupplierDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxDistributerSupplierEntity">
+		select * from nx_distributer_supplier where nx_distributer_supplier_id = #{value}
+	</select>
+
+	<resultMap id="supplier" type="NxSupplierEntity">
+		<id property="nxSupplierId" column="nx_supplier_id"/>
+		<result property="nxSupplierName" column="nx_supplier_name"/>
+		<result property="nxSupplierPaymentType" column="nx_supplier_payment_type"/>
+	</resultMap>
+	<resultMap id="disSupplier" type="NxDistributerSupplierEntity">
+		<id property="nxDistributerSupplierId" column="nx_distributer_supplier_id"/>
+		<association property="nxSupplierEntity" resultMap="supplier"/>
+	</resultMap>
+
+	<select id="queryList" resultMap="disSupplier">
+		select * from nx_distributer_supplier as ds
+		left join nx_supplier as s on s.nx_supplier_id = ds.nx_DS_supplier_id
+		where nx_DS_distributer_id = #{disId}
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_distributer_supplier where nx_DS_distributer_id = #{disId}
+	</select>
+	 
+	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerSupplierEntity">
+		insert into nx_distributer_supplier
+		(
+			`nx_distributer_supplier_id`, 
+			`nx_DS_distributer_id`, 
+			`nx_DS_supplier_id`
+		)
+		values
+		(
+			#{nxDistributerSupplierId}, 
+			#{nxDsDistributerId}, 
+			#{nxDsSupplierId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxDistributerSupplierEntity">
+		update nx_distributer_supplier 
+		<set>
+			<if test="nxDsDistributerId != null">`nx_DS_distributer_id` = #{nxDsDistributerId}, </if>
+			<if test="nxDsSupplierId != null">`nx_DS_supplier_id` = #{nxDsSupplierId}</if>
+		</set>
+		where nx_distributer_supplier_id = #{nxDistributerSupplierId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_distributer_supplier where nx_distributer_supplier_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_distributer_supplier where nx_distributer_supplier_id in 
+		<foreach item="nxDistributerSupplierId" collection="array" open="(" separator="," close=")">
+			#{nxDistributerSupplierId}
+		</foreach>
+	</delete>
+
+</mapper>

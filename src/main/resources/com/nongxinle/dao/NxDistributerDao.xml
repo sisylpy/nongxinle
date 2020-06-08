@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxDistributerDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxDistributerEntity">
+		select * from nx_distributer where nx_distributer_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxDistributerEntity">
+		select * from nx_distributer 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_distributer 
+	</select>
+	 
+	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerEntity">
+		insert into nx_distributer
+		(
+			`nx_distributer_id`,
+			`nx_distributer_name`,
+			`nx_distributer_lan`,
+			`nx_distributer_lun`,
+			`nx_distributer_business_type`
+		)
+		values
+		(
+			#{nxDistributerId},
+			#{nxDistributerName},
+			#{nxDistributerLan},
+			#{nxDistributerLun},
+			#{nxDistributerBusinessType}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxDistributerEntity">
+		update nx_distributer 
+		<set>
+			<if test="nxDistributerName != null">`nx_distributer_name` = #{nxDistributerName}, </if>
+			<if test="nxDistributerLan != null">`nx_distributer_lan` = #{nxDistributerLan}, </if>
+			<if test="nxDistributerLun != null">`nx_distributer_lun` = #{nxDistributerLun}, </if>
+			<if test="nxDistributerBusinessType != null">`nx_distributer_business_type` = #{nxDistributerBusinessType}</if>
+		</set>
+		where distributer_id = #{distributerId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_distributer where nx_distributer_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_distributer where nx_distributer_id in
+		<foreach item="nxDistributerId" collection="array" open="(" separator="," close=")">
+			#{distributerId}
+		</foreach>
+	</delete>
+
+</mapper>

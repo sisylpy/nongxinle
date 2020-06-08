@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxDistributerUserDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxDistributerUserEntity">
+		select * from nx_distributer_user where nx_distributer_user_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxDistributerUserEntity">
+		select * from nx_distributer_user 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_distributer_user 
+	</select>
+
+
+	<resultMap id="user" type="NxDistributerUserEntity">
+		<id property="nxDistributerUserId" column="nx_Distributer_user_id"/>
+		<result property="nxDuWxNickName" column="nx_DU_wx_nick_name"/>
+		<result property="nxDuWxAvatarUrl" column="nx_DU_wx_avatar_url"/>
+		<collection property="roleEntities" ofType="NxDisUserRoleEntity">
+			<id property="id" column="id"/>
+			<result property="roleId" column="role_id"/>
+		</collection>
+	</resultMap>
+    <select id="queryUser" resultMap="user">
+		select * from nx_distributer_user as du
+			left join nx_distributer_user_role as dr on du.nx_Distributer_user_id = dr.user_id
+		where 	du.nx_Distributer_user_id = #{disId}
+	</select>
+
+    <insert id="save" parameterType="com.nongxinle.entity.NxDistributerUserEntity">
+		insert into nx_distributer_user
+		(
+			`nx_distributer_user_id`,
+			`nx_DU_wx_nick_name`,
+		 	`nx_DU_wx_avatar_url`,
+		 	`nx_DU_wx_gender`,
+		 	`nx_DU_wx_open_id`,
+			`nx_DU_distributer_id`,
+		 	`nx_DU_user_short_name`
+
+		)
+		values
+		(
+			#{nxDistributerUserId},
+			#{nxDuWxNickName},
+			#{nxDuWxAvatarUrl},
+			#{nxDuWxGender},
+			#{nxDuWxOpenId},
+			#{nxDuDistributerId},
+		    #{nxDuUserShortName}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxDistributerUserEntity">
+		update nx_distributer_user 
+		<set>
+			<if test="nxDuWxNickName != null">`nx_DU_wx_nick_name` = #{nxDuWxNickName}</if>,
+			<if test="nxDuWxAvatarUrl != null">`nx_DU_wx_avatar_url` = #{nxDuWxAvatarUrl}</if>,
+			<if test="nxDuWxGender != null">`nx_DU_wx_gender` = #{nxDuWxGender}</if>,
+			<if test="nxDuWxOpenId != null">`nx_DU_wx_open_id` = #{nxDuWxOpenId}</if>,
+			<if test="nxDuDistributerId != null">`nx_DU_distributer_id` = #{nxDuDistributerId}</if>,
+			<if test="nxDuUserShortName != null">`nx_DU_user_short_name` = #{nxDuUserShortName}</if>
+		</set>
+		where dis_user_id = #{distUserId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_distributer_user where nx_distributer_user_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_distributer_user where nx_distributer_user_id in
+		<foreach item="disUserId" collection="array" open="(" separator="," close=")">
+			#{distUserId}
+		</foreach>
+	</delete>
+
+</mapper>

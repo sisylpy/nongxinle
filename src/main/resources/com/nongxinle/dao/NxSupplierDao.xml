@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxSupplierDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxSupplierEntity">
+		select * from nx_supplier where nx_supplier_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxSupplierEntity">
+		select * from nx_supplier 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_supplier 
+	</select>
+	 
+	<insert id="save" parameterType="com.nongxinle.entity.NxSupplierEntity">
+		insert into nx_supplier
+		(
+			`nx_supplier_id`, 
+			`nx_supplier_name`, 
+			`nx_supplier_father_goods_id`, 
+			`nx_supplier_payment_type`, 
+			`nx_supplier_date`
+		)
+		values
+		(
+			#{nxSupplierId}, 
+			#{nxSupplierName}, 
+			#{nxSupplierFatherGoodsId}, 
+			#{nxSupplierPaymentType}, 
+			#{nxSupplierDate}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxSupplierEntity">
+		update nx_supplier 
+		<set>
+			<if test="nxSupplierName != null">`nx_supplier_name` = #{nxSupplierName}, </if>
+			<if test="nxSupplierFatherGoodsId != null">`nx_supplier_father_goods_id` = #{nxSupplierFatherGoodsId}, </if>
+			<if test="nxSupplierPaymentType != null">`nx_supplier_payment_type` = #{nxSupplierPaymentType}, </if>
+			<if test="nxSupplierDate != null">`nx_supplier_date` = #{nxSupplierDate}</if>
+		</set>
+		where nx_supplier_id = #{nxSupplierId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_supplier where nx_supplier_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_supplier where nx_supplier_id in 
+		<foreach item="nxSupplierId" collection="array" open="(" separator="," close=")">
+			#{nxSupplierId}
+		</foreach>
+	</delete>
+
+</mapper>

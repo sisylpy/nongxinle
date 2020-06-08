@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxCommunityFatherGoodsDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxCommunityFatherGoodsEntity">
+		select * from nx_community_father_goods where nx_community_father_goods_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxCommunityFatherGoodsEntity">
+		select * from nx_community_father_goods
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_community_father_goods
+	</select>
+    <select id="queryFatherGoods" resultType="com.nongxinle.entity.NxCommunityFatherGoodsEntity">
+		select * from nx_community_father_goods where nx_fathers_father_id = #{dgGoodsFatherId}
+	</select>
+	<select id="queryCataListByCommunityId" resultType="com.nongxinle.entity.NxCommunityFatherGoodsEntity">
+		select  * from nx_community_father_goods where nx_CFG_community_id = #{communityId} and nx_father_goods_level = 2 order by nx_father_goods_sort
+	</select>
+
+	<insert id="save" parameterType="com.nongxinle.entity.NxCommunityFatherGoodsEntity"
+			useGeneratedKeys="true" keyProperty="nxCommunityFatherGoodsId">
+		insert into nx_community_father_goods
+		(
+			`nx_community_father_goods_id`,
+			`nx_father_goods_name`,
+			`nx_father_goods_img`,
+			`nx_father_goods_sort`,
+			`nx_father_goods_color`,
+		 	`nx_fathers_father_id`,
+		 	`nx_father_goods_level`,
+		 	`nx_CFG_community_id`,
+		 	`nx_CFG_goods_amount`
+		)
+		values
+		(
+			#{nxCommunityFatherGoodsId},
+			#{nxFatherGoodsName},
+			#{nxFatherGoodsImg},
+			#{nxFatherGoodsSort},
+			#{nxFatherGoodsColor},
+		 	#{nxFathersFatherId},
+		 	#{nxFatherGoodsLevel},
+		 	#{nxCfgCommunityId},
+		 	#{nxCfgGoodsAmount}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxCommunityFatherGoodsEntity">
+		update nx_community_father_goods
+		<set>
+			<if test="nxFatherGoodsName != null">`nx_father_goods_name` = #{nxFatherGoodsName}, </if>
+			<if test="nxFatherGoodsImg != null">`nx_father_goods_img` = #{nxFatherGoodsImg}, </if>
+			<if test="nxFatherGoodsSort != null">`nx_father_goods_sort` = #{nxFatherGoodsSort}, </if>
+			<if test="nxFatherGoodsColor != null">`nx_father_goods_color` = #{nxFatherGoodsColor}, </if>
+			<if test="nxFathersFatherId != null">`nx_fathers_father_id` = #{nxFathersFatherId}, </if>
+			<if test="nxFatherGoodsLevel != null">`nx_father_goods_level` = #{nxFatherGoodsLevel}, </if>
+			<if test="nxCfgCommunityId != null">`nx_CFG_community_id` = #{nxCfgCommunityId}, </if>
+			<if test="nxCfgGoodsAmount != null">`nx_CFG_goods_amount` = #{nxCfgGoodsAmount}</if>
+		</set>
+		where nx_community_father_goods_id = #{nxCommunityFatherGoodsId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_community_father_goods where nx_community_father_goods_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_community_father_goods where nx_community_father_goods_id in
+		<foreach item="nxDfgId" collection="array" open="(" separator="," close=")">
+			#{nxDfgId}
+		</foreach>
+	</delete>
+
+</mapper>

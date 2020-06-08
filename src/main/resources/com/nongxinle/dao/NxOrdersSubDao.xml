@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxOrdersSubDao">
+
+    <select id="queryObject" resultType="com.nongxinle.entity.NxOrdersSubEntity">
+        select *
+        from nx_orders_sub
+        where nx_orders_sub_id = #{value}
+    </select>
+
+    <select id="queryList" resultType="com.nongxinle.entity.NxOrdersSubEntity">
+        select * from nx_orders_sub
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from nx_orders_sub where nx_OS_order_user_id = #{nxOrdersUserId}
+
+    </select>
+
+
+    <resultMap id="commGoods" type="NxCommunityGoodsEntity">
+        <id property="nxCommunityGoodsId" column="nx_community_goods_id"/>
+        <result property="nxCgPurchaseQuantity" column="dg_purchase_quantity"/>
+        <result property="nxCgGoodsName" column="nx_cg_goods_name"/>
+        <result property="nxCgGoodsDetail" column="nx_cg_goods_detail"/>
+        <result property="nxCgGoodsStandardname" column="nx_cg_goods_standardname"/>
+        <!--<result property="nxCgGoodsFatherId" column="dg_goods_father_id"/>-->
+        <!--<association property="nxGoodsEntity" resultMap="goods"/>-->
+    </resultMap>
+
+    <resultMap id="community" type="NxCommunityEntity">
+        <id property="nxCommunityId" column="nx_community_id"/>
+        <result property="nxCommunityName" column="nx_community_name"/>
+
+    </resultMap>
+    <resultMap id="subOrders" type="NxOrdersSubEntity">
+        <id property="nxOrdersSubId" column="nx_orders_sub_id"/>
+        <result property="nxOsQuantity" column="nx_OS_quantity"/>
+        <result property="nxOsStandard" column="nx_OS_standard"/>
+        <result property="nxOsRemark" column="nx_OS_remark"/>
+        <result property="nxOsGoodsFatherId" column="nx_OS_goods_father_id"/>
+        <result property="nxOsCommunityGoodsId" column="nx_OS_community_goods_id"/>
+        <result property="nxOsPurchaseUserId" column="nx_OS_purchase_usr_id"/>
+        <association property="nxCommunityGoodsEntity"  resultMap="commGoods"/>
+        <association property="nxCommunityEntity" resultMap="community"/>
+
+    </resultMap>
+    <select id="queryPurchaseGoods" resultMap="subOrders">
+        select * from nx_orders_sub as os
+          left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_OS_community_goods_id
+        where nx_OS_distributer_id = #{disId} and nx_OS_buy_status = #{status}
+    </select>
+    <select id="querySubsByGoodsId" resultType="com.nongxinle.entity.NxOrdersSubEntity">
+        select * from nx_orders_sub where nx_OS_community_goods_id = #{disGoodsId} and nx_OS_buy_status = #{status}
+    </select>
+
+
+    <select id="querySubOrdersByDisIdandStatus" resultMap="subOrders">
+        select * from nx_orders_sub as os
+             left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_OS_community_goods_id
+        where nx_OS_distributer_id = #{disId} and nx_OS_buy_status = #{purchaseStatus}
+    </select>
+
+
+    <select id="querySubOrdersByCustomerUserId" resultMap="subOrders">
+        select * from nx_orders_sub as os
+          left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_OS_community_goods_id
+          left join nx_order_template_item as it on it.nx_OT_dis_goods_id = dg.nx_community_goods_id
+        where nx_OS_order_user_id = #{nxOrdersUserId}
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+    <select id="queryListByOrderId" resultType="com.nongxinle.entity.NxOrdersSubEntity">
+        select * from nx_orders_sub where nx_OS_orders_id = #{nxOrdersId}
+    </select>
+    <select id="queryOutGoodsByType" resultMap="subOrders">
+      select * from nx_orders_sub as os
+        left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_OS_community_goods_id
+        left join nx_community as c on c.nx_community_id = dg.nx_cg_community_id
+        where nx_OS_sub_supplier_id = #{nxOsSubSupplierId}  and nx_OS_goods_type = #{nxOsGoodsType}
+        and nx_OS_status = #{nxOsStatus}
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+
+    <insert id="save" parameterType="com.nongxinle.entity.NxOrdersSubEntity">
+        insert into nx_orders_sub
+        (`nx_orders_sub_id`,
+         `nx_OS_nx_goods_id`,
+         `nx_OS_quantity`,
+         `nx_OS_price`,
+         `nx_OS_remark`,
+         `nx_OS_weight`,
+         `nx_OS_subtotal`,
+         `nx_OS_status`,
+         `nx_OS_weigh_user_id`,
+         `nx_OS_account_user_id`,
+         `nx_OS_orders_id`,
+         `nx_OS_standard`,
+         `nx_OS_community_goods_father_id`,
+         `nx_OS_distributer_id`,
+         `nx_OS_community_goods_id`,
+         `nx_OS_buy_status`,
+         `nx_OS_purchase_user_id`,
+         `nx_OS_order_user_id`,
+         `nx_OS_sub_weight`,
+         `nx_OS_sub_supplier_id`,
+          `nx_OS_community_id`,
+         `nx_Os_goods_type`
+         )
+        values (#{nxOrdersSubId},
+                #{nxOsNxGoodsId},
+                #{nxOsQuantity},
+                #{nxOsPrice},
+                #{nxOsRemark},
+                #{nxOsWeight},
+                #{nxOsSubtotal},
+                #{nxOsStatus},
+                #{nxOsWeighUserId},
+                #{nxOsAccountUserId},
+                #{nxOsOrdersId},
+                #{nxOsStandard},
+                #{nxOsCommunityGoodsFatherId},
+                #{nxOsDistributerId},
+                #{nxOsCommunityGoodsId},
+                #{nxOsBuyStatus},
+                #{nxOsPurchaseUserId},
+                #{nxOsOrderUserId},
+                #{nxOsSubWeight},
+                #{nxOsSubSupplierId},
+                #{nxOsCommunityId},
+                #{nxOsGoodsType}
+                )
+    </insert>
+
+    <update id="update" parameterType="com.nongxinle.entity.NxOrdersSubEntity">
+        update nx_orders_sub
+        <set>
+            <if test="nxOsNxGoodsId != null">`nx_OS_nx_goods_id` = #{nxOsNxGoodsId},</if>
+            <if test="nxOsCommunityGoodsFatherId != null">`nx_OS_community_goods_father_id` = #{nxOsCommunityGoodsFatherId},</if>
+            <if test="nxOsQuantity != null">`nx_OS_quantity` = #{nxOsQuantity},</if>
+            <if test="nxOsPrice != null">`nx_OS_price` = #{nxOsPrice},</if>
+            <if test="nxOsRemark != null">`nx_OS_remark` = #{nxOsRemark},</if>
+            <if test="nxOsWeight != null">`nx_OS_weight` = #{nxOsWeight},</if>
+            <if test="nxOsSubtotal != null">`nx_OS_subtotal` = #{nxOsSubtotal},</if>
+            <if test="nxOsStatus != null">`nx_OS_status` = #{nxOsStatus},</if>
+            <if test="nxOsWeighUserId != null">`nx_OS_weigh_user_id` = #{nxOsWeighUserId},</if>
+            <if test="nxOsOrdersId != null">`nx_OS_orders_id` = #{nxOsOrdersId},</if>
+            <if test="nxOsStandard != null">`nx_OS_standard` = #{nxOsStandard},</if>
+            <if test="nxOsDistributerId != null">`nx_OS_distributer_id` = #{nxOsDistributerId},</if>
+            <if test="nxOsCommunityGoodsId != null">`nx_OS_community_goods_id` = #{nxOsCommunityGoodsId},</if>
+            <if test="nxOsBuyStatus != null">`nx_OS_buy_status` = #{nxOsBuyStatus},</if>
+            <if test="nxOsPurchaseUserId != null">`nx_OS_purchase_user_id` = #{nxOsPurchaseUserId},</if>
+            <if test="nxOsOrderUserId != null">`nx_OS_order_user_id` = #{nxOsOrderUserId},</if>
+            <if test="nxOsSubWeight != null">`nx_OS_sub_weight` = #{nxOsSubWeight},</if>
+            <if test="nxOsSubSupplierId != null">`nx_OS_sub_supplier_id` = #{nxOsSubSupplierId},</if>
+            <if test="nxOsCommunityId != null">`nx_OS_community_id` = #{nxOsCommunityId},</if>
+            <if test="nxOsGoodsType != null">`nx_OS_goods_type` = #{nxOsGoodsType},</if>
+            <if test="nxOsAccountUserId != null">`nx_OS_account_user_id` = #{nxOsAccountUserId}</if>
+        </set>
+        where nx_orders_sub_id = #{nxOrdersSubId}
+    </update>
+
+    <delete id="delete">
+        delete
+        from nx_orders_sub
+        where nx_orders_sub_id = #{value}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete from nx_orders_sub where nx_orders_sub_id in
+        <foreach item="nxOrdersSubId" collection="array" open="(" separator="," close=")">
+            #{nxOrdersSubId}
+        </foreach>
+    </delete>
+
+</mapper>

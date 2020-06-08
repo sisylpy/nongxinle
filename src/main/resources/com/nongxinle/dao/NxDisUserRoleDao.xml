@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxDisUserRoleDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxDisUserRoleEntity">
+		select * from nx_dis_user_role where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxDisUserRoleEntity">
+		select * from nx_dis_user_role 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_dis_user_role 
+	</select>
+	 
+	<insert id="save" parameterType="com.nongxinle.entity.NxDisUserRoleEntity">
+		insert into nx_dis_user_role
+		(
+			`id`, 
+			`user_id`, 
+			`role_id`
+		)
+		values
+		(
+			#{id}, 
+			#{userId}, 
+			#{roleId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxDisUserRoleEntity">
+		update nx_dis_user_role 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="roleId != null">`role_id` = #{roleId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_dis_user_role where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_dis_user_role where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
