@@ -42,7 +42,7 @@
         <result property="nxOsQuantity" column="nx_OS_quantity"/>
         <result property="nxOsStandard" column="nx_OS_standard"/>
         <result property="nxOsRemark" column="nx_OS_remark"/>
-        <result property="nxOsGoodsFatherId" column="nx_OS_goods_father_id"/>
+        <result property="nxOsCommunityGoodsFatherId" column="nx_OS_community_goods_father_id"/>
         <result property="nxOsCommunityGoodsId" column="nx_OS_community_goods_id"/>
         <result property="nxOsPurchaseUserId" column="nx_OS_purchase_usr_id"/>
         <association property="nxCommunityGoodsEntity"  resultMap="commGoods"/>
@@ -62,7 +62,7 @@
     <select id="querySubOrdersByDisIdandStatus" resultMap="subOrders">
         select * from nx_orders_sub as os
              left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_OS_community_goods_id
-        where nx_OS_distributer_id = #{disId} and nx_OS_buy_status = #{purchaseStatus}
+        where nx_OS_community_id = #{communityId} and nx_OS_buy_status = #{purchaseStatus}
     </select>
 
 

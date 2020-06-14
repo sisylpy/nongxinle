@@ -28,5 +28,5 @@ public interface NxDistributerUserService {
 	
 	void deleteBatch(Integer[] distUserIds);
 
-    List<NxDistributerUserEntity> queryUser(Integer disId);
+    List<NxDistributerUserEntity> queryUser(Integer communityId);
 }

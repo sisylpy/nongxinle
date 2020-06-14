@@ -31,7 +31,7 @@ public interface NxOrdersService {
 
     List<NxOrdersEntity> queryOrders(Map<String, Object> map);
 
-	Map<String, Object> queryDistributerIndexData(Integer disId);
+	Map<String, Object> queryDistributerIndexData(Integer communityId);
 
 	List<NxOrdersEntity> queryOrdersToWeigh(Map<String, Object> map);
 

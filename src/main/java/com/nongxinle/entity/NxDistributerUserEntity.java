@@ -25,28 +25,15 @@ public class NxDistributerUserEntity implements Serializable, Comparable {
 	 *  批发商用户id
 	 */
 	private Integer nxDistributerUserId;
-	/**
-	 *  批发商用户微信昵称
-	 */
-	private String nxDuWxNickName;
-	/**
-	 *
-	 */
-	private String nxDuWxAvatarUrl;
-	/**
-	 *
-	 */
-	private Integer nxDuWxGender;
-	/**
-	 *
-	 */
-
-	private String nxDuWxOpenId;
 
 	/**
 	 *
 	 */
 	private Integer nxDuDistributerId;
+
+	private Integer nxDuCommunityId;
+
+	private String nxDuUserShortName;
 
 
 	/**
@@ -59,7 +46,6 @@ public class NxDistributerUserEntity implements Serializable, Comparable {
 	 */
 	private Integer orderAmount;
 
-	private String duUserShortName;
 
 	@Override
 	public boolean equals(Object o) {
@@ -67,19 +53,15 @@ public class NxDistributerUserEntity implements Serializable, Comparable {
 		if (o == null || getClass() != o.getClass()) return false;
 		NxDistributerUserEntity that = (NxDistributerUserEntity) o;
 		return Objects.equals(nxDistributerUserId, that.nxDistributerUserId) &&
-				Objects.equals(nxDuWxNickName, that.nxDuWxNickName) &&
-				Objects.equals(nxDuWxAvatarUrl, that.nxDuWxAvatarUrl) &&
-				Objects.equals(nxDuWxGender, that.nxDuWxGender) &&
-				Objects.equals(nxDuWxOpenId, that.nxDuWxOpenId) &&
 				Objects.equals(nxDuDistributerId, that.nxDuDistributerId) &&
 				Objects.equals(roleEntities, that.roleEntities) &&
 				Objects.equals(orderAmount, that.orderAmount) &&
-				Objects.equals(duUserShortName, that.duUserShortName);
+				Objects.equals(nxDuUserShortName, that.nxDuUserShortName);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(nxDistributerUserId, nxDuWxNickName, nxDuWxAvatarUrl, nxDuWxGender, nxDuWxOpenId, nxDuDistributerId, roleEntities, orderAmount, duUserShortName);
+		return Objects.hash(nxDistributerUserId, nxDuDistributerId, roleEntities, orderAmount, nxDuUserShortName);
 	}
 
 	@Override

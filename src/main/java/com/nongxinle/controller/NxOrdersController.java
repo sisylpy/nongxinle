@@ -153,30 +153,30 @@ public class NxOrdersController {
 
 
             //路线列表
-            List<NxRouteEntity> routeEntities = nxRouteService.queryRoute();
+//            List<NxRouteEntity> routeEntities = nxRouteService.queryRoute();
+//
+//            for (NxRouteEntity route : routeEntities) {
+//                //一个路线的订单map
+//                Map<String, Object> map1 = new HashMap<>();
+//                //新路线订单列表
+//                List<NxOrdersEntity> entityList = new ArrayList<>();
+//
+//                String nxRouteName = route.getNxRouteName();
+//                map1.put("route", nxRouteName);
+//                for (NxOrdersEntity order : entities2) {
+//                    System.out.println("orderkkkkccc" + order.getNxCustomerEntity().getNxCommunityEntity());
+//
+//                    if (order.getNxCustomerEntity().getNxCommunityEntity().getNxCommunityRouteId().equals(route.getNxRouteId())) {
+//                        entityList.add(order);
+//                    }
+//                }
+//                map1.put("arr", entityList);
+//                if (entityList.size() > 0) {
+//                    list.add(map1);
+//                }
+//            }
 
-            for (NxRouteEntity route : routeEntities) {
-                //一个路线的订单map
-                Map<String, Object> map1 = new HashMap<>();
-                //新路线订单列表
-                List<NxOrdersEntity> entityList = new ArrayList<>();
-
-                String nxRouteName = route.getNxRouteName();
-                map1.put("route", nxRouteName);
-                for (NxOrdersEntity order : entities2) {
-                    System.out.println("orderkkkkccc" + order.getNxCustomerEntity().getNxCommunityEntity());
-
-                    if (order.getNxCustomerEntity().getNxCommunityEntity().getNxCommunityRouteId().equals(route.getNxRouteId())) {
-                        entityList.add(order);
-                    }
-                }
-                map1.put("arr", entityList);
-                if (entityList.size() > 0) {
-                    list.add(map1);
-                }
-            }
-
-            return R.ok().put("data", list);
+            return R.ok().put("data", entities2);
         }
         // 配送中订单
         if (orderStatus.equals(Four) && paymentStatus.equals(noCare)) {
@@ -312,13 +312,13 @@ public class NxOrdersController {
     /**
      * 批发商首页接口
      *
-     * @param disId 批发商id
+     * @param communityId 社区id
      * @return 分配拣货员列表
      */
-    @RequestMapping(value = "/communityGetIndexData/{disId}")
+    @RequestMapping(value = "/communityGetIndexData/{communityId}")
     @ResponseBody
-    public R disGetIndexData(@PathVariable Integer disId) {
-        Map<String, Object> list = nxOrdersService.queryDistributerIndexData(disId);
+    public R disGetIndexData(@PathVariable Integer communityId) {
+        Map<String, Object> list = nxOrdersService.queryDistributerIndexData(communityId);
         return R.ok().put("data", list);
     }
 

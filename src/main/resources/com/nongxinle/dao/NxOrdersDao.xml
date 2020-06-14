@@ -9,16 +9,18 @@
 		select count(*) from nx_orders where nx_orders_user_id = #{nxOrdersUserId}
 	</select>
 
-	<resultMap id="disGoods" type="NxCommunityGoodsEntity">
+	<resultMap id="commGoods" type="NxCommunityGoodsEntity">
 		<id property="nxCommunityGoodsId" column="nx_community_goods_id"/>
-		<result property="nxCgGoodsPrice" column="dg_goods_price"/>
-		<result property="nxCgGoodsPriceDecimal" column="dg_goods_price_decimal"/>
-		<result property="nxCgGoodsIsWeight" column="dg_goods_is_weight"/>
-		<result property="nxCgGoodsStatus" column="dg_goods_status"/>
-		<result property="nxCgPurchaseQuantity" column="dg_purchase_quantity"/>
-		<result property="nxCgBuyStatus" column="dg_buy_status"/>
-		<result property="nxCgGoodsTotalHits" column="dg_goods_total_hits"/>
-		<result property="nxCgGoodsSellType" column="dg_goods_sell_type"/>
+		<result property="nxCgGoodsPrice" column="nx_cg_goods_price"/>
+		<result property="nxCgGoodsPriceDecimal" column="nx_cg_goods_price_decimal"/>
+		<result property="nxCgGoodsIsWeight" column="nx_cg_goods_is_weight"/>
+		<result property="nxCgGoodsStatus" column="nx_cg_goods_status"/>
+		<result property="nxCgPurchaseQuantity" column="nx_cg_purchase_quantity"/>
+		<result property="nxCgBuyStatus" column="nx_cg_buy_status"/>
+		<result property="nxCgGoodsTotalHits" column="nx_cg_goods_total_hits"/>
+		<result property="nxCgGoodsSellType" column="nx_cg_goods_sell_type"/>
+		<result property="nxCgGoodsName" column="nx_cg_goods_name"/>
+		<result property="nxCgGoodsStandardname" column="nx_cg_goods_standardname"/>
 
 	</resultMap>
 	<!-- subOrders -->
@@ -38,7 +40,7 @@
 			<!--<result property="nxGoodsStandardname" column="nx_goods_standardname"/>-->
 			<!--<result property="nxGoodsDetail" column="nx_goods_detail"/>-->
 		<!--</association>-->
-		<association property="nxCommunityGoodsEntity" resultMap="disGoods"/>
+		<association property="nxCommunityGoodsEntity" resultMap="commGoods"/>
 
 	</resultMap>
 
@@ -117,10 +119,9 @@
 	<select id="queryObject" resultMap="ordersInformation">
 		select * from nx_orders  as o
 			left join nx_orders_sub as s on s.nx_OS_orders_id = o.nx_orders_id
-			left join nx_goods as g on g.nx_goods_id = s.nx_OS_goods_id
 			left join nx_customer as c on c.nx_customer_id = o.nx_orders_customer_id
 			left join nx_community as co on co.nx_community_id = o.nx_orders_community_id
-			left join nx_community_goods as dg on dg.nx_community_goods_id = s.nx_OS_dis_goods_id
+			left join nx_community_goods as dg on dg.nx_community_goods_id = s.nx_OS_community_goods_id
 		where nx_orders_id = #{value}
 
 	</select>
@@ -128,7 +129,7 @@
 		select * from nx_orders as o
 		left join nx_customer as c on o.nx_orders_customer_id = c.nx_customer_id
 		left join nx_customer_user as u on o.nx_orders_user_id = u.nx_Cu_user_id
-        where o.nx_orders_distributer_id = #{disId} and o.nx_orders_status = #{status}
+        where o.nx_orders_community_id = #{communityId} and o.nx_orders_status = #{status}
 		<if test="pickerUserId != null">
 			and o.nx_orders_weigh_user_id = #{pickerUserId}
 		</if>
@@ -149,9 +150,8 @@
 		left join nx_customer as c on o.nx_orders_customer_id = c.nx_customer_id
 		left join nx_customer_user as u on o.nx_orders_user_id = u.nx_CU_user_id
 		left join nx_orders_sub as os on o.nx_orders_id = os.nx_OS_orders_id
-		left join nx_goods as g on g.nx_goods_id = os.nx_OS_goods_id
 		left join nx_community as mm on mm.nx_community_id = o.nx_orders_community_id
-		left join nx_route as r on r.nx_route_id = mm.nx_community_route_id
+		left join nx_community_goods as cg on cg.nx_community_goods_id = os.nx_OS_community_goods_id
 		where o.nx_orders_distributer_id = #{disId} and o.nx_orders_status = #{status}
 		<if test="pickerUserId != null">
 			and o.nx_orders_weigh_user_id = #{pickerUserId}
@@ -167,11 +167,9 @@
         left join nx_customer as c on o.nx_orders_customer_id = c.nx_customer_id
         left join nx_customer_user as u on o.nx_orders_user_id = u.nx_CU_user_id
         left join nx_orders_sub as os on o.nx_orders_id = os.nx_OS_orders_id
-        left join nx_goods as g on g.nx_goods_id = os.nx_OS_goods_id
         left join nx_community as mm on mm.nx_community_id = c.nx_customer_community_id
-        left join nx_route as r on r.nx_route_id = mm.nx_community_route_id
 		  where o.nx_orders_distributer_id = #{disId} and o.nx_orders_status = #{orderStatus}
-		<if test="paymentStatus != null">
+		<if test="paymentStatus != -1">
 			and o.nx_orders_payment_status = #{paymentStatus}
 		</if>
     </select>
@@ -179,7 +177,6 @@
 	<select id="queryCustomerOrder" resultMap="ordersInformation">
 		select * from nx_orders as o
 			left join nx_orders_sub as s on s.nx_OS_orders_id = o.nx_orders_id
-			left join nx_goods as g on g.nx_goods_id = s.nx_OS_goods_id
 		where o.nx_orders_user_id = #{nxOrdersUserId}
 		order by o.nx_orders_date
 		<if test="offset != null and limit != null">

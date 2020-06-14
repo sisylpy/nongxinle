@@ -8,13 +8,11 @@ package com.nongxinle.controller;
 import java.util.*;
 
 import com.nongxinle.entity.*;
-import com.nongxinle.service.NxGoodsService;
-import com.nongxinle.service.NxOrderTemplateItemService;
+import com.nongxinle.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.nongxinle.service.NxOrdersSubService;
 import com.nongxinle.utils.PageUtils;
 import com.nongxinle.utils.R;
 
@@ -25,8 +23,15 @@ public class NxOrdersSubController {
     @Autowired
     private NxOrdersSubService nxOrdersSubService;
 
+//    @Autowired
+//    private NxGoodsService nxGoodsService;
+
     @Autowired
-    private NxGoodsService nxGoodsService;
+    private NxCommunityGoodsService nxCommunityGoodsService;
+
+    @Autowired
+    private NxCommunityFatherGoodsService nxCommunityFatherGoodsService;
+
 
     @Autowired
     private NxOrderTemplateItemService nxOrderTemplateItemService;
@@ -112,25 +117,29 @@ public class NxOrdersSubController {
         List<NxOrdersSubEntity> subEntities = nxOrdersSubService.queryToPurchaseGoods(map);
 
         List<Map<String, Object>> resultData = new ArrayList<>();
+        System.out.println("fhakfdaslkfjaskl" + subEntities.size());
 
         if (subEntities.size() > 0) {
-            TreeSet<NxGoodsEntity> fatherGoodsList = new TreeSet<>();
+
+//            TreeSet<NxGoodsEntity> fatherGoodsList = new TreeSet<>();
+            TreeSet<NxCommunityFatherGoodsEntity> fatherGoodsList = new TreeSet<>();
             //获取父级商品
             for (NxOrdersSubEntity subEntity : subEntities) {
-                Integer nxOsGoodsFatherId = subEntity.getNxOsGoodsFatherId();
-                NxGoodsEntity fatherGoods = nxGoodsService.queryObject(nxOsGoodsFatherId);
+                Integer nxOsGoodsFatherId = subEntity.getNxOsCommunityGoodsFatherId();
+                NxCommunityFatherGoodsEntity fatherGoods = nxCommunityFatherGoodsService.queryObject(nxOsGoodsFatherId);
                 fatherGoodsList.add(fatherGoods);
             }
+            System.out.println(fatherGoodsList + "fatherGoodsList");
 
 
             // 一，父级商品子商品组装
-            for (NxGoodsEntity fatherGoods : fatherGoodsList) {
+            for (NxCommunityFatherGoodsEntity fatherGoods : fatherGoodsList) {
                 // 父级商品和子商品和子订单
                 Map<String, Object> mapFather = new HashMap<>();
-                mapFather.put("fatherName", fatherGoods.getNxGoodsName());
+                mapFather.put("fatherName", fatherGoods.getNxFatherGoodsName());
                 mapFather.put("show", false);
                 List<Map<String, Object>> goodsList = new ArrayList<>();
-                TreeSet<NxCommunityGoodsEntity> disGoodsEntityTreeSet = new TreeSet<>();
+                TreeSet<NxCommunityGoodsEntity> commGoodsEntityTreeSet = new TreeSet<>();
 
                 System.out.println(subEntities.size() + "sisisizeezeee");
 
@@ -138,28 +147,28 @@ public class NxOrdersSubController {
                 for (NxOrdersSubEntity subEntity : subEntities) {
 
                     System.out.println("kankan:" + subEntity.getNxCommunityGoodsEntity());
-                    System.out.println("father" + fatherGoods.getNxGoodsId());
-                    System.out.println("subFather" + subEntity.getNxOsGoodsFatherId());
+                    System.out.println("father" + fatherGoods.getNxCommunityFatherGoodsId());
+//                    System.out.println("subFather" + subEntity.getNxOsGoodsFatherId());
                     // 组装子商品和子订单
-                    if (fatherGoods.getNxGoodsId().equals(subEntity.getNxOsGoodsFatherId())) {
-                        disGoodsEntityTreeSet.add(subEntity.getNxCommunityGoodsEntity());
+                    if (fatherGoods.getNxCommunityFatherGoodsId().equals(subEntity.getNxOsCommunityGoodsFatherId())) {
+                        commGoodsEntityTreeSet.add(subEntity.getNxCommunityGoodsEntity());
                     }
                 }
 
-                System.out.println("trees:" + disGoodsEntityTreeSet);
+                System.out.println("trees:" + commGoodsEntityTreeSet);
 
                 // 组装商品的子订单
-                for (NxCommunityGoodsEntity disGoods : disGoodsEntityTreeSet) {
-                    System.out.println("disGoodsdisGoods" + disGoods);
+                for (NxCommunityGoodsEntity commGoods : commGoodsEntityTreeSet) {
+                    System.out.println("disGoodsdisGoods" + commGoods);
                     Map<String, Object> mapSub = new HashMap<>();
 
-                    mapSub.put("goodsName", disGoods.getNxGoodsEntity().getNxGoodsName());
-                    mapSub.put("standardName", disGoods.getNxGoodsEntity().getNxGoodsStandardname());
-                    mapSub.put("purchase", disGoods.getNxCgPurchaseQuantity());
-                    mapSub.put("disGoodsId", disGoods.getNxCommunityGoodsId());
+                    mapSub.put("goodsName", commGoods.getNxCgGoodsName());
+                    mapSub.put("standardName", commGoods.getNxCgGoodsStandardname());
+                    mapSub.put("purchase", commGoods.getNxCgPurchaseQuantity());
+                    mapSub.put("disGoodsId", commGoods.getNxCommunityGoodsId());
                     mapSub.put("show", true);
                     Map<String, Object> subMap = new HashMap<>();
-                    subMap.put("disGoodsId", disGoods.getNxCommunityGoodsId());
+                    subMap.put("disGoodsId", commGoods.getNxCommunityGoodsId());
                     subMap.put("status", status);
                     List<NxOrdersSubEntity> subEntities1 = nxOrdersSubService.querySubsByGoodsId(subMap);
                     mapSub.put("subList", subEntities1);

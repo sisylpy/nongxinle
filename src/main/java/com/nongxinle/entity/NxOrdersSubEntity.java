@@ -30,7 +30,7 @@ public class NxOrdersSubEntity implements Serializable, Comparable {
 	/**
 	 *  子订单father商品id
 	 */
-	private Integer nxOsGoodsFatherId;
+	private Integer nxOsCommunityGoodsFatherId;
 	/**
 	 *  子订单申请数量
 	 */
@@ -103,11 +103,13 @@ public class NxOrdersSubEntity implements Serializable, Comparable {
 
   	private String nxOsGoodsSellStandardScale;
 
-  	private  Integer nxOsCommunityGoodsFatherId;
 
 	private NxCommunityGoodsEntity nxCommunityGoodsEntity;
 
+	private String nxOsStandardPrice;
+
 	private NxCommunityEntity nxCommunityEntity;
+
 
 
 
@@ -118,7 +120,7 @@ public class NxOrdersSubEntity implements Serializable, Comparable {
 		NxOrdersSubEntity subEntity = (NxOrdersSubEntity) o;
 		return Objects.equals(nxOrdersSubId, subEntity.nxOrdersSubId) &&
 				Objects.equals(nxOsNxGoodsId, subEntity.nxOsNxGoodsId) &&
-				Objects.equals(nxOsGoodsFatherId, subEntity.nxOsGoodsFatherId) &&
+				Objects.equals(nxOsCommunityGoodsFatherId, subEntity.nxOsCommunityGoodsFatherId) &&
 				Objects.equals(nxOsQuantity, subEntity.nxOsQuantity) &&
 				Objects.equals(nxOsStandard, subEntity.nxOsStandard) &&
 				Objects.equals(nxOsPrice, subEntity.nxOsPrice) &&
@@ -144,7 +146,7 @@ public class NxOrdersSubEntity implements Serializable, Comparable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(nxOrdersSubId, nxOsNxGoodsId, nxOsGoodsFatherId, nxOsQuantity, nxOsStandard, nxOsPrice, nxOsRemark, nxOsWeight, nxOsSubtotal, nxOsStatus, nxOsWeighUserId, nxOsAccountUserId, nxOsOrdersId, nxCommunityGoodsEntity, nxOsDistributerId, nxOsCommunityGoodsId, nxOsBuyStatus, nxOsPurchaseUserId, nxOsOrderUserId, hasItem, nxOsSubWeight, nxOsSubSupplierId, nxOsCommunityId);
+		return Objects.hash(nxOrdersSubId, nxOsNxGoodsId, nxOsCommunityGoodsFatherId, nxOsQuantity, nxOsStandard, nxOsPrice, nxOsRemark, nxOsWeight, nxOsSubtotal, nxOsStatus, nxOsWeighUserId, nxOsAccountUserId, nxOsOrdersId, nxCommunityGoodsEntity, nxOsDistributerId, nxOsCommunityGoodsId, nxOsBuyStatus, nxOsPurchaseUserId, nxOsOrderUserId, hasItem, nxOsSubWeight, nxOsSubSupplierId, nxOsCommunityId);
 	}
 
 	@Override

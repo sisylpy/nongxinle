@@ -34,12 +34,12 @@ public class NxDistributerUserController {
 
 	@RequestMapping(value = "/disGetUserByRole", method = RequestMethod.POST)
 	@ResponseBody
-	public R disGetUser (Integer disId, Integer roleNumber) {
-		System.out.println(disId + "dddd");
+	public R disGetUser (Integer communityId, Integer roleNumber) {
+		System.out.println(communityId + "dddd");
 		Map<String, Object> map = new HashMap<>();
-		map.put("disId", disId);
+		map.put("nxCommunityId", communityId);
 
-		List<NxDistributerUserEntity> userEntities =  nxDistributerUserService.queryUser(disId);
+		List<NxDistributerUserEntity> userEntities =  nxDistributerUserService.queryUser(communityId);
 		System.out.println(userEntities);
 		List<NxDistributerUserEntity> result = new ArrayList<>();
 		for (NxDistributerUserEntity user : userEntities) {

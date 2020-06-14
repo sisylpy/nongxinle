@@ -197,9 +197,9 @@
 
 	</select>
 	<select id="queryCommunityGoodsWithPinyin" resultType="com.nongxinle.entity.NxCommunityGoodsEntity">
-		select * from  nx_community_goods where nx_cg_community_id =#{nxCgCommunityId}
-		    and nx_cg_goods_pinyin like concat('%', #{pinyin}, '%')
-			 or nx_cg_goods_py like concat('%', #{pinyin}, '%')
+		select * from  nx_community_goods where nx_cg_community_id =#{nxCgCommunityId} and nx_cg_goods_type = 2
+		    and (nx_cg_goods_pinyin like concat('%', #{pinyin}, '%')
+			 or nx_cg_goods_py like concat('%', #{pinyin}, '%'))
 
 	</select>
 
