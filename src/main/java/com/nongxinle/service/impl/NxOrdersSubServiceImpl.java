@@ -74,5 +74,15 @@ public class NxOrdersSubServiceImpl implements NxOrdersSubService {
         return nxOrdersSubDao.queryOutGoodsByType(map);
     }
 
+	@Override
+	public List<NxOrdersSubEntity> querySubGoodsByOrderId(Integer integer) {
+		return nxOrdersSubDao.querySubGoodsByOrderId(integer);
+	}
+
+	@Override
+	public List<NxOrdersSubEntity> queryCommGoodsOfSubs(Integer fatherId) {
+		return nxOrdersSubDao.queryCommGoodsOfSubs(fatherId);
+	}
+
 
 }

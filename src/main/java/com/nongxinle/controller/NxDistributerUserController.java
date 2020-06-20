@@ -12,8 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nongxinle.entity.NxDisUserRoleEntity;
-import com.nongxinle.entity.SysRoleEntity;
+import com.nongxinle.entity.NxDistributerUserRoleEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,24 +33,24 @@ public class NxDistributerUserController {
 
 	@RequestMapping(value = "/disGetUserByRole", method = RequestMethod.POST)
 	@ResponseBody
-	public R disGetUser (Integer communityId, Integer roleNumber) {
-		System.out.println(communityId + "dddd");
-		Map<String, Object> map = new HashMap<>();
-		map.put("nxCommunityId", communityId);
+	public R disGetUser (Integer disId, Integer roleNumber) {
+		System.out.println(disId + "dddd");
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("nxDisId", disId);
 
-		List<NxDistributerUserEntity> userEntities =  nxDistributerUserService.queryUser(communityId);
+		List<NxDistributerUserEntity> userEntities =  nxDistributerUserService.queryUser(disId);
 		System.out.println(userEntities);
 		List<NxDistributerUserEntity> result = new ArrayList<>();
 		for (NxDistributerUserEntity user : userEntities) {
 			System.out.println(user + "uuuuu");
-			List<NxDisUserRoleEntity> roleEntities = user.getRoleEntities();
+			List<NxDistributerUserRoleEntity> roleEntities = user.getRoleEntities();
 
 
-			for (NxDisUserRoleEntity roleEntity: roleEntities) {
-				System.out.println(roleEntity.getRoleId() + "rrrororo");
+			for (NxDistributerUserRoleEntity roleEntity: roleEntities) {
+				System.out.println(roleEntity.getNxDurRoleId() + "rrrororo");
 				System.out.println(roleNumber + "aaaaa");
 
-				if (roleEntity.getRoleId().equals(roleNumber)){
+				if (roleEntity.getNxDurRoleId().equals(roleNumber)){
 					System.out.println("0000" + result);
 					result.add(user);
 					System.out.println("11111" + result);

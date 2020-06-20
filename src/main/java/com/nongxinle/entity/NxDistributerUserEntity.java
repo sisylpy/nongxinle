@@ -3,13 +3,12 @@ package com.nongxinle.entity;
 /**
  * 
  * @author lpy
- * @date 2020-02-10 19:43:11
+ * @date 06-20 10:21
  */
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,61 +17,41 @@ import lombok.ToString;
 
 @Setter@Getter@ToString
 
-public class NxDistributerUserEntity implements Serializable, Comparable {
+public class NxDistributerUserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 *  批发商用户id
 	 */
 	private Integer nxDistributerUserId;
-
 	/**
-	 *
+	 *  用户名
 	 */
-	private Integer nxDuDistributerId;
-
-	private Integer nxDuCommunityId;
-
-	private String nxDuUserShortName;
-
-
+	private String nxDiuWxAvartraUrl;
 	/**
-	 * 批发商用户角色
+	 *  批发商用户社区id
 	 */
-	List<NxDisUserRoleEntity> roleEntities;
-
+	private Integer nxDiuDepartmentId;
 	/**
-	 * order number
+	 *  登陆密码
 	 */
+	private String nxDiuWxNickName;
+	/**
+	 *  
+	 */
+	private String nxDiuWxOpenId;
+	/**
+	 *  
+	 */
+	private String nxDiuWxPhone;
+	/**
+	 *  
+	 */
+	private Integer nxDiuDistributerId;
+
+
 	private Integer orderAmount;
 
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		NxDistributerUserEntity that = (NxDistributerUserEntity) o;
-		return Objects.equals(nxDistributerUserId, that.nxDistributerUserId) &&
-				Objects.equals(nxDuDistributerId, that.nxDuDistributerId) &&
-				Objects.equals(roleEntities, that.roleEntities) &&
-				Objects.equals(orderAmount, that.orderAmount) &&
-				Objects.equals(nxDuUserShortName, that.nxDuUserShortName);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(nxDistributerUserId, nxDuDistributerId, roleEntities, orderAmount, nxDuUserShortName);
-	}
-
-	@Override
-	public int compareTo(Object o) {
-		if (o instanceof NxDistributerUserEntity) {
-			NxDistributerUserEntity e = (NxDistributerUserEntity) o;
-			return this.nxDistributerUserId.compareTo(e.nxDistributerUserId);
-		}
-		return 0;
-	}
-
-
+	List<NxDistributerUserRoleEntity> roleEntities;
 
 }

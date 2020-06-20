@@ -105,6 +105,8 @@ public class NxOrdersSubEntity implements Serializable, Comparable {
 
 
 	private NxCommunityGoodsEntity nxCommunityGoodsEntity;
+	private NxCommunityFatherGoodsEntity nxCommunityFatherGoodsEntity;
+
 
 	private String nxOsStandardPrice;
 
@@ -131,7 +133,6 @@ public class NxOrdersSubEntity implements Serializable, Comparable {
 				Objects.equals(nxOsWeighUserId, subEntity.nxOsWeighUserId) &&
 				Objects.equals(nxOsAccountUserId, subEntity.nxOsAccountUserId) &&
 				Objects.equals(nxOsOrdersId, subEntity.nxOsOrdersId) &&
-//				Objects.equals(nxGoodsEntity, subEntity.nxGoodsEntity) &&
 				Objects.equals(nxCommunityGoodsEntity, subEntity.nxCommunityGoodsEntity) &&
 				Objects.equals(nxOsDistributerId, subEntity.nxOsDistributerId) &&
 				Objects.equals(nxOsCommunityGoodsId, subEntity.nxOsCommunityGoodsId) &&

@@ -12,6 +12,10 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxCustomerDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxCustomerUserDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxCustomerUserGoodsDao.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDepartmentDao.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDepartmentFatherGoodsDao.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDepartmentGoodsDao.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDepartmentUserDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDistributerCommunityDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDistributerDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDistributerDepartmentDao.xml" dialect="MySQL" />

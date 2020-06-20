@@ -148,7 +148,7 @@ public class NxOrdersServiceImpl implements NxOrdersService {
     }
 
 	@Override
-	public Map<String, Object> queryDistributerIndexData(Integer communityId) {
+	public Map<String, Object> queryDistributerIndexData(Integer disId) {
 
 		List<NxDistributerUserEntity> listWeigh = new ArrayList<>();
 		List<NxDistributerUserEntity> listPurchase = new ArrayList<>();
@@ -158,13 +158,15 @@ public class NxOrdersServiceImpl implements NxOrdersService {
 		//查询批发商的所有拣货员
 		List<NxDistributerUserEntity> distributerUserEntities = new ArrayList<>();
 		List<NxDistributerUserEntity> purchaserUserEntities = new ArrayList<>();
-		List<NxDistributerUserEntity> userEntities = nxDistributerUserDao.queryUser(communityId);
+		List<NxDistributerUserEntity> userEntities = nxDistributerUserDao.queryUser(disId);
 		for (NxDistributerUserEntity user : userEntities) {
-			List<NxDisUserRoleEntity> roleEntities = user.getRoleEntities();
-			for(NxDisUserRoleEntity userRoleEntity :roleEntities){
-				if(userRoleEntity.getRoleId().equals(3)){
+			List<NxDistributerUserRoleEntity> roleEntities = user.getRoleEntities();
+			System.out.println(roleEntities);
+			System.out.println("roororororoorro");
+			for(NxDistributerUserRoleEntity userRoleEntity :roleEntities){
+				if(userRoleEntity.getNxDurRoleId().equals(3)){
 					distributerUserEntities.add(user);
-				}if(userRoleEntity.getRoleId().equals(5)){
+				}if(userRoleEntity.getNxDurRoleId().equals(5)){
 					purchaserUserEntities.add(user);
 				}
 			}
@@ -172,7 +174,7 @@ public class NxOrdersServiceImpl implements NxOrdersService {
 
 		//查询所有分配称重订单
 		Map<String, Object> map1 = new HashMap<>();
-		map1.put("communityId", communityId);
+		map1.put("disId", disId);
 		map1.put("status", 1);
 		List<NxOrdersEntity> ordersEntityList = nxOrdersDao.queryOrders(map1);
 		//组装拣货员的订单
@@ -190,12 +192,13 @@ public class NxOrdersServiceImpl implements NxOrdersService {
 			}
 
 		}
+		System.out.println(listWeigh);
 		mapData.put("weigh", JSON.toJSON(listWeigh));
 
 
 //		//查询所有采购订单
 		Map<String, Object> map2 = new HashMap<>();
-		map2.put("communityId", communityId);
+		map2.put("disId", disId);
 		map2.put("purchaseStatus", 2);
 		List<NxOrdersSubEntity> ordersSubEntities = nxOrdersSubDao.querySubOrdersByDisIdandStatus(map2);
 		System.out.println(ordersSubEntities.size() + "ordersunbdbbfdasfisid");
@@ -219,6 +222,7 @@ public class NxOrdersServiceImpl implements NxOrdersService {
 
 
 		return mapData;
+
 	}
 
 	@Override

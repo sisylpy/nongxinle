@@ -4,7 +4,7 @@ package com.nongxinle.service;
  * 
  *
  * @author lpy
- * @date 2020-02-10 19:43:11
+ * @date 06-20 10:21
  */
 
 import com.nongxinle.entity.NxDistributerUserEntity;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 public interface NxDistributerUserService {
 	
-	NxDistributerUserEntity queryObject(Integer distUserId);
+	NxDistributerUserEntity queryObject(Integer nxDistributerUserId);
 	
 	List<NxDistributerUserEntity> queryList(Map<String, Object> map);
 	
@@ -24,9 +24,9 @@ public interface NxDistributerUserService {
 	
 	void update(NxDistributerUserEntity nxDistributerUser);
 	
-	void delete(Integer distUserId);
+	void delete(Integer nxDistributerUserId);
 	
-	void deleteBatch(Integer[] distUserIds);
+	void deleteBatch(Integer[] nxDistributerUserIds);
 
-    List<NxDistributerUserEntity> queryUser(Integer communityId);
+    List<NxDistributerUserEntity> queryUser(Integer disId);
 }

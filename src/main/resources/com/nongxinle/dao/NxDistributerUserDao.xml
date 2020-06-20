@@ -18,43 +18,63 @@
 		select count(*) from nx_distributer_user 
 	</select>
 
-
-	<resultMap id="user" type="NxDistributerUserEntity">
-		<id property="nxDistributerUserId" column="nx_Distributer_user_id"/>
-		<result property="nxDuCommunityId" column="nx_DU_community_id"/>
-		<result property="nxDuUserShortName" column="nx_DU_user_short_name"/>
-		<collection property="roleEntities" ofType="NxDisUserRoleEntity">
-			<id property="id" column="id"/>
-			<result property="roleId" column="role_id"/>
-		</collection>
+	<resultMap id="userRoles" type="NxDistributerUserRoleEntity">
+		<id property="nxDistributerUserRoleId" column="nx_distributer_usr_role_id"/>
+		<result property="nxDurRoleId" column="nx_DUR_role_id"/>
+		<result property="nxDurUserId" column="nx_DUR_user_id"/>
 	</resultMap>
-    <select id="queryUser" resultMap="user">
+
+	<resultMap id="disUser" type="NxDistributerUserEntity">
+		<id property="nxDistributerUserId" column="nx_distributer_user_id"/>
+		<result property="nxDiuDistributerId" column="nx_DIU_distributer_id"/>
+		<result property="nxDiuWxAvartraUrl" column="nx_DIU_wx_avartra_url"/>
+		<result property="nxDiuWxNickName" column="nx_DIU_wx_nick_name"/>
+		<result property="nxDiuWxOpenId" column="nx_DIU_wx_open_id"/>
+		<result property="nxDiuWxPhone" column="nx_DIU_wx_phone"/>
+		<collection property="roleEntities" resultMap="userRoles"/>
+	</resultMap>
+
+	<select id="queryUser" resultMap="disUser">
 		select * from nx_distributer_user as du
-			left join nx_distributer_user_role as dr on du.nx_Distributer_user_id = dr.user_id
-		where 	du.nx_DU_community_id = #{communityId}
+		left join nx_distributer_user_role as r on du.nx_distributer_user_id = r.nx_DUR_user_id
+
+		where nx_DIU_department_id = #{disId}
 	</select>
 
-    <insert id="save" parameterType="com.nongxinle.entity.NxDistributerUserEntity">
+	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerUserEntity">
 		insert into nx_distributer_user
 		(
-			`nx_distributer_user_id`,
-		 	`nx_DU_user_short_name`
-
+			`nx_distributer_user_id`, 
+			`nx_DIU_wx_avartra_url`, 
+			`nx_DIU_department_id`, 
+			`nx_DIU_wx_nick_name`, 
+			`nx_DIU_wx_open_id`, 
+			`nx_DIU_wx_phone`, 
+			`nx_DIU_distributer_id`
 		)
 		values
 		(
-			#{nxDistributerUserId},
-		    #{nxDuUserShortName}
+			#{nxDistributerUserId}, 
+			#{nxDiuWxAvartraUrl}, 
+			#{nxDiuDepartmentId}, 
+			#{nxDiuWxNickName}, 
+			#{nxDiuWxOpenId}, 
+			#{nxDiuWxPhone}, 
+			#{nxDiuDistributerId}
 		)
 	</insert>
 	 
 	<update id="update" parameterType="com.nongxinle.entity.NxDistributerUserEntity">
 		update nx_distributer_user 
 		<set>
-			<if test="nxDuWxNickName != null">`nx_DU_wx_nick_name` = #{nxDuWxNickName}</if>,
-			<if test="nxDuUserShortName != null">`nx_DU_user_short_name` = #{nxDuUserShortName}</if>
+			<if test="nxDiuWxAvartraUrl != null">`nx_DIU_wx_avartra_url` = #{nxDiuWxAvartraUrl}, </if>
+			<if test="nxDiuDepartmentId != null">`nx_DIU_department_id` = #{nxDiuDepartmentId}, </if>
+			<if test="nxDiuWxNickName != null">`nx_DIU_wx_nick_name` = #{nxDiuWxNickName}, </if>
+			<if test="nxDiuWxOpenId != null">`nx_DIU_wx_open_id` = #{nxDiuWxOpenId}, </if>
+			<if test="nxDiuWxPhone != null">`nx_DIU_wx_phone` = #{nxDiuWxPhone}, </if>
+			<if test="nxDiuDistributerId != null">`nx_DIU_distributer_id` = #{nxDiuDistributerId}</if>
 		</set>
-		where dis_user_id = #{distUserId}
+		where nx_distributer_user_id = #{nxDistributerUserId}
 	</update>
 	
 	<delete id="delete">
@@ -62,9 +82,9 @@
 	</delete>
 	
 	<delete id="deleteBatch">
-		delete from nx_distributer_user where nx_distributer_user_id in
-		<foreach item="disUserId" collection="array" open="(" separator="," close=")">
-			#{distUserId}
+		delete from nx_distributer_user where nx_distributer_user_id in 
+		<foreach item="nxDistributerUserId" collection="array" open="(" separator="," close=")">
+			#{nxDistributerUserId}
 		</foreach>
 	</delete>
 

@@ -129,7 +129,7 @@
 		select * from nx_orders as o
 		left join nx_customer as c on o.nx_orders_customer_id = c.nx_customer_id
 		left join nx_customer_user as u on o.nx_orders_user_id = u.nx_Cu_user_id
-        where o.nx_orders_community_id = #{communityId} and o.nx_orders_status = #{status}
+        where o.nx_orders_distributer_id = #{disId} and o.nx_orders_status = #{status}
 		<if test="pickerUserId != null">
 			and o.nx_orders_weigh_user_id = #{pickerUserId}
 		</if>

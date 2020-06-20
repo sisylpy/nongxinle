@@ -36,4 +36,8 @@ public interface NxOrdersSubService {
 	List<NxOrdersSubEntity> querySubOrdersByCustomerUserId(Map<String, Object> map);
 
     List<NxOrdersEntity> queryOutGoodsByType(Map<String, Object> map);
+
+	List<NxOrdersSubEntity>  querySubGoodsByOrderId(Integer integer);
+
+	List<NxOrdersSubEntity> queryCommGoodsOfSubs(Integer fatherId);
 }

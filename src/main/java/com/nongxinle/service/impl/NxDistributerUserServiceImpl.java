@@ -18,8 +18,8 @@ public class NxDistributerUserServiceImpl implements NxDistributerUserService {
 	private NxDistributerUserDao nxDistributerUserDao;
 	
 	@Override
-	public NxDistributerUserEntity queryObject(Integer distUserId){
-		return nxDistributerUserDao.queryObject(distUserId);
+	public NxDistributerUserEntity queryObject(Integer nxDistributerUserId){
+		return nxDistributerUserDao.queryObject(nxDistributerUserId);
 	}
 	
 	@Override
@@ -43,18 +43,18 @@ public class NxDistributerUserServiceImpl implements NxDistributerUserService {
 	}
 	
 	@Override
-	public void delete(Integer distUserId){
-		nxDistributerUserDao.delete(distUserId);
+	public void delete(Integer nxDistributerUserId){
+		nxDistributerUserDao.delete(nxDistributerUserId);
 	}
 	
 	@Override
-	public void deleteBatch(Integer[] distUserIds){
-		nxDistributerUserDao.deleteBatch(distUserIds);
+	public void deleteBatch(Integer[] nxDistributerUserIds){
+		nxDistributerUserDao.deleteBatch(nxDistributerUserIds);
 	}
 
-	@Override
-	public List<NxDistributerUserEntity> queryUser(Integer communityId) {
-		return nxDistributerUserDao.queryUser(communityId);
-	}
+    @Override
+    public List<NxDistributerUserEntity> queryUser(Integer disId) {
+        return nxDistributerUserDao.queryUser(disId);
+    }
 
 }

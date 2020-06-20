@@ -37,6 +37,110 @@ public class NxOrdersSubController {
     private NxOrderTemplateItemService nxOrderTemplateItemService;
 
 
+
+    @RequestMapping(value = "/getCommGoodsOfSubs/{fatherId}")
+    @ResponseBody
+    public R getCommGoodsOfSubs(@PathVariable Integer fatherId) {
+        System.out.println(fatherId + "fatherId");
+          List<NxOrdersSubEntity> subEntities =  nxOrdersSubService.queryCommGoodsOfSubs(fatherId);
+
+          TreeSet<NxCommunityGoodsEntity> commGoodsEntityTreeSet = new TreeSet<>();
+        for (NxOrdersSubEntity sub : subEntities) {
+            NxCommunityGoodsEntity nxCommunityGoodsEntity = sub.getNxCommunityGoodsEntity();
+            commGoodsEntityTreeSet.add(nxCommunityGoodsEntity);
+        }
+
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        for (NxCommunityGoodsEntity commGoods : commGoodsEntityTreeSet) {
+            Map<String, Object> map = new HashMap<>();
+
+            List<NxOrdersSubEntity> subs = new ArrayList<>();
+            map.put("goodsName", commGoods.getNxCgGoodsName());
+            for (NxOrdersSubEntity subEntity: subEntities){
+                if(commGoods.getNxCommunityGoodsId().equals(subEntity.getNxOsCommunityGoodsId())){
+                    subs.add(subEntity);
+                }
+            }
+            map.put("orders", subs);
+
+            data.add(map);
+
+        }
+
+
+        return R.ok().put("data", data);
+    }
+
+
+
+
+
+    /**
+     * 获取订单详细
+     *
+     * @param orderIds 订单ids
+     * @return 订单
+     */
+    @RequestMapping(value = "/getOrderCate/{orderIds}")
+    @ResponseBody
+    public R getOrderCate(@PathVariable String orderIds) {
+        System.out.println(orderIds + "idsiddssss");
+        String[] split = orderIds.split(",");
+
+        TreeSet<NxCommunityFatherGoodsEntity> commFatherGoodsTreeSet = new TreeSet<>();
+
+        List<NxOrdersSubEntity> subEntities = new ArrayList<>();
+        for (String s : split) {
+
+            if(!s.equals(',')){
+                System.out.println(s + "::::s::::");
+                Integer integer = Integer.valueOf(s);
+                if(integer != null){
+                    List<NxOrdersSubEntity> ordersEntity = nxOrdersSubService.querySubGoodsByOrderId(integer);
+                    subEntities.addAll(ordersEntity);
+                    for (NxOrdersSubEntity subEntity: ordersEntity) {
+                        System.out.println(subEntity.getNxOrdersSubId() + "idididididiididi");
+                        NxCommunityFatherGoodsEntity nxCommunityFatherGoodsEntity = subEntity.getNxCommunityFatherGoodsEntity();
+                        System.out.println("goodssssss");
+                        commFatherGoodsTreeSet.add(nxCommunityFatherGoodsEntity);
+
+                    }
+                }
+            }
+
+            System.out.println(commFatherGoodsTreeSet);
+            System.out.println(subEntities.size() + "sisisisiziziziiziz");
+
+        }
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        for (NxCommunityFatherGoodsEntity father : commFatherGoodsTreeSet) {
+            Map<String, Object> map = new HashMap<>();
+            Integer total = 0;
+            map.put("fatherId", father.getNxCommunityFatherGoodsId());
+            map.put("fatherName", father.getNxFatherGoodsName());
+            map.put("img", father.getNxFatherGoodsImg());
+            Integer nxCommunityFatherGoodsId = father.getNxCommunityFatherGoodsId();
+            for (NxOrdersSubEntity sub : subEntities) {
+                if(sub.getNxOsCommunityGoodsFatherId().equals(nxCommunityFatherGoodsId)){
+                    total = total + 1 ;
+                    map.put("total", total);
+                }
+
+            }
+            data.add(map);
+
+
+
+        }
+
+
+        return R.ok().put("data", data);
+    }
+
+
+
     @RequestMapping(value = "/getOutGoodsOfGoodsType", method = RequestMethod.POST)
     @ResponseBody
     public R getOutGoodsOfGoodsType (@RequestParam Integer page, @RequestParam Integer limit,

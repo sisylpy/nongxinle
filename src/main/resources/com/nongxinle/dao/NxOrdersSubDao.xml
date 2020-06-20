@@ -62,7 +62,7 @@
     <select id="querySubOrdersByDisIdandStatus" resultMap="subOrders">
         select * from nx_orders_sub as os
              left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_OS_community_goods_id
-        where nx_OS_community_id = #{communityId} and nx_OS_buy_status = #{purchaseStatus}
+        where nx_OS_distributer_id = #{disId} and nx_OS_buy_status = #{purchaseStatus}
     </select>
 
 
@@ -87,6 +87,35 @@
         <if test="offset != null and limit != null">
             limit #{offset}, #{limit}
         </if>
+    </select>
+
+
+    <resultMap id="commFatherGoods" type="NxCommunityFatherGoodsEntity">
+        <id property="nxCommunityFatherGoodsId" column="nx_community_father_goods_id"/>
+        <result property="nxFatherGoodsName" column="nx_father_goods_name"/>
+        <result property="nxFatherGoodsImg" column="nx_father_goods_img"/>
+        <result property="nxFatherGoodsColor" column="nx_father_goods_color"/>
+    </resultMap>
+
+    <resultMap id="subOrdersWithCommFatherGoods" type="NxOrdersSubEntity">
+        <id property="nxOrdersSubId" column="nx_oders_sub_id"/>
+        <result property="nxOsQuantity" column="nx_OS_quantity"/>
+        <result property="nxOsStandard" column="nx_OS_standard"/>
+        <result property="nxOsCommunityGoodsFatherId" column="nx_OS_community_goods_father_id"/>
+        <association property="nxCommunityFatherGoodsEntity" resultMap="commFatherGoods"/>
+    </resultMap>
+
+    <select id="querySubGoodsByOrderId" resultMap="subOrdersWithCommFatherGoods">
+        select * from nx_orders_sub  as os
+        left join nx_community_father_goods as cfg on os.nx_OS_community_goods_father_id = cfg.nx_community_father_goods_id
+        where nx_OS_orders_id = #{integer}
+    </select>
+
+
+    <select id="queryCommGoodsOfSubs" resultMap="subOrders">
+        select * from nx_orders_sub  as s
+        left join nx_community_goods as cg on s.nx_OS_community_goods_id = cg.nx_community_goods_id
+        where nx_OS_community_goods_father_id = #{fatherId}
     </select>
 
 

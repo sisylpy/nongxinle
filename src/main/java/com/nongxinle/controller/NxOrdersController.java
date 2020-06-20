@@ -275,12 +275,14 @@ public class NxOrdersController {
     /**
      * 获取订单详细
      *
-     * @param orderId 订单id
+     * @param orderId 订单ids
      * @return 订单
      */
     @RequestMapping(value = "/getOrderDetail/{orderId}")
     @ResponseBody
     public R getOrderDetail(@PathVariable Integer orderId) {
+
+
         NxOrdersEntity ordersEntity = nxOrdersService.queryObject(orderId);
 
 
@@ -312,13 +314,13 @@ public class NxOrdersController {
     /**
      * 批发商首页接口
      *
-     * @param communityId 社区id
+     * @param disId 批发商id
      * @return 分配拣货员列表
      */
-    @RequestMapping(value = "/communityGetIndexData/{communityId}")
+    @RequestMapping(value = "/disGetIndexData/{disId}")
     @ResponseBody
-    public R disGetIndexData(@PathVariable Integer communityId) {
-        Map<String, Object> list = nxOrdersService.queryDistributerIndexData(communityId);
+    public R disGetIndexData(@PathVariable Integer disId) {
+        Map<String, Object> list = nxOrdersService.queryDistributerIndexData(disId);
         return R.ok().put("data", list);
     }
 

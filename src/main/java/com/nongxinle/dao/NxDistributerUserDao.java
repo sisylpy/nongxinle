@@ -15,5 +15,5 @@ import java.util.Map;
 
 public interface NxDistributerUserDao extends BaseDao<NxDistributerUserEntity> {
 
-    List<NxDistributerUserEntity> queryUser(Integer communityId);
+    List<NxDistributerUserEntity> queryUser(Integer disId);
 }
