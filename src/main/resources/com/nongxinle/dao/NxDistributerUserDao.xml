@@ -46,8 +46,7 @@
 		(
 			`nx_distributer_user_id`, 
 			`nx_DIU_wx_avartra_url`, 
-			`nx_DIU_department_id`, 
-			`nx_DIU_wx_nick_name`, 
+			`nx_DIU_wx_nick_name`,
 			`nx_DIU_wx_open_id`, 
 			`nx_DIU_wx_phone`, 
 			`nx_DIU_distributer_id`
@@ -56,8 +55,7 @@
 		(
 			#{nxDistributerUserId}, 
 			#{nxDiuWxAvartraUrl}, 
-			#{nxDiuDepartmentId}, 
-			#{nxDiuWxNickName}, 
+			#{nxDiuWxNickName},
 			#{nxDiuWxOpenId}, 
 			#{nxDiuWxPhone}, 
 			#{nxDiuDistributerId}
@@ -68,7 +66,6 @@
 		update nx_distributer_user 
 		<set>
 			<if test="nxDiuWxAvartraUrl != null">`nx_DIU_wx_avartra_url` = #{nxDiuWxAvartraUrl}, </if>
-			<if test="nxDiuDepartmentId != null">`nx_DIU_department_id` = #{nxDiuDepartmentId}, </if>
 			<if test="nxDiuWxNickName != null">`nx_DIU_wx_nick_name` = #{nxDiuWxNickName}, </if>
 			<if test="nxDiuWxOpenId != null">`nx_DIU_wx_open_id` = #{nxDiuWxOpenId}, </if>
 			<if test="nxDiuWxPhone != null">`nx_DIU_wx_phone` = #{nxDiuWxPhone}, </if>

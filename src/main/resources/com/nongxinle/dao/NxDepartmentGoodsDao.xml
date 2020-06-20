@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxDepartmentGoodsDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxDepartmentGoodsEntity">
+		select * from nx_department_goods where nx_department_goods_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxDepartmentGoodsEntity">
+		select * from nx_department_goods 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_department_goods 
+	</select>
+	 
+	<insert id="save" parameterType="com.nongxinle.entity.NxDepartmentGoodsEntity">
+		insert into nx_department_goods
+		(
+			`nx_department_goods_id`,
+			`nx_dg_distribute_id`,
+			`nx_dg_department_id`,
+			`nx_dg_goods_status`,
+			`nx_dg_goods_is_weight`,
+			`nx_dg_goods_price`,
+			`nx_dg_goods_price_decimal`,
+			`nx_dg_nx_goods_file_path`,
+			`nx_dg_goods_sell_type`,
+			`nx_dg_goods_buy_type`,
+			`nx_dg_cf_goods_father_id`,
+			`nx_dg_nx_goods_id`,
+			`nx_dg_nx_goods_father_id`,
+			`nx_dg_nx_goods_father_img`,
+			`nx_dg_goods_total_hits`,
+			`nx_dg_purchase_quantity`,
+			`nx_dg_buy_purchase_user_id`,
+			`nx_dg_buy_app_id`,
+			`nx_dg_buy_status`,
+			`nx_dg_supplier_id`,
+			`nx_dg_buying_price`,
+			`nx_dg_goods_type`,
+			`nx_dg_goods_name`,
+			`nx_dg_goods_detail`,
+			`nx_dg_goods_standardname`,
+			`nx_dg_goods_stock`,
+			`nx_dg_goods_pinyin`,
+			`nx_dg_goods_py`
+		)
+		values
+		(
+			#{nxDepartmentGoodsId},
+			#{nxDgDistributeId},
+			#{nxDgCommunityId},
+			#{nxDgGoodsStatus},
+			#{nxDgGoodsIsWeight},
+			#{nxDgGoodsPrice},
+			#{nxDgGoodsPriceDecimal},
+			#{nxDgNxGoodsFilePath},
+			#{nxDgGoodsSellType},
+			#{nxDgGoodsBuyType},
+			#{nxDgCfGoodsFatherId},
+			#{nxDgNxGoodsId},
+			#{nxDgNxGoodsFatherId},
+			#{nxDgNxGoodsFatherImg},
+			#{nxDgGoodsTotalHits},
+			#{nxDgPurchaseQuantity},
+			#{nxDgBuyPurchaseUserId},
+			#{nxDgBuyAppId},
+			#{nxDgBuyStatus},
+			#{nxDgSupplierId},
+			#{nxDgBuyingPrice},
+			#{nxDgGoodsType},
+			#{nxDgGoodsName},
+			#{nxDgGoodsDetail},
+			#{nxDgGoodsStandardname},
+			#{nxDgGoodsStock},
+			#{nxDgGoodsPinyin},
+			#{nxDgGoodsPy}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxDepartmentGoodsEntity">
+		update nx_department_goods 
+		<set>
+			<if test="nxDgDistributeId != null">`nx_dg_distribute_id` = #{nxDgDistributeId}, </if>
+			<if test="nxDgCommunityId != null">`nx_dg_community_id` = #{nxDgCommunityId}, </if>
+			<if test="nxDgGoodsStatus != null">`nx_dg_goods_status` = #{nxDgGoodsStatus}, </if>
+			<if test="nxDgGoodsIsWeight != null">`nx_dg_goods_is_weight` = #{nxDgGoodsIsWeight}, </if>
+			<if test="nxDgGoodsPrice != null">`nx_dg_goods_price` = #{nxDgGoodsPrice}, </if>
+			<if test="nxDgGoodsPriceDecimal != null">`nx_dg_goods_price_decimal` = #{nxDgGoodsPriceDecimal}, </if>
+			<if test="nxDgNxGoodsFilePath != null">`nx_dg_nx_goods_file_path` = #{nxDgNxGoodsFilePath}, </if>
+			<if test="nxDgGoodsSellType != null">`nx_dg_goods_sell_type` = #{nxDgGoodsSellType}, </if>
+			<if test="nxDgGoodsBuyType != null">`nx_dg_goods_buy_type` = #{nxDgGoodsBuyType}, </if>
+			<if test="nxDgCfGoodsFatherId != null">`nx_dg_cf_goods_father_id` = #{nxDgCfGoodsFatherId}, </if>
+			<if test="nxDgNxGoodsId != null">`nx_dg_nx_goods_id` = #{nxDgNxGoodsId}, </if>
+			<if test="nxDgNxGoodsFatherId != null">`nx_dg_nx_goods_father_id` = #{nxDgNxGoodsFatherId}, </if>
+			<if test="nxDgNxGoodsFatherImg != null">`nx_dg_nx_goods_father_img` = #{nxDgNxGoodsFatherImg}, </if>
+			<if test="nxDgGoodsTotalHits != null">`nx_dg_goods_total_hits` = #{nxDgGoodsTotalHits}, </if>
+			<if test="nxDgPurchaseQuantity != null">`nx_dg_purchase_quantity` = #{nxDgPurchaseQuantity}, </if>
+			<if test="nxDgBuyPurchaseUserId != null">`nx_dg_buy_purchase_user_id` = #{nxDgBuyPurchaseUserId}, </if>
+			<if test="nxDgBuyAppId != null">`nx_dg_buy_app_id` = #{nxDgBuyAppId}, </if>
+			<if test="nxDgBuyStatus != null">`nx_dg_buy_status` = #{nxDgBuyStatus}, </if>
+			<if test="nxDgSupplierId != null">`nx_dg_supplier_id` = #{nxDgSupplierId}, </if>
+			<if test="nxDgBuyingPrice != null">`nx_dg_buying_price` = #{nxDgBuyingPrice}, </if>
+			<if test="nxDgGoodsType != null">`nx_dg_goods_type` = #{nxDgGoodsType}, </if>
+			<if test="nxDgGoodsName != null">`nx_dg_goods_name` = #{nxDgGoodsName}, </if>
+			<if test="nxDgGoodsDetail != null">`nx_dg_goods_detail` = #{nxDgGoodsDetail}, </if>
+			<if test="nxDgGoodsStandardname != null">`nx_dg_goods_standardname` = #{nxDgGoodsStandardname}, </if>
+			<if test="nxDgGoodsStock != null">`nx_dg_goods_stock` = #{nxDgGoodsStock}, </if>
+			<if test="nxDgGoodsPinyin != null">`nx_dg_goods_pinyin` = #{nxDgGoodsPinyin}, </if>
+			<if test="nxDgGoodsPy != null">`nx_dg_goods_py` = #{nxDgGoodsPy}</if>
+		</set>
+		where nx_community_goods_id = #{nxCommunityGoodsId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_department_goods where nx_department_goods_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_department_goods where nx_department_goods_id in
+		<foreach item="nxCommunityGoodsId" collection="array" open="(" separator="," close=")">
+			#{nxCommunityGoodsId}
+		</foreach>
+	</delete>
+
+</mapper>

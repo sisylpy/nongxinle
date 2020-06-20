@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxDepartmentDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxDepartmentEntity">
+		select * from nx_department where nx_department_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxDepartmentEntity">
+		select * from nx_department 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_department 
+	</select>
+
+	<resultMap id="depUsers" type="NxDepartmentUserEntity">
+		<id property="nxDepartmentUserId" column="nx_department_user_id"/>
+		<id property="nxDuWxAvartraUrl" column="nx_DU_wx_avartra_url"/>
+		<id property="nxDuWxPhone" column="nx_DU_wx_phone"/>
+	</resultMap>
+
+	<resultMap id="departments" type="NxDepartmentEntity">
+		<id property="nxDepartmentId" column="nx_department_id"/>
+		<result property="nxDepartmentName" column="nx_department_name"/>
+		<result property="nxDepartmentType" column="nx_department_type"/>
+		<collection property="nxDepartmentUserEntities" resultMap="depUsers"/>
+ 	</resultMap>
+
+	<select id="queryDisDepartments" resultMap="departments">
+		select * from nx_department as d
+		left join nx_department_user as u on u.nx_DU_department_id = d.nx_department_id
+		where d.nx_department_dis_id = #{disId}  and u.nx_DU_admin = 1 and
+		<choose>
+		<when test="type == 'unFixed'">
+			d.nx_department_type  = 1
+		</when>
+		<when test="type == 'fixed'">
+			d.nx_department_type  = 2
+		</when>
+		</choose>
+
+
+	</select>
+
+	<insert id="save" parameterType="com.nongxinle.entity.NxDepartmentEntity"
+			useGeneratedKeys="true" keyProperty="nxDepartmentId">
+		insert into nx_department
+		(
+			`nx_department_id`, 
+			`nx_department_name`, 
+			`nx_department_father_id`, 
+			`nx_department_type`, 
+			`nx_department_sub_amount`,
+		 	`nx_department_dis_id`
+		)
+		values
+		(
+			#{nxDepartmentId}, 
+			#{nxDepartmentName}, 
+			#{nxDepartmentFatherId}, 
+			#{nxDepartmentType}, 
+			#{nxDepartmentSubAmount},
+		 	#{nxDepartmentDisId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxDepartmentEntity">
+		update nx_department 
+		<set>
+			<if test="nxDepartmentName != null">`nx_department_name` = #{nxDepartmentName}, </if>
+			<if test="nxDepartmentFatherId != null">`nx_department_father_id` = #{nxDepartmentFatherId}, </if>
+			<if test="nxDepartmentType != null">`nx_department_type` = #{nxDepartmentType}, </if>
+			<if test="nxDepartmentDisId != null">`nx_department_dis_id` = #{nxDepartmentDisId}, </if>
+			<if test="nxDepartmentSubAmount != null">`nx_department_sub_amount` = #{nxDepartmentSubAmount}</if>
+		</set>
+		where nx_department_id = #{nxDepartmentId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_department where nx_department_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_department where nx_department_id in 
+		<foreach item="nxDepartmentId" collection="array" open="(" separator="," close=")">
+			#{nxDepartmentId}
+		</foreach>
+	</delete>
+
+</mapper>

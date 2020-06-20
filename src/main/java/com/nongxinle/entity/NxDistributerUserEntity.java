@@ -31,7 +31,6 @@ public class NxDistributerUserEntity implements Serializable {
 	/**
 	 *  批发商用户社区id
 	 */
-	private Integer nxDiuDepartmentId;
 	/**
 	 *  登陆密码
 	 */
@@ -47,6 +46,9 @@ public class NxDistributerUserEntity implements Serializable {
 	/**
 	 *  
 	 */
+
+	private String nxDiuCode;
+
 	private Integer nxDiuDistributerId;
 
 
