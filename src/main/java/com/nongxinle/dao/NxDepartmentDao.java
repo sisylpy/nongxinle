@@ -16,4 +16,7 @@ import java.util.Map;
 public interface NxDepartmentDao extends BaseDao<NxDepartmentEntity> {
 
     List<NxDepartmentEntity> queryDisDepartments(Map<String, Object> map);
+
+    NxDepartmentEntity queryDepInfo(Integer nxDuDepartmentId);
+
 }

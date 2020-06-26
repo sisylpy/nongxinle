@@ -12,7 +12,7 @@ import java.util.Map;
 import com.nongxinle.entity.*;
 import com.nongxinle.service.NxCommunityFatherGoodsService;
 import com.nongxinle.service.NxCommunityStandardService;
-import com.nongxinle.service.NxOrdersSubService;
+import com.nongxinle.service.NxCommunityOrdersSubService;
 import com.nongxinle.utils.UploadFile;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -44,7 +44,7 @@ public class NxCommunityGoodsController {
     private NxCommunityGoodsService communityGoodsService;
 
     @Autowired
-    NxOrdersSubService nxOrdersSubService;
+    NxCommunityOrdersSubService nxCommunityOrdersSubService;
 
      @RequestMapping(value = "/queryGoodsWithPinyin", method = RequestMethod.POST)
       @ResponseBody
@@ -150,11 +150,11 @@ public class NxCommunityGoodsController {
              for (Object obj1 :
                      jsonArray1) {
                  JSONObject jsonObject = JSONObject.fromObject(obj1);
-                 NxOrdersSubEntity subEntity = (NxOrdersSubEntity) JSONObject.toBean(jsonObject,NxOrdersSubEntity.class);
+                 NxCommunityOrdersSubEntity subEntity = (NxCommunityOrdersSubEntity) JSONObject.toBean(jsonObject, NxCommunityOrdersSubEntity.class);
                  System.out.println("kkkkk" + subEntity);
-                 subEntity.setNxOsBuyStatus(2);
-                 subEntity.setNxOsPurchaseUserId(purchaseUserId);
-                 nxOrdersSubService.update(subEntity);
+                 subEntity.setNxCosBuyStatus(2);
+                 subEntity.setNxCosPurchaseUserId(purchaseUserId);
+                 nxCommunityOrdersSubService.update(subEntity);
              }
          }
          return R.ok();
@@ -162,35 +162,6 @@ public class NxCommunityGoodsController {
 
 
 
-     @RequestMapping(value = "/savePlanPurchase", method = RequestMethod.POST)
-      @ResponseBody
-      public R savePlanPurchase (Integer disGoodsId, String plan, String subList ) {
-
-         System.out.println(disGoodsId + "00");
-         System.out.println(plan + "11");
-         System.out.println(subList);
-
-         NxCommunityGoodsEntity goodsEntity = cgService.queryObject(disGoodsId);
-         goodsEntity.setNxCgPurchaseQuantity(plan);
-         goodsEntity.setNxCgBuyStatus(1);
-         communityGoodsService.update(goodsEntity);
-
-
-         JSONArray jsonArray = JSONArray.fromObject(subList);
-         for (Object obj : jsonArray) {
-             JSONObject jsonObject2 = JSONObject.fromObject(obj);
-             NxOrdersSubEntity orderSubEntity = (NxOrdersSubEntity) JSONObject.toBean(jsonObject2, NxOrdersSubEntity.class);
-
-             orderSubEntity.setNxOsBuyStatus(1);
-             nxOrdersSubService.update(orderSubEntity);
-
-
-         }
-
-
-
-        return R.ok();
-      }
 
 
 

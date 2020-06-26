@@ -7,7 +7,6 @@ package com.nongxinle.entity;
  */
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,7 +42,7 @@ public class NxCommunityFatherGoodsEntity implements Serializable, Comparable  {
 	private Integer nxCfgGoodsAmount;
 
 
-	private List<NxPromoteEntity> nxPromoteEntities;
+	private List<NxCommunityPromoteEntity> nxPromoteEntities;
 
 	@Override
 	public boolean equals(Object o) {
@@ -69,7 +68,7 @@ public class NxCommunityFatherGoodsEntity implements Serializable, Comparable  {
 
 	@Override
 	public int compareTo(Object o) {
-		if (o instanceof NxOrdersSubEntity) {
+		if (o instanceof NxCommunityOrdersSubEntity) {
 			NxCommunityFatherGoodsEntity e = (NxCommunityFatherGoodsEntity) o;
 
 			return this.nxCommunityFatherGoodsId.compareTo(e.nxCommunityFatherGoodsId);

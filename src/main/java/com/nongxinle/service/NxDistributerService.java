@@ -27,4 +27,5 @@ public interface NxDistributerService {
 	void delete(Integer distributerId);
 	
 	void deleteBatch(Integer[] distributerIds);
+
 }

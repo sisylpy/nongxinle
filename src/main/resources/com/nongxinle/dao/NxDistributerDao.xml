@@ -18,7 +18,8 @@
 		select count(*) from nx_distributer 
 	</select>
 	 
-	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerEntity">
+	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerEntity"
+			useGeneratedKeys="true" keyProperty="nxDistributerId">
 		insert into nx_distributer
 		(
 			`nx_distributer_id`,

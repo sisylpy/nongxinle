@@ -1,5 +1,7 @@
 package com.nongxinle.service.impl;
 
+import com.nongxinle.dao.NxDistributerUserDao;
+import com.nongxinle.entity.NxDistributerUserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ import com.nongxinle.service.NxDistributerService;
 public class NxDistributerServiceImpl implements NxDistributerService {
 	@Autowired
 	private NxDistributerDao nxDistributerDao;
+
+	@Autowired
+	private NxDistributerUserDao nxDistributerUserDao;
 	
 	@Override
 	public NxDistributerEntity queryObject(Integer distributerId){
@@ -51,5 +56,5 @@ public class NxDistributerServiceImpl implements NxDistributerService {
 	public void deleteBatch(Integer[] distributerIds){
 		nxDistributerDao.deleteBatch(distributerIds);
 	}
-	
+
 }

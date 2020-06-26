@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nongxinle.entity.NxAdsenseEntity;
-import com.nongxinle.entity.NxPromoteEntity;
-import com.nongxinle.service.NxAdsenseService;
-import com.nongxinle.service.NxPromoteService;
+import com.nongxinle.entity.NxCommunityAdsenseEntity;
+import com.nongxinle.entity.NxCommunityPromoteEntity;
+import com.nongxinle.service.NxCommunityAdsenseService;
+import com.nongxinle.service.NxCommunityPromoteService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +33,10 @@ public class NxCommunityFatherGoodsController {
 	private NxCommunityFatherGoodsService nxCommunityFatherGoodsService;
 
 	@Autowired
-	private NxPromoteService nxPromoteService;
+	private NxCommunityPromoteService nxCommunityPromoteService;
 
 	@Autowired
-	private NxAdsenseService nxAdsenseService;
+	private NxCommunityAdsenseService nxCommunityAdsenseService;
 
 
 
@@ -52,12 +52,12 @@ public class NxCommunityFatherGoodsController {
 		List<NxCommunityFatherGoodsEntity> fatherGoodsEntities = new ArrayList<>();
 		for (NxCommunityFatherGoodsEntity father : entities) {
 			Integer nxCommunityFatherGoodsId = father.getNxCommunityFatherGoodsId();
-			List<NxPromoteEntity> nxPromoteEntities = nxPromoteService.queryPromoteByFatherId(nxCommunityFatherGoodsId);
+			List<NxCommunityPromoteEntity> nxPromoteEntities = nxCommunityPromoteService.queryPromoteByFatherId(nxCommunityFatherGoodsId);
 			father.setNxPromoteEntities(nxPromoteEntities);
 			fatherGoodsEntities.add(father);
 		}
 
-		List<NxAdsenseEntity> adsenseEntities = nxAdsenseService.queryAdsenseByNxCommunityId(communityId);
+		List<NxCommunityAdsenseEntity> adsenseEntities = nxCommunityAdsenseService.queryAdsenseByNxCommunityId(communityId);
 		Map<String, Object> map = new HashMap<>();
 		map.put("adsense", adsenseEntities);
 		map.put("fathers", fatherGoodsEntities);

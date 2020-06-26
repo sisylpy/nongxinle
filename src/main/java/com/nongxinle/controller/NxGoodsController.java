@@ -57,6 +57,19 @@ public class NxGoodsController {
     private NxStandardService standardService;
 
 
+     @RequestMapping(value = "/restrauntGetGoodsByFatherId", method = RequestMethod.POST)
+      @ResponseBody
+      public R restrauntGetGoodsByFatherId (Integer limit, Integer page, Integer fatherId) {
+
+         List<NxGoodsEntity> nxGoodsEntities1 = queryByFatherIdwithLimit(limit, page, fatherId);
+         int total = nxGoodsService.queryTotalByFatherId(fatherId);
+         PageUtils pageUtil = new PageUtils(nxGoodsEntities1, total, limit, page);
+        return R.ok().put("page",pageUtil);
+      }
+
+
+
+
 
     @RequestMapping(value = "/adminGetGoodsTree")
     @ResponseBody
@@ -114,6 +127,8 @@ public class NxGoodsController {
           map.put("limit", limit);
           map.put("fatherId", fatherId);
 
+          System.out.println("haiahfidfi");
+
           //查询列表数据
           List<NxGoodsEntity> nxGoodsEntities = nxGoodsService.queryListWithFatherId(map);
 
@@ -160,39 +175,40 @@ public class NxGoodsController {
      * @param page 第几页
      * @param fatherId 上级id
      * @return 商品
+     * todo 暂停disGoods的概念
      */
-    @RequestMapping(value = "/getIbookGoodsByFatherId", method = RequestMethod.POST)
-    @ResponseBody
-    public R getGoodsByFatherId(Integer limit, Integer page, Integer fatherId, Integer disId) {
-
-        List<NxGoodsEntity> nxGoodsEntities1 = queryByFatherIdwithLimit(limit, page, fatherId);
-
-        List<NxGoodsEntity> goodsEntities = new ArrayList<>();
-
-        for (NxGoodsEntity goods : nxGoodsEntities1) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("disId", disId);
-            map.put("goodsId", goods.getNxGoodsId());
-           List<NxCommunityGoodsEntity> dgGoods = dgService.queryDisDownloadGoods(map);
-            Integer nxGoodsId = goods.getNxGoodsId();
-            List<NxStandardEntity> standardEntities =  standardService.queryGoodsStandardListByGoodId(nxGoodsId);
-            goods.setNxGoodsStandardEntities(standardEntities);
-
-            if(dgGoods.size() > 0) {
-               goods.setIsDownload(1);
-               goodsEntities.add(goods);
-           }else {
-               goods.setIsDownload(0);
-               goodsEntities.add(goods);
-           }
-        }
-
-        int total = nxGoodsService.queryTotalByFatherId(fatherId);
-        PageUtils pageUtil = new PageUtils(goodsEntities, total, limit, page);
-
-        return R.ok().put("page", pageUtil);
-
-    }
+//    @RequestMapping(value = "/getIbookGoodsByFatherId", method = RequestMethod.POST)
+//    @ResponseBody
+//    public R getGoodsByFatherId(Integer limit, Integer page, Integer fatherId, Integer disId) {
+//
+//        List<NxGoodsEntity> nxGoodsEntities1 = queryByFatherIdwithLimit(limit, page, fatherId);
+//
+//        List<NxGoodsEntity> goodsEntities = new ArrayList<>();
+//
+//        for (NxGoodsEntity goods : nxGoodsEntities1) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("disId", disId);
+//            map.put("goodsId", goods.getNxGoodsId());
+//           List<NxCommunityGoodsEntity> dgGoods = dgService.queryDisDownloadGoods(map);
+//            Integer nxGoodsId = goods.getNxGoodsId();
+//            List<NxStandardEntity> standardEntities =  standardService.queryGoodsStandardListByGoodId(nxGoodsId);
+//            goods.setNxGoodsStandardEntities(standardEntities);
+//
+//            if(dgGoods.size() > 0) {
+//               goods.setIsDownload(1);
+//               goodsEntities.add(goods);
+//           }else {
+//               goods.setIsDownload(0);
+//               goodsEntities.add(goods);
+//           }
+//        }
+//
+//        int total = nxGoodsService.queryTotalByFatherId(fatherId);
+//        PageUtils pageUtil = new PageUtils(goodsEntities, total, limit, page);
+//
+//        return R.ok().put("page", pageUtil);
+//
+//    }
 
 
     /**

@@ -29,4 +29,12 @@ public interface NxDepartmentService {
 	void deleteBatch(Integer[] nxDepartmentIds);
 
 	List<NxDepartmentEntity> queryDisDepartments(Map<String, Object> map);
+
+	void saveSubDepartment(NxDepartmentEntity dep);
+
+	NxDepartmentEntity queryDepartmentInfo(Integer nxDuDepartmentId);
+
+	Integer saveNewRestraunt(NxDepartmentEntity dep);
+
+	Map<String, Object> queryGroupInfo(Integer userId);
 }

@@ -7,19 +7,14 @@ package com.nongxinle.controller;
  * @date 05-26 16:23
  */
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.nongxinle.entity.NxPromoteEntity;
 import com.nongxinle.utils.UploadFile;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.nongxinle.entity.NxAdsenseEntity;
-import com.nongxinle.service.NxAdsenseService;
-import com.nongxinle.utils.PageUtils;
+import com.nongxinle.entity.NxCommunityAdsenseEntity;
+import com.nongxinle.service.NxCommunityAdsenseService;
 import com.nongxinle.utils.R;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,9 +23,9 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("api/nxadsense")
-public class NxAdsenseController {
+public class NxCommunityAdsenseController {
 	@Autowired
-	private NxAdsenseService nxAdsenseService;
+	private NxCommunityAdsenseService nxCommunityAdsenseService;
 
 
 
@@ -38,7 +33,7 @@ public class NxAdsenseController {
 	@RequestMapping(value = "/getListByCommunityId/{communityId}")
 	@ResponseBody
 	public R getListByCommunityId(@PathVariable Integer communityId) {
-		List<NxAdsenseEntity> adsenseEntities = nxAdsenseService.getListByCommunityId(communityId);
+		List<NxCommunityAdsenseEntity> adsenseEntities = nxCommunityAdsenseService.getListByCommunityId(communityId);
 
 
 	    return R.ok().put("data", adsenseEntities);
@@ -66,11 +61,11 @@ public class NxAdsenseController {
 		System.out.println(filePath);
 		System.out.println("filebpathth");
 
-		NxAdsenseEntity adsenseEntity = new NxAdsenseEntity();
-		adsenseEntity.setNxAdsenseFilePath(filePath);
-		adsenseEntity.setNxAdsenseCommunityId(nxAdsenseCommunityId);
+		NxCommunityAdsenseEntity adsenseEntity = new NxCommunityAdsenseEntity();
+		adsenseEntity.setNxCaFilePath(filePath);
+		adsenseEntity.setNxCommunityAdsenseId(nxAdsenseCommunityId);
 
-		nxAdsenseService.save(adsenseEntity);
+		nxCommunityAdsenseService.save(adsenseEntity);
 
 
 		return R.ok();

@@ -8,34 +8,28 @@ package com.nongxinle.controller;
 import java.util.*;
 
 import com.github.wxpay.sdk.WXPay;
-import com.github.wxpay.sdk.WXPayConfig;
-import com.github.wxpay.sdk.WXPayUtil;
 import com.nongxinle.entity.*;
+import com.nongxinle.service.NxCommunityOrdersService;
 import com.nongxinle.service.NxDistributerUserService;
 import com.nongxinle.service.NxRouteService;
 import com.nongxinle.service.NxWxOrdersService;
 import com.nongxinle.utils.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import netscape.javascript.JSObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
-
-import com.nongxinle.service.NxOrdersService;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.nongxinle.utils.DateUtils.formatWhatDay;
 import static com.nongxinle.utils.DateUtils.formatWhatDayTime;
 
 
 @RestController
 @RequestMapping("api/nxorders")
-public class NxOrdersController {
+public class NxCommunityOrdersController {
     @Autowired
-    private NxOrdersService nxOrdersService;
+    private NxCommunityOrdersService nxCommunityOrdersService;
 
     @Autowired
     private NxRouteService nxRouteService;
@@ -62,7 +56,7 @@ public class NxOrdersController {
     @RequestMapping(value = "/deleteOrder/{nxOrdersId}")
     @ResponseBody
     public R deleteOrder(@PathVariable Integer nxOrdersId) {
-        nxOrdersService.delete(nxOrdersId);
+        nxCommunityOrdersService.delete(nxOrdersId);
 
 
         return R.ok();
@@ -76,8 +70,8 @@ public class NxOrdersController {
         map.put("offset", (page - 1) * limit);
         map.put("limit", limit);
         map.put("nxOrdersUserId", nxOrdersUserId);
-        List<NxOrdersEntity> ordersEntityList = nxOrdersService.queryCustomerOrder(map);
-        int total = nxOrdersService.queryTotal(map);
+        List<NxCommunityOrdersEntity> ordersEntityList = nxCommunityOrdersService.queryCustomerOrder(map);
+        int total = nxCommunityOrdersService.queryTotal(map);
 
         PageUtils pageUtil = new PageUtils(ordersEntityList, total, limit, page);
 
@@ -97,7 +91,7 @@ public class NxOrdersController {
         Map<String, Object> map = new HashMap<>();
         map.put("deliveryUserId", deliveryUserId);
         map.put("status", 4);
-        List<NxOrdersEntity> ordersEntityList = nxOrdersService.queryDeliveryOrder(map);
+        List<NxCommunityOrdersEntity> ordersEntityList = nxCommunityOrdersService.queryDeliveryOrder(map);
 
         return R.ok().put("data", ordersEntityList);
     }
@@ -128,7 +122,7 @@ public class NxOrdersController {
         map.put("orderStatus", orderStatus);
 
         map.put("paymentStatus", paymentStatus);
-        List<NxOrdersEntity> entities = nxOrdersService.queryOrdersPaymentInformation(map);
+        List<NxCommunityOrdersEntity> entities = nxCommunityOrdersService.queryOrdersPaymentInformation(map);
 
         //未付款订单
         if (orderStatus.equals(Two) && paymentStatus.equals(Zero)) {
@@ -146,7 +140,7 @@ public class NxOrdersController {
             map2.put("disId", disId);
             map2.put("orderStatus", orderStatus);
             map2.put("paymentStatus", null);
-            List<NxOrdersEntity> entities2 = nxOrdersService.queryOrdersPaymentInformation(map2);
+            List<NxCommunityOrdersEntity> entities2 = nxCommunityOrdersService.queryOrdersPaymentInformation(map2);
 
             //带路线的订单列表
             List<Map<String, Object>> list = new ArrayList<>();
@@ -159,11 +153,11 @@ public class NxOrdersController {
 //                //一个路线的订单map
 //                Map<String, Object> map1 = new HashMap<>();
 //                //新路线订单列表
-//                List<NxOrdersEntity> entityList = new ArrayList<>();
+//                List<NxCommunityOrdersEntity> entityList = new ArrayList<>();
 //
 //                String nxRouteName = route.getNxRouteName();
 //                map1.put("route", nxRouteName);
-//                for (NxOrdersEntity order : entities2) {
+//                for (NxCommunityOrdersEntity order : entities2) {
 //                    System.out.println("orderkkkkccc" + order.getNxCustomerEntity().getNxCommunityEntity());
 //
 //                    if (order.getNxCustomerEntity().getNxCommunityEntity().getNxCommunityRouteId().equals(route.getNxRouteId())) {
@@ -182,12 +176,12 @@ public class NxOrdersController {
         if (orderStatus.equals(Four) && paymentStatus.equals(noCare)) {
 
             map.put("paymentStatus", null);
-            List<NxOrdersEntity> entities3 = nxOrdersService.queryOrdersPaymentInformation(map);
+            List<NxCommunityOrdersEntity> entities3 = nxCommunityOrdersService.queryOrdersPaymentInformation(map);
 
             Set<NxDistributerUserEntity> userEntitySet = new TreeSet<>();
 
-            for (NxOrdersEntity order : entities3) {
-                Integer nxOrdersDeliveryUserId = order.getNxOrdersDeliveryUserId();
+            for (NxCommunityOrdersEntity order : entities3) {
+                Integer nxOrdersDeliveryUserId = order.getNxCoDeliveryUserId();
                 System.out.println(order);
                 System.out.println("ididiid::::" + nxOrdersDeliveryUserId);
                 NxDistributerUserEntity nxDistributerUserEntity = nxDistributerUserService.queryObject(nxOrdersDeliveryUserId);
@@ -218,7 +212,7 @@ public class NxOrdersController {
         Map<String, Object> map = new HashMap<>();
         map.put("disId", disId);
         map.put("status", 1);
-        List<NxOrdersEntity> entities = nxOrdersService.queryOrdersDetail(map);
+        List<NxCommunityOrdersEntity> entities = nxCommunityOrdersService.queryOrdersDetail(map);
 
         return R.ok().put("data", entities);
     }
@@ -236,7 +230,7 @@ public class NxOrdersController {
         map.put("disId", disId);
         map.put("serviceDate", serviceDate);
         map.put("status", 0);
-        List<NxOrdersEntity> entities = nxOrdersService.queryOrdersDetail(map);
+        List<NxCommunityOrdersEntity> entities = nxCommunityOrdersService.queryOrdersDetail(map);
         return R.ok().put("data", entities);
     }
 
@@ -252,18 +246,18 @@ public class NxOrdersController {
      */
     @RequestMapping(value = "/saveSubOrderWeight", method = RequestMethod.POST)
     @ResponseBody
-    public R saveSubOrderWeight(@RequestBody NxOrdersEntity arr) {
+    public R saveSubOrderWeight(@RequestBody NxCommunityOrdersEntity arr) {
         System.out.println("arrr" + arr);
-        nxOrdersService.updateSub(arr);
+        nxCommunityOrdersService.updateSub(arr);
 
 //		JSONArray jsonArray = JSONArray.fromObject(arr);
 //		System.out.println("00000");
 //		for (Object obj: jsonArray){
 //			System.out.println("11111");
 //			JSONObject jsonObject2 = JSONObject.fromObject(obj);
-//			NxOrdersSubEntity subEntity = (NxOrdersSubEntity) JSONObject.toBean(jsonObject2, NxOrdersSubEntity.class);
+//			NxCommunityOrdersSubEntity subEntity = (NxCommunityOrdersSubEntity) JSONObject.toBean(jsonObject2, NxCommunityOrdersSubEntity.class);
 //			subEntity.setNxOsStatus(1);
-////			nxOrdersSubService.update(subEntity);
+////			nxCommunityOrdersSubService.update(subEntity);
 //
 //		}
 
@@ -283,7 +277,7 @@ public class NxOrdersController {
     public R getOrderDetail(@PathVariable Integer orderId) {
 
 
-        NxOrdersEntity ordersEntity = nxOrdersService.queryObject(orderId);
+        NxCommunityOrdersEntity ordersEntity = nxCommunityOrdersService.queryObject(orderId);
 
 
         return R.ok().put("data", ordersEntity);
@@ -305,7 +299,7 @@ public class NxOrdersController {
         map.put("pickerUserId", pickUserId);
         map.put("status", status);
 
-        List<NxOrdersEntity> entities = nxOrdersService.queryOrdersToWeigh(map);
+        List<NxCommunityOrdersEntity> entities = nxCommunityOrdersService.queryOrdersToWeigh(map);
 
         return R.ok().put("data", entities);
     }
@@ -320,7 +314,7 @@ public class NxOrdersController {
     @RequestMapping(value = "/disGetIndexData/{disId}")
     @ResponseBody
     public R disGetIndexData(@PathVariable Integer disId) {
-        Map<String, Object> list = nxOrdersService.queryDistributerIndexData(disId);
+        Map<String, Object> list = nxCommunityOrdersService.queryDistributerIndexData(disId);
         return R.ok().put("data", list);
     }
 
@@ -333,11 +327,11 @@ public class NxOrdersController {
         JSONArray jsonArray = JSONArray.fromObject(ordersEntities);
         for (Object obj : jsonArray) {
             JSONObject jsonObject2 = JSONObject.fromObject(obj);
-            NxOrdersEntity ordersEntity = (NxOrdersEntity) JSONObject.toBean(jsonObject2, NxOrdersEntity.class);
+            NxCommunityOrdersEntity ordersEntity = (NxCommunityOrdersEntity) JSONObject.toBean(jsonObject2, NxCommunityOrdersEntity.class);
 
-            ordersEntity.setNxOrdersStatus(1);
-            ordersEntity.setNxOrdersWeighUserId(pickUserId);
-            nxOrdersService.update(ordersEntity);
+            ordersEntity.setNxCoStatus(1);
+            ordersEntity.setNxCoWeighUserId(pickUserId);
+            nxCommunityOrdersService.update(ordersEntity);
 
         }
 
@@ -361,11 +355,11 @@ public class NxOrdersController {
         System.out.println("00000");
         for (Object obj : jsonArray) {
             JSONObject jsonObject2 = JSONObject.fromObject(obj);
-            NxOrdersEntity ordersEntity = (NxOrdersEntity) JSONObject.toBean(jsonObject2, NxOrdersEntity.class);
+            NxCommunityOrdersEntity ordersEntity = (NxCommunityOrdersEntity) JSONObject.toBean(jsonObject2, NxCommunityOrdersEntity.class);
 
-            ordersEntity.setNxOrdersStatus(4);
-            ordersEntity.setNxOrdersDeliveryUserId(deliveryUserId);
-            nxOrdersService.update(ordersEntity);
+            ordersEntity.setNxCoStatus(4);
+            ordersEntity.setNxCoDeliveryUserId(deliveryUserId);
+            nxCommunityOrdersService.update(ordersEntity);
 
         }
 
@@ -377,14 +371,14 @@ public class NxOrdersController {
 //		 for (String str : split) {
 //			 System.out.println(str);
 //			 String replace2 = str.replace("\"", "");
-//			 NxOrdersEntity ordersEntity = new NxOrdersEntity();
+//			 NxCommunityOrdersEntity ordersEntity = new NxCommunityOrdersEntity();
 //			 Integer i = null;
 //			 if(str != null){
 //				i = Integer.valueOf(replace2);
 //				 ordersEntity.setNxOrdersId(i);
 //				 ordersEntity.setNxOrdersStatus(1);
 //				 ordersEntity.setNxOrdersWeighUserId(pickUserId);
-//				 nxOrdersService.update(ordersEntity);
+//				 nxCommunityOrdersService.update(ordersEntity);
 //			 }
 //		 }
         return R.ok();
@@ -403,8 +397,8 @@ public class NxOrdersController {
         Map<String, Object> map = new HashMap<>();
         map.put("disId", disId);
         map.put("status", 0);
-        List<NxOrdersEntity> entities = nxOrdersService.queryOrders(map);
-        for (NxOrdersEntity orders : entities) {
+        List<NxCommunityOrdersEntity> entities = nxCommunityOrdersService.queryOrders(map);
+        for (NxCommunityOrdersEntity orders : entities) {
             orders.setIsSelected(false);
         }
         return R.ok().put("data", entities);
@@ -416,13 +410,13 @@ public class NxOrdersController {
     @ResponseBody
     @RequestMapping("/save")
 //	@RequiresPermissions("nxorders:save")
-    public R save(@RequestBody NxOrdersEntity nxOrders, HttpServletRequest request) {
+    public R save(@RequestBody NxCommunityOrdersEntity nxOrders, HttpServletRequest request) {
         System.out.println(nxOrders);
 
-        nxOrders.setNxOrdersDate(formatWhatDayTime(0));
-        nxOrders.setNxOrdersStatus(0);
-        nxOrders.setNxOrdersPaymentStatus(1);
-        nxOrdersService.save(nxOrders);
+        nxOrders.setNxCoDate(formatWhatDayTime(0));
+        nxOrders.setNxCoStatus(0);
+        nxOrders.setNxCoPaymentStatus(1);
+        nxCommunityOrdersService.save(nxOrders);
 
 
         MyWxPayConfig config = new MyWxPayConfig();
@@ -486,8 +480,8 @@ public class NxOrdersController {
         map.put("limit", limit);
 
         //查询列表数据
-        List<NxOrdersEntity> nxOrdersList = nxOrdersService.queryList(map);
-        int total = nxOrdersService.queryTotal(map);
+        List<NxCommunityOrdersEntity> nxOrdersList = nxCommunityOrdersService.queryList(map);
+        int total = nxCommunityOrdersService.queryTotal(map);
 
         PageUtils pageUtil = new PageUtils(nxOrdersList, total, limit, page);
 
@@ -503,7 +497,7 @@ public class NxOrdersController {
     @RequestMapping("/info/{nxOrdersId}")
     @RequiresPermissions("nxorders:info")
     public R info(@PathVariable("nxOrdersId") Integer nxOrdersId) {
-        NxOrdersEntity nxOrders = nxOrdersService.queryObject(nxOrdersId);
+        NxCommunityOrdersEntity nxOrders = nxCommunityOrdersService.queryObject(nxOrdersId);
 
         return R.ok().put("nxOrders", nxOrders);
     }
@@ -516,8 +510,8 @@ public class NxOrdersController {
     @ResponseBody
     @RequestMapping("/update")
     @RequiresPermissions("nxorders:update")
-    public R update(@RequestBody NxOrdersEntity nxOrders) {
-        nxOrdersService.update(nxOrders);
+    public R update(@RequestBody NxCommunityOrdersEntity nxOrders) {
+        nxCommunityOrdersService.update(nxOrders);
 
         return R.ok();
     }
@@ -530,7 +524,7 @@ public class NxOrdersController {
     @RequestMapping("/delete")
     @RequiresPermissions("nxorders:delete")
     public R delete(@RequestBody Integer[] nxOrdersIds) {
-        nxOrdersService.deleteBatch(nxOrdersIds);
+        nxCommunityOrdersService.deleteBatch(nxOrdersIds);
 
         return R.ok();
     }

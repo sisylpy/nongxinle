@@ -23,7 +23,7 @@
 		select count(*) from nx_community_goods
 	</select>
 
-	<resultMap id="subOrders" type="NxOrdersSubEntity">
+	<resultMap id="subOrders" type="NxCommunityOrdersSubEntity">
 		<id property="nxOrdersSubId" column="nx_orders_sub_id"/>
 		<result property="nxOsQuantity" column="nx_OS_quantity"/>
 		<result property="nxOsStandard" column="nx_OS_standard"/>

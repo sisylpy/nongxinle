@@ -10,7 +10,10 @@ package com.nongxinle.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
+import com.nongxinle.entity.NxGoodsEntity;
+import com.nongxinle.service.NxGoodsService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,20 +25,35 @@ import com.nongxinle.utils.R;
 
 
 @RestController
-@RequestMapping("nxdepartmentgoods")
+@RequestMapping("api/nxdepartmentgoods")
 public class NxDepartmentGoodsController {
 	@Autowired
 	private NxDepartmentGoodsService nxDepartmentGoodsService;
+
+	@Autowired
+	private NxGoodsService nxGoodsService;
 	
-	@RequestMapping("/nxdepartmentgoods.html")
-	public String list(){
-		return "nxdepartmentgoods/nxdepartmentgoods.html";
+
+
+
+	@RequestMapping(value = "/depGetFatherGoods/{depId}")
+	@ResponseBody
+	public R depGetFatherGoods(@PathVariable Integer depId) {
+		System.out.println(depId);
+	    List<NxDepartmentGoodsEntity> departmentGoodsEntities =  nxDepartmentGoodsService.queryDepartGoods(depId);
+		TreeSet<NxGoodsEntity> goodsEntityTreeSet = new TreeSet<>();
+
+
+		for (NxDepartmentGoodsEntity goods : departmentGoodsEntities) {
+			Integer nxDgNxGoodsFatherId = goods.getNxDgNxGoodsFatherId();
+			NxGoodsEntity goodsEntity = nxGoodsService.queryObject(nxDgNxGoodsFatherId);
+			goodsEntityTreeSet.add(goodsEntity);
+		}
+
+	    return R.ok().put("data", goodsEntityTreeSet);
 	}
-	
-	@RequestMapping("/nxdepartmentgoods_add.html")
-	public String add(){
-		return "nxdepartmentgoods/nxdepartmentgoods_add.html";
-	}
+
+
 	
 	/**
 	 * 列表

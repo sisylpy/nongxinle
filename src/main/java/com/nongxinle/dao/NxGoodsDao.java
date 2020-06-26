@@ -31,4 +31,5 @@ public interface NxGoodsDao extends BaseDao<NxGoodsEntity> {
 
     List<NxGoodsEntity> queryGoodsTree();
 
+    List<NxGoodsEntity> queryGoodsByFatherId(Integer fatherId);
 }

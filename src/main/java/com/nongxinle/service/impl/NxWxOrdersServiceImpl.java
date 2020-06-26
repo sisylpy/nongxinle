@@ -1,12 +1,11 @@
 package com.nongxinle.service.impl;
 
 import com.nongxinle.dao.NxCustomerUserDao;
+import com.nongxinle.entity.NxCommunityOrdersEntity;
 import com.nongxinle.entity.NxCustomerUserEntity;
-import com.nongxinle.entity.NxOrdersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,10 +62,10 @@ public class NxWxOrdersServiceImpl implements NxWxOrdersService {
 	}
 
     @Override
-    public Boolean saveWxOrders(NxOrdersEntity nxOrders, HttpServletRequest request) {
+    public Boolean saveWxOrders(NxCommunityOrdersEntity nxOrders, HttpServletRequest request) {
 
 
-		Integer ordersUserId = nxOrders.getNxOrdersUserId();
+		Integer ordersUserId = nxOrders.getNxCoUserId();
 		NxCustomerUserEntity nxCustomerUserEntity = nxCustomerUserDao.queryObject(ordersUserId);
 		String nxCuWxOpenId = nxCustomerUserEntity.getNxCuWxOpenId();
 

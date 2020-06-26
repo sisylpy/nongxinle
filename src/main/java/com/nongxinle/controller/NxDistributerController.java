@@ -11,31 +11,56 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nongxinle.entity.*;
+import com.nongxinle.service.NxDistributerUserRoleService;
+import com.nongxinle.service.NxDistributerUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.nongxinle.entity.NxDistributerEntity;
 import com.nongxinle.service.NxDistributerService;
 import com.nongxinle.utils.PageUtils;
 import com.nongxinle.utils.R;
 
 
 @RestController
-@RequestMapping("nxdistributer")
+@RequestMapping("api/nxdistributer")
 public class NxDistributerController {
 	@Autowired
 	private NxDistributerService nxDistributerService;
+
+	@Autowired
+	private NxDistributerUserService nxDistributerUserService;
+
+	@Autowired
+	private NxDistributerUserRoleService nxDistributerUserRoleService;
 	
-	@RequestMapping("/nxdistributer.html")
-	public String list(){
-		return "nxdistributer/nxdistributer.html";
-	}
-	
-	@RequestMapping("/nxdistributer_add.html")
-	public String add(){
-		return "nxdistributer/nxdistributer_add.html";
-	}
+	 @RequestMapping(value = "/disAndUserSave", method = RequestMethod.POST)
+	  @ResponseBody
+	  public R disAndUserSave (@RequestBody NxDistributerEntity distributerEntity) {
+
+		 System.out.println(distributerEntity);
+
+	 	//1,保存批发商
+	 	nxDistributerService.save(distributerEntity);
+
+	 	//2，保存批发商用户
+		 Integer nxDistributerId = distributerEntity.getNxDistributerId();
+		 NxDistributerUserEntity nxDistributerUserEntity = distributerEntity.getNxDistributerUserEntity();
+		 nxDistributerUserEntity.setNxDiuDistributerId(nxDistributerId);
+		 nxDistributerUserService.save(nxDistributerUserEntity);
+
+		 //查询注册成功的用户信息
+		 Integer nxDistributerUserId = nxDistributerUserEntity.getNxDistributerUserId();
+		 System.out.println("seachdhhchchchc");
+		 NxDistributerUserEntity nxDistributerEntity = nxDistributerUserService.queryUserInfo(nxDistributerUserId);
+		 System.out.println("kfdaklfas;fj");
+		 System.out.println(nxDistributerEntity);
+
+
+		 return R.ok().put("data", nxDistributerEntity);
+	  }
+
 	
 	/**
 	 * 列表

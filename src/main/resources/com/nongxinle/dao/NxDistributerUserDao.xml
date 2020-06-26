@@ -24,6 +24,11 @@
 		<result property="nxDurUserId" column="nx_DUR_user_id"/>
 	</resultMap>
 
+	<resultMap id="distributer" type="NxDistributerEntity">
+		<id property="nxDistributerId" column="nx_distributer_id"/>
+		<result property="nxDistributerName" column="nx_distributer_name"/>
+	</resultMap>
+
 	<resultMap id="disUser" type="NxDistributerUserEntity">
 		<id property="nxDistributerUserId" column="nx_distributer_user_id"/>
 		<result property="nxDiuDistributerId" column="nx_DIU_distributer_id"/>
@@ -31,17 +36,25 @@
 		<result property="nxDiuWxNickName" column="nx_DIU_wx_nick_name"/>
 		<result property="nxDiuWxOpenId" column="nx_DIU_wx_open_id"/>
 		<result property="nxDiuWxPhone" column="nx_DIU_wx_phone"/>
+		<association property="nxDistributerEntity" resultMap="distributer"/>
 		<collection property="roleEntities" resultMap="userRoles"/>
 	</resultMap>
 
 	<select id="queryUser" resultMap="disUser">
 		select * from nx_distributer_user as du
 		left join nx_distributer_user_role as r on du.nx_distributer_user_id = r.nx_DUR_user_id
-
-		where nx_DIU_department_id = #{disId}
+		where nx_DIU_distributer_id= #{disId}
 	</select>
 
-	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerUserEntity">
+
+	<select id="queryUserInfo" resultMap="disUser">
+		select * from nx_distributer_user as u
+		left join nx_distributer as d on u.nx_DIU_distributer_id = d.nx_distributer_id
+		where nx_distributer_user_id = #{nxDistributerUserId}
+	</select>
+
+	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerUserEntity"
+	useGeneratedKeys="true" keyProperty="nxDistributerUserId">
 		insert into nx_distributer_user
 		(
 			`nx_distributer_user_id`, 

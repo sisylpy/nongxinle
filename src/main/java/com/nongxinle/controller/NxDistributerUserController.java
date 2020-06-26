@@ -102,11 +102,13 @@ public class NxDistributerUserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-	@RequiresPermissions("nxdistributeruser:save")
+//	@RequiresPermissions("nxdistributeruser:save")
 	public R save(@RequestBody NxDistributerUserEntity nxDistributerUser){
 		nxDistributerUserService.save(nxDistributerUser);
-		
-		return R.ok();
+		Integer nxDistributerUserId = nxDistributerUser.getNxDistributerUserId();
+		NxDistributerUserEntity nxDistributerUserEntity = nxDistributerUserService.queryObject(nxDistributerUserId);
+
+		return R.ok().put("data", nxDistributerUserEntity);
 	}
 	
 	/**

@@ -5,6 +5,7 @@ import com.nongxinle.service.NxDepartmentUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,5 +69,64 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
     public List<NxDepartmentEntity> queryDisDepartments(Map<String, Object> map) {
         return  nxDepartmentDao.queryDisDepartments(map);
     }
+
+	@Override
+	public void saveSubDepartment(NxDepartmentEntity dep) {
+		 nxDepartmentDao.save(dep);
+	}
+
+    @Override
+    public NxDepartmentEntity queryDepartmentInfo(Integer nxDuDepartmentId) {
+
+		return nxDepartmentDao.queryDepInfo(nxDuDepartmentId);
+    }
+
+	@Override
+	public Integer saveNewRestraunt(NxDepartmentEntity dep) {
+
+		//1.保存餐馆
+		nxDepartmentDao.save(dep);
+
+		//2，保存用户
+		Integer nxDepartmentId = dep.getNxDepartmentId();
+		NxDepartmentUserEntity nxDepartmentUserEntity = dep.getNxDepartmentUserEntity();
+		nxDepartmentUserEntity.setNxDuDepartmentId(nxDepartmentId);
+		nxDepartmentUserService.save(nxDepartmentUserEntity);
+		List<NxDepartmentEntity> nxDepartmentEntities1 = dep.getNxDepartmentEntities();
+		System.out.println(nxDepartmentEntities1);
+
+		if(dep.getNxDepartmentEntities().size() > 0){
+			System.out.println(dep.getNxDepartmentEntities() + "sisisisiis");
+			//3,保存部门
+
+			List<NxDepartmentEntity> nxDepartmentEntities = dep.getNxDepartmentEntities();
+			for (NxDepartmentEntity subDep : nxDepartmentEntities) {
+				subDep.setNxDepartmentFatherId(nxDepartmentId);
+				nxDepartmentDao.save(subDep);
+			}
+		}
+
+
+		Integer nxDepartmentUserId = nxDepartmentUserEntity.getNxDepartmentUserId();
+		return nxDepartmentUserId;
+
+	}
+
+	@Override
+	public Map<String, Object> queryGroupInfo(Integer userId) {
+		NxDepartmentUserEntity userEntity = nxDepartmentUserService.queryObject(userId);
+
+		Integer nxDuDepartmentId = userEntity.getNxDuDepartmentId();
+		NxDepartmentEntity group =  nxDepartmentDao.queryObject(nxDuDepartmentId);
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("userInfo", userEntity);
+		map.put("groupInfo", group);
+
+
+		return map;
+
+	}
+
 
 }

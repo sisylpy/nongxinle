@@ -8,21 +8,17 @@ package com.nongxinle.controller;
  */
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.nongxinle.entity.NxCommunityGoodsEntity;
-import com.nongxinle.entity.NxGoodsEntity;
 import com.nongxinle.service.NxCommunityGoodsService;
 import com.nongxinle.utils.UploadFile;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.nongxinle.entity.NxPromoteEntity;
-import com.nongxinle.service.NxPromoteService;
-import com.nongxinle.utils.PageUtils;
+import com.nongxinle.entity.NxCommunityPromoteEntity;
+import com.nongxinle.service.NxCommunityPromoteService;
 import com.nongxinle.utils.R;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,9 +27,9 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("api/nxpromote")
-public class NxPromoteController {
+public class NxCommunityPromoteController {
 	@Autowired
-	private NxPromoteService nxPromoteService;
+	private NxCommunityPromoteService nxCommunityPromoteService;
 
 	@Autowired
 	private NxCommunityGoodsService nxCommunityGoodsService;
@@ -43,7 +39,7 @@ public class NxPromoteController {
 	@ResponseBody
 	public R getListByCommunityId(@PathVariable Integer communityId) {
 		System.out.println("lailema?" );
-		List<NxPromoteEntity> promoteEntities = nxPromoteService.getListByCommunityId(communityId);
+		List<NxCommunityPromoteEntity> promoteEntities = nxCommunityPromoteService.getListByCommunityId(communityId);
 
 	    return R.ok().put("data", promoteEntities);
 	}
@@ -83,21 +79,21 @@ public class NxPromoteController {
 		System.out.println(filePath);
 		System.out.println("filebpathth");
 
-		NxPromoteEntity nxPromoteEntity = new NxPromoteEntity();
-		nxPromoteEntity.setNxPromoteCgId(nxPromoteCgId);
-		nxPromoteEntity.setNxPromoteFilePath(filePath);
-		nxPromoteEntity.setNxOrignalPrice(nxOrignalPrice);
-		nxPromoteEntity.setNxPromotePrice(nxPromotePrice);
-		nxPromoteEntity.setNxPromoteStandard(nxPromoteStandard);
-		nxPromoteEntity.setNxPromoteWeight(nxPromoteWeight);
-		nxPromoteEntity.setNxPromoteExpired(nxPromoteExpired);
-		nxPromoteEntity.setNxPromoteStorage(nxPromoteStorage);
-		nxPromoteEntity.setNxPromoteWords(nxPromoteWords);
-		nxPromoteEntity.setNxPromoteCommunityId(nxPromoteCommunityId);
-		nxPromoteEntity.setNxPromoteRecommandGoods(nxPromoteRecommandGoods);
-		nxPromoteEntity.setNxPromoteCgFatherId(nxPromoteCgFatherId);
+		NxCommunityPromoteEntity nxCommunityPromoteEntity = new NxCommunityPromoteEntity();
+		nxCommunityPromoteEntity.setNxPromoteCgId(nxPromoteCgId);
+		nxCommunityPromoteEntity.setNxPromoteFilePath(filePath);
+		nxCommunityPromoteEntity.setNxOrignalPrice(nxOrignalPrice);
+		nxCommunityPromoteEntity.setNxPromotePrice(nxPromotePrice);
+		nxCommunityPromoteEntity.setNxPromoteStandard(nxPromoteStandard);
+		nxCommunityPromoteEntity.setNxPromoteWeight(nxPromoteWeight);
+		nxCommunityPromoteEntity.setNxPromoteExpired(nxPromoteExpired);
+		nxCommunityPromoteEntity.setNxPromoteStorage(nxPromoteStorage);
+		nxCommunityPromoteEntity.setNxPromoteWords(nxPromoteWords);
+		nxCommunityPromoteEntity.setNxPromoteCommunityId(nxPromoteCommunityId);
+		nxCommunityPromoteEntity.setNxPromoteRecommandGoods(nxPromoteRecommandGoods);
+		nxCommunityPromoteEntity.setNxPromoteCgFatherId(nxPromoteCgFatherId);
 
-		nxPromoteService.save(nxPromoteEntity);
+		nxCommunityPromoteService.save(nxCommunityPromoteEntity);
 
 
 
@@ -116,7 +112,7 @@ public class NxPromoteController {
 	@RequestMapping("/info/{nxPromoteId}")
 //	@RequiresPermissions("nxpromote:info")
 	public R info(@PathVariable("nxPromoteId") Integer nxPromoteId){
-		NxPromoteEntity nxPromote = nxPromoteService.queryObject(nxPromoteId);
+		NxCommunityPromoteEntity nxPromote = nxCommunityPromoteService.queryObject(nxPromoteId);
 		String nxPromoteRecommandGoods = nxPromote.getNxPromoteRecommandGoods();
 		String[] split = nxPromoteRecommandGoods.split(",");
 		List<NxCommunityGoodsEntity> goodslist = new ArrayList<>();
@@ -141,8 +137,8 @@ public class NxPromoteController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("nxpromote:update")
-	public R update(@RequestBody NxPromoteEntity nxPromote){
-		nxPromoteService.update(nxPromote);
+	public R update(@RequestBody NxCommunityPromoteEntity nxPromote){
+		nxCommunityPromoteService.update(nxPromote);
 		
 		return R.ok();
 	}
@@ -154,7 +150,7 @@ public class NxPromoteController {
 	@RequestMapping("/delete")
 	@RequiresPermissions("nxpromote:delete")
 	public R delete(@RequestBody Integer[] nxPromoteIds){
-		nxPromoteService.deleteBatch(nxPromoteIds);
+		nxCommunityPromoteService.deleteBatch(nxPromoteIds);
 		
 		return R.ok();
 	}

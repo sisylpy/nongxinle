@@ -8,11 +8,10 @@
 package com.nongxinle.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.nongxinle.entity.NxCustomerUserEntity;
-import com.nongxinle.entity.NxOrdersEntity;
+import com.nongxinle.entity.NxCommunityOrdersEntity;
 import com.nongxinle.entity.Value;
 import com.nongxinle.service.NxCustomerUserService;
-import com.nongxinle.service.NxOrdersService;
+import com.nongxinle.service.NxCommunityOrdersService;
 import com.nongxinle.utils.HttpUtils;
 import com.nongxinle.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.nongxinle.utils.DateUtils.formatWhatDay;
 import static com.nongxinle.utils.DateUtils.formatWhatDayTime;
 
 /**
@@ -38,7 +36,7 @@ public class WxSendController {
     private NxCustomerUserService nxCustomerUserService;
 
     @Autowired
-    private NxOrdersService nxOrdersService;
+    private NxCommunityOrdersService nxCommunityOrdersService;
 
 
 
@@ -47,9 +45,9 @@ public class WxSendController {
     @ResponseBody
     public R sendPaymentWxNotice(@PathVariable Integer nxOrdersId){
 
-        NxOrdersEntity ordersEntity = nxOrdersService.queryObject(nxOrdersId);
+        NxCommunityOrdersEntity ordersEntity = nxCommunityOrdersService.queryObject(nxOrdersId);
 
-        Integer nxOrdersUserId = ordersEntity.getNxOrdersUserId();
+        Integer nxOrdersUserId = ordersEntity.getNxCoUserId();
         System.out.println( "enennenetyytyty" +ordersEntity);
         String token = getToken();
         String cuWxOpenId= nxCustomerUserService.queryOpenId(nxOrdersUserId);
@@ -60,9 +58,9 @@ public class WxSendController {
         param.put("page","/pages/index/index");
         param.put("miniprogram_state","developer");
 
-        String nxOrdersAmount = ordersEntity.getNxOrdersAmount().toString();
-        String nxOrdersDate = ordersEntity.getNxOrdersDate();
-        String  nxOrdersId1 = ordersEntity.getNxOrdersId().toString();
+        String nxOrdersAmount = ordersEntity.getNxCoAmount().toString();
+        String nxOrdersDate = ordersEntity.getNxCoDate();
+        String  nxOrdersId1 = ordersEntity.getNxCommunityOrdersId().toString();
 
 
         Map<String,Object> data = new HashMap<>();
@@ -85,7 +83,7 @@ public class WxSendController {
             map.put("nxOrdersStatus",3);
             map.put("nxOrdersPaymentStatus", 1);
             map.put("nxOrdersPaymentSendTime", formatWhatDayTime(0));
-            nxOrdersService.updatePaymentStatus(map);
+            nxCommunityOrdersService.updatePaymentStatus(map);
         }
         return R.ok();
     }

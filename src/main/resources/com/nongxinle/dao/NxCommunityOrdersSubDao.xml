@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxCommunityOrdersSubDao">
+
+    <select id="queryObject" resultType="com.nongxinle.entity.NxCommunityOrdersSubEntity">
+        select *
+        from nx_community_orders_sub
+        where nx_community_orders_sub_id = #{value}
+    </select>
+
+    <select id="queryList" resultType="com.nongxinle.entity.NxCommunityOrdersSubEntity">
+        select * from nx_community_orders_sub
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from nx_community_orders_sub where nx_COS_order_user_id = #{nxOrdersUserId}
+    </select>
+
+
+    <resultMap id="commGoods" type="NxCommunityGoodsEntity">
+        <id property="nxCommunityGoodsId" column="nx_community_goods_id"/>
+        <result property="nxCgPurchaseQuantity" column="dg_purchase_quantity"/>
+        <result property="nxCgGoodsName" column="nx_cg_goods_name"/>
+        <result property="nxCgGoodsDetail" column="nx_cg_goods_detail"/>
+        <result property="nxCgGoodsStandardname" column="nx_cg_goods_standardname"/>
+        <!--<result property="nxCgGoodsFatherId" column="dg_goods_father_id"/>-->
+        <!--<association property="nxGoodsEntity" resultMap="goods"/>-->
+    </resultMap>
+
+    <resultMap id="community" type="NxCommunityEntity">
+        <id property="nxCommunityId" column="nx_community_id"/>
+        <result property="nxCommunityName" column="nx_community_name"/>
+
+    </resultMap>
+    <resultMap id="subOrders" type="NxCommunityOrdersSubEntity">
+        <id property="nxCommunityOrdersSubId" column="nx_community_orders_sub_id"/>
+        <result property="nxCosQuantity" column="nx_COS_quantity"/>
+        <result property="nxCosStandard" column="nx_COS_standard"/>
+        <result property="nxCosRemark" column="nx_COS_remark"/>
+        <result property="nxCosCommunityGoodsFatherId" column="nx_COS_community_goods_father_id"/>
+        <result property="nxCosCommunityGoodsId" column="nx_COS_community_goods_id"/>
+        <result property="nxCosPurchaseUserId" column="nx_COS_purchase_usr_id"/>
+        <association property="nxCommunityGoodsEntity"  resultMap="commGoods"/>
+        <association property="nxCommunityEntity" resultMap="community"/>
+
+    </resultMap>
+    <select id="queryPurchaseGoods" resultMap="subOrders">
+        select * from nx_community_orders_sub as os
+          left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_COS_community_goods_id
+        where nx_COS_distributer_id = #{disId} and nx_COS_buy_status = #{status}
+    </select>
+    <select id="querySubsByGoodsId" resultType="com.nongxinle.entity.NxCommunityOrdersSubEntity">
+        select * from nx_community_orders_sub where nx_COS_community_goods_id = #{disGoodsId} and nx_COS_buy_status = #{status}
+    </select>
+
+
+    <select id="querySubOrdersByDisIdandStatus" resultMap="subOrders">
+        select * from nx_community_orders_sub as os
+             left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_COS_community_goods_id
+        where nx_COS_distributer_id = #{disId} and nx_COS_buy_status = #{purchaseStatus}
+    </select>
+
+
+    <select id="querySubOrdersByCustomerUserId" resultMap="subOrders">
+        select * from nx_community_orders_sub as os
+          left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_COS_community_goods_id
+          left join nx_order_template_item as it on it.nx_OT_dis_goods_id = dg.nx_community_goods_id
+        where nx_COS_order_user_id = #{nxOrdersUserId}
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+    <select id="queryListByOrderId" resultType="com.nongxinle.entity.NxCommunityOrdersSubEntity">
+        select * from nx_community_orders_sub where nx_COS_orders_id = #{nxOrdersId}
+    </select>
+    <select id="queryOutGoodsByType" resultMap="subOrders">
+      select * from nx_community_orders_sub as os
+        left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_COS_community_goods_id
+        left join nx_community as c on c.nx_community_id = dg.nx_cg_community_id
+        where nx_COS_sub_supplier_id = #{nxCosSubSupplierId}  and nx_COS_goods_type = #{nxCosGoodsType}
+        and nx_COS_status = #{nxCosStatus}
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+
+    <resultMap id="commFatherGoods" type="NxCommunityFatherGoodsEntity">
+        <id property="nxCommunityFatherGoodsId" column="nx_community_father_goods_id"/>
+        <result property="nxFatherGoodsName" column="nx_father_goods_name"/>
+        <result property="nxFatherGoodsImg" column="nx_father_goods_img"/>
+        <result property="nxFatherGoodsColor" column="nx_father_goods_color"/>
+    </resultMap>
+
+    <resultMap id="subOrdersWithCommFatherGoods" type="NxCommunityOrdersSubEntity">
+        <id property="nxCommunityOrdersSubId" column="nx_community_oders_sub_id"/>
+        <result property="nxCosQuantity" column="nx_COS_quantity"/>
+        <result property="nxCosStandard" column="nx_COS_standard"/>
+        <result property="nxCosCommunityGoodsFatherId" column="nx_COS_community_goods_father_id"/>
+        <association property="nxCommunityFatherGoodsEntity" resultMap="commFatherGoods"/>
+    </resultMap>
+
+    <select id="querySubGoodsByOrderId" resultMap="subOrdersWithCommFatherGoods">
+        select * from nx_community_orders_sub  as os
+        left join nx_community_father_goods as cfg on os.nx_COS_community_goods_father_id = cfg.nx_community_father_goods_id
+        where nx_COS_orders_id = #{integer}
+    </select>
+
+
+    <select id="queryCommGoodsOfSubs" resultMap="subOrders">
+        select * from nx_community_orders_sub  as s
+        left join nx_community_goods as cg on s.nx_COS_community_goods_id = cg.nx_community_goods_id
+        where nx_COS_community_goods_father_id = #{fatherId}
+    </select>
+
+
+    <insert id="save" parameterType="com.nongxinle.entity.NxCommunityOrdersSubEntity">
+        insert into nx_community_orders_sub
+        (`nx_community_orders_sub_id`,
+         `nx_COS_nx_goods_id`,
+         `nx_COS_quantity`,
+         `nx_COS_price`,
+         `nx_COS_remark`,
+         `nx_COS_weight`,
+         `nx_COS_subtotal`,
+         `nx_COS_status`,
+         `nx_COS_weigh_user_id`,
+         `nx_COS_account_user_id`,
+         `nx_COS_orders_id`,
+         `nx_COS_standard`,
+         `nx_COS_community_goods_father_id`,
+         `nx_COS_distributer_id`,
+         `nx_COS_community_goods_id`,
+         `nx_COS_buy_status`,
+         `nx_COS_purchase_user_id`,
+         `nx_COS_order_user_id`,
+         `nx_COS_sub_weight`,
+         `nx_COS_sub_supplier_id`,
+          `nx_COS_community_id`,
+         `nx_COs_goods_type`
+         )
+        values (#{nxOrdersSubId},
+                #{nxCosNxGoodsId},
+                #{nxCosQuantity},
+                #{nxCosPrice},
+                #{nxCosRemark},
+                #{nxCosWeight},
+                #{nxCosSubtotal},
+                #{nxCosStatus},
+                #{nxCosWeighUserId},
+                #{nxCosAccountUserId},
+                #{nxCosOrdersId},
+                #{nxCosStandard},
+                #{nxCosCommunityGoodsFatherId},
+                #{nxCosDistributerId},
+                #{nxCosCommunityGoodsId},
+                #{nxCosBuyStatus},
+                #{nxCosPurchaseUserId},
+                #{nxCosOrderUserId},
+                #{nxCosSubWeight},
+                #{nxCosSubSupplierId},
+                #{nxCosCommunityId},
+                #{nxCosGoodsType}
+                )
+    </insert>
+
+    <update id="update" parameterType="com.nongxinle.entity.NxCommunityOrdersSubEntity">
+        update nx_community_orders_sub
+        <set>
+            <if test="nxCosNxGoodsId != null">`nx_COS_nx_goods_id` = #{nxCosNxGoodsId},</if>
+            <if test="nxCosCommunityGoodsFatherId != null">`nx_COS_community_goods_father_id` = #{nxCosCommunityGoodsFatherId},</if>
+            <if test="nxCosQuantity != null">`nx_COS_quantity` = #{nxCosQuantity},</if>
+            <if test="nxCosPrice != null">`nx_COS_price` = #{nxCosPrice},</if>
+            <if test="nxCosRemark != null">`nx_COS_remark` = #{nxCosRemark},</if>
+            <if test="nxCosWeight != null">`nx_COS_weight` = #{nxCosWeight},</if>
+            <if test="nxCosSubtotal != null">`nx_COS_subtotal` = #{nxCosSubtotal},</if>
+            <if test="nxCosStatus != null">`nx_COS_status` = #{nxCosStatus},</if>
+            <if test="nxCosWeighUserId != null">`nx_COS_weigh_user_id` = #{nxCosWeighUserId},</if>
+            <if test="nxCosOrdersId != null">`nx_COS_orders_id` = #{nxCosOrdersId},</if>
+            <if test="nxCosStandard != null">`nx_COS_standard` = #{nxCosStandard},</if>
+            <if test="nxCosDistributerId != null">`nx_COS_distributer_id` = #{nxCosDistributerId},</if>
+            <if test="nxCosCommunityGoodsId != null">`nx_COS_community_goods_id` = #{nxCosCommunityGoodsId},</if>
+            <if test="nxCosBuyStatus != null">`nx_COS_buy_status` = #{nxCosBuyStatus},</if>
+            <if test="nxCosPurchaseUserId != null">`nx_COS_purchase_user_id` = #{nxCosPurchaseUserId},</if>
+            <if test="nxCosOrderUserId != null">`nx_COS_order_user_id` = #{nxCosOrderUserId},</if>
+            <if test="nxCosSubWeight != null">`nx_COS_sub_weight` = #{nxCosSubWeight},</if>
+            <if test="nxCosSubSupplierId != null">`nx_COS_sub_supplier_id` = #{nxCosSubSupplierId},</if>
+            <if test="nxCosCommunityId != null">`nx_COS_community_id` = #{nxCosCommunityId},</if>
+            <if test="nxCosGoodsType != null">`nx_COS_goods_type` = #{nxCosGoodsType},</if>
+            <if test="nxCosAccountUserId != null">`nx_COS_account_user_id` = #{nxCosAccountUserId}</if>
+        </set>
+        where nx_orders_sub_id = #{nxOrdersSubId}
+    </update>
+
+    <delete id="delete">
+        delete
+        from nx_community_orders_sub
+        where nx_community_orders_sub_id = #{value}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete from nx_community_orders_sub where nx_community_orders_sub_id in
+        <foreach item="nxOrdersSubId" collection="array" open="(" separator="," close=")">
+            #{nxOrdersSubId}
+        </foreach>
+    </delete>
+
+</mapper>

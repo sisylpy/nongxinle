@@ -40,4 +40,6 @@ public class NxDistributerEntity implements Serializable {
 	 */
 	private Integer nxDistributerBusinessType;
 
+	private NxDistributerUserEntity nxDistributerUserEntity;
+
 }

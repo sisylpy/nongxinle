@@ -54,6 +54,8 @@ public class NxDistributerUserEntity implements Serializable {
 
 	private Integer orderAmount;
 
-	List<NxDistributerUserRoleEntity> roleEntities;
+	private List<NxDistributerUserRoleEntity> roleEntities;
+
+	private NxDistributerEntity nxDistributerEntity;
 
 }

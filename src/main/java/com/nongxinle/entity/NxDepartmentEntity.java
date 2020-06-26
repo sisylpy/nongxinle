@@ -45,6 +45,10 @@ public class NxDepartmentEntity implements Serializable {
 	private Integer nxDepUserId;
 
 	private Integer nxDepartmentDisId;
+
+	private NxDepartmentEntity fatherDepartmentEntity;
+
+	private NxDepartmentUserEntity nxDepartmentUserEntity;
 	
 	private List<NxDepartmentUserEntity>  nxDepartmentUserEntities;
 

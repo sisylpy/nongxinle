@@ -28,7 +28,8 @@
 			`nx_DU_wx_nick_name`, 
 			`nx_DU_wx_open_id`, 
 			`nx_DU_wx_phone`, 
-			`nx_DU_admin`
+			`nx_DU_admin`,
+		 	`nx_DU_distributer_id`
 		)
 		values
 		(
@@ -38,7 +39,8 @@
 			#{nxDuWxNickName}, 
 			#{nxDuWxOpenId}, 
 			#{nxDuWxPhone}, 
-			#{nxDuAdmin}
+			#{nxDuAdmin},
+		 	#{nxDuDistributerId}
 		)
 	</insert>
 	 
@@ -50,6 +52,7 @@
 			<if test="nxDuWxNickName != null">`nx_DU_wx_nick_name` = #{nxDuWxNickName}, </if>
 			<if test="nxDuWxOpenId != null">`nx_DU_wx_open_id` = #{nxDuWxOpenId}, </if>
 			<if test="nxDuWxPhone != null">`nx_DU_wx_phone` = #{nxDuWxPhone}, </if>
+			<if test="nxDuDistributerId != null">`nx_DU_distributer_id` = #{nxDuDistributerId}, </if>
 			<if test="nxDuAdmin != null">`nx_DU_admin` = #{nxDuAdmin}</if>
 		</set>
 		where nx_department_user_id = #{nxDepartmentUserId}

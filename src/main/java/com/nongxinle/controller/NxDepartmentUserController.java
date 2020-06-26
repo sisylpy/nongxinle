@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import com.nongxinle.entity.NxDepartmentEntity;
+import com.nongxinle.service.NxDepartmentService;
 import com.nongxinle.utils.WeChatUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +31,26 @@ public class NxDepartmentUserController {
 	@Autowired
 	private NxDepartmentUserService nxDepartmentUserService;
 
+	@Autowired
+	private NxDepartmentService nxDepartmentService;
+
 	private static String APP_ID = "wx87baf9dcf935518a";
 
 	private  static  String SECRET = "a7e380c56222dfbd5377aeea6bb1eba2";
 	
 
-
 	@RequestMapping(value = "/info/{id}")
 	@ResponseBody
 	public R info(@PathVariable Integer id) {
 		NxDepartmentUserEntity nxDepartmentUserEntity = nxDepartmentUserService.queryObject(id);
+		Integer nxDuDepartmentId = nxDepartmentUserEntity.getNxDuDepartmentId();
+		NxDepartmentEntity dep = nxDepartmentService.queryDepartmentInfo(nxDuDepartmentId);
 
-		return R.ok().put("data", nxDepartmentUserEntity);
+		Map<String, Object> map = new HashMap<>();
+		map.put("userInfo", nxDepartmentUserEntity);
+		map.put("depInfo", dep);
+
+		return R.ok().put("data", map);
 	}
 
 	  @RequestMapping(value = "/addRestraunt/{socketId}")
@@ -73,7 +83,6 @@ public class NxDepartmentUserController {
 		// 我们需要的openid，在一个小程序中，openid是唯一的
 		String openid = jsonObject.get("openid").toString();
 		nxDepartmentUser.setNxDuWxOpenId(openid);
-		nxDepartmentUser.setNxDuAdmin(1);
 
 		nxDepartmentUserService.save(nxDepartmentUser);
 

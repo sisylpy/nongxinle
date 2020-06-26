@@ -7,6 +7,8 @@ package com.nongxinle.service;
  * @date 06-20 10:21
  */
 
+import com.nongxinle.entity.NxDepartmentUserEntity;
+import com.nongxinle.entity.NxDistributerEntity;
 import com.nongxinle.entity.NxDistributerUserEntity;
 
 import java.util.List;
@@ -29,4 +31,6 @@ public interface NxDistributerUserService {
 	void deleteBatch(Integer[] nxDistributerUserIds);
 
     List<NxDistributerUserEntity> queryUser(Integer disId);
+
+	NxDistributerUserEntity queryUserInfo(Integer nxDistributerUserId);
 }

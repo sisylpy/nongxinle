@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nongxinle.entity.NxDepartmentUserEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,56 @@ import com.nongxinle.utils.R;
 public class NxDepartmentController {
 	@Autowired
 	private NxDepartmentService nxDepartmentService;
+
+
+
+	@RequestMapping(value = "/groupInfo/{userId}")
+	@ResponseBody
+	public R groupInfo(@PathVariable Integer userId) {
+	     Map<String, Object> map = nxDepartmentService.queryGroupInfo(userId);
+
+	    return R.ok().put("data", map);
+	}
+
+	 @RequestMapping(value = "/restrauntRegist", method = RequestMethod.POST)
+	  @ResponseBody
+	  public R restrauntRegist (@RequestBody NxDepartmentEntity dep) {
+		 System.out.println(dep);
+
+		 Integer integer = nxDepartmentService.saveNewRestraunt(dep);
+
+
+		 return R.ok().put("data", integer);
+	  }
+
+
+
+
+	/**
+	 * 保存
+	 */
+	@ResponseBody
+	@RequestMapping("/saveSubDepartment")
+//	@RequiresPermissions("nxdepartment:save")
+	public R saveSubDepartment(@RequestBody NxDepartmentEntity nxDepartment){
+		System.out.println("ddddddcccc22222" + nxDepartment);
+		List<NxDepartmentEntity> nxDepartmentEntities = nxDepartment.getNxDepartmentEntities();
+		for (NxDepartmentEntity dep : nxDepartmentEntities) {
+			System.out.println("--===---222222");
+		nxDepartmentService.saveSubDepartment(dep);
+
+		}
+		Integer nxDepartmentId = nxDepartment.getNxDepartmentId();
+		System.out.println();
+		NxDepartmentEntity nxDepartmentEntity = nxDepartmentService.queryObject(nxDepartmentId);
+		Integer nxDepartmentSubAmount = nxDepartmentEntity.getNxDepartmentSubAmount();
+		System.out.println(nxDepartmentSubAmount + "ammmmount2222");
+		nxDepartmentEntity.setNxDepartmentSubAmount(nxDepartmentSubAmount + nxDepartment.getNxDepartmentEntities().size());
+
+		nxDepartmentService.update(nxDepartmentEntity);
+		return R.ok();
+	}
+
 
 
 	 @RequestMapping(value = "/getDisDepartments", method = RequestMethod.POST)
@@ -66,11 +117,11 @@ public class NxDepartmentController {
 	 */
 	@ResponseBody
 	@RequestMapping("/info/{nxDepartmentId}")
-	@RequiresPermissions("nxdepartment:info")
+//	@RequiresPermissions("nxdepartment:info")
 	public R info(@PathVariable("nxDepartmentId") Integer nxDepartmentId){
 		NxDepartmentEntity nxDepartment = nxDepartmentService.queryObject(nxDepartmentId);
 		
-		return R.ok().put("nxDepartment", nxDepartment);
+		return R.ok().put("data", nxDepartment);
 	}
 	
 	/**
@@ -80,7 +131,7 @@ public class NxDepartmentController {
 	@RequestMapping("/save")
 //	@RequiresPermissions("nxdepartment:save")
 	public R save(@RequestBody NxDepartmentEntity nxDepartment){
-		System.out.println(nxDepartment);
+		System.out.println("dddddd" + nxDepartment);
 		nxDepartmentService.save(nxDepartment);
 		
 		return R.ok();

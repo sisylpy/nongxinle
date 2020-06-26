@@ -17,7 +17,7 @@ import lombok.ToString;
 
 @Setter@Getter@ToString
 
-public class NxPromoteEntity implements Serializable {
+public class NxCommunityPromoteEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**

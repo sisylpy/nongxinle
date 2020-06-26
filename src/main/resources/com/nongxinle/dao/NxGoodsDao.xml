@@ -139,8 +139,11 @@
 		select * from nx_goods where nx_goods_father_id = #{fatherId} order by nx_goods_sort
 	</select>
 
-	<select id="queryListWithFatherId" resultType="com.nongxinle.entity.NxGoodsEntity">
-		select * from nx_goods
+
+
+	<select id="queryListWithFatherId" resultMap="nxGoods">
+		select * from nx_goods as g
+		left join nx_standard as s on g.nx_goods_id = s.nx_s_goods_id
 		<if test="fatherId != null">
 			where nx_goods_father_id = #{fatherId}
 		</if>
@@ -166,6 +169,12 @@
 	</select>
     <select id="queryGoodsTree" resultType="com.nongxinle.entity.NxGoodsEntity">
 		select * from nx_goods where  nx_goods_father_id &lt; 100
+	</select>
+
+    <select id="queryGoodsByFatherId" resultMap="nxGoods">
+		select * from  nx_goods as g
+		left join nx_standard as s on g.nx_goods_id = s.nx_s_goods_id
+		where nx_goods_father_id = #{fatherId}
 	</select>
 
 

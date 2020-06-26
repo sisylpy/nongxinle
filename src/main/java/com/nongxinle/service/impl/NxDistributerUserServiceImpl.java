@@ -1,5 +1,9 @@
 package com.nongxinle.service.impl;
 
+import com.nongxinle.dao.NxDistributerUserRoleDao;
+import com.nongxinle.entity.NxDepartmentUserEntity;
+import com.nongxinle.entity.NxDistributerEntity;
+import com.nongxinle.entity.NxDistributerUserRoleEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,9 @@ import com.nongxinle.service.NxDistributerUserService;
 public class NxDistributerUserServiceImpl implements NxDistributerUserService {
 	@Autowired
 	private NxDistributerUserDao nxDistributerUserDao;
+
+	@Autowired
+	private NxDistributerUserRoleDao nxDistributerUserRoleDao;
 	
 	@Override
 	public NxDistributerUserEntity queryObject(Integer nxDistributerUserId){
@@ -34,7 +41,22 @@ public class NxDistributerUserServiceImpl implements NxDistributerUserService {
 	
 	@Override
 	public void save(NxDistributerUserEntity nxDistributerUser){
+
 		nxDistributerUserDao.save(nxDistributerUser);
+		Integer nxDistributerUserId = nxDistributerUser.getNxDistributerUserId();
+		System.out.println(nxDistributerUserId + "iddididi");
+
+		List<NxDistributerUserRoleEntity> roleEntities = nxDistributerUser.getRoleEntities();
+		for (NxDistributerUserRoleEntity role : roleEntities) {
+			Integer nxDurRoleId = role.getNxDurRoleId();
+			NxDistributerUserRoleEntity roleEntity = new NxDistributerUserRoleEntity();
+			roleEntity.setNxDurUserId(nxDistributerUserId);
+			roleEntity.setNxDurRoleId(nxDurRoleId);
+			nxDistributerUserRoleDao.save(roleEntity);
+		}
+
+
+
 	}
 	
 	@Override
@@ -56,5 +78,10 @@ public class NxDistributerUserServiceImpl implements NxDistributerUserService {
     public List<NxDistributerUserEntity> queryUser(Integer disId) {
         return nxDistributerUserDao.queryUser(disId);
     }
+
+	@Override
+	public NxDistributerUserEntity queryUserInfo(Integer nxDistributerUserId) {
+		return nxDistributerUserDao.queryUserInfo(nxDistributerUserId);
+	}
 
 }

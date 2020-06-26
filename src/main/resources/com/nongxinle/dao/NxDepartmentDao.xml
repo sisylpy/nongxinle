@@ -3,8 +3,34 @@
 
 <mapper namespace="com.nongxinle.dao.NxDepartmentDao">
 
-	<select id="queryObject" resultType="com.nongxinle.entity.NxDepartmentEntity">
-		select * from nx_department where nx_department_id = #{value}
+
+	<resultMap id="subDeps" type="NxDepartmentEntity">
+		<id property="nxDepartmentId" column="dd_nx_department_id"/>
+		<result property="nxDepartmentName" column="dd_nx_department_name"/>
+		<result property="nxDepartmentSubAmount" column="dd_nx_department_sub_amount"/>
+		<result property="nxDepartmentFatherId" column="dd_nx_department_father_id"/>
+		<collection property="nxDepartmentUserEntities" resultMap="depUsers"/>
+	</resultMap>
+
+	<resultMap id="departmentsWithSubDeps" type="NxDepartmentEntity">
+		<id property="nxDepartmentId" column="nx_department_id"/>
+		<result property="nxDepartmentName" column="nx_department_name"/>
+		<result property="nxDepartmentSubAmount" column="nx_department_sub_amount"/>
+		<result property="nxDepartmentDisId" column="nx_department_dis_id"/>
+		<collection property="nxDepartmentEntities" resultMap="subDeps"/>
+	</resultMap>
+
+	<select id="queryObject" resultMap="departmentsWithSubDeps">
+		select d.nx_department_id 'nx_department_id', d.nx_department_name 'nx_department_name',
+		       d.nx_department_sub_amount 'nx_department_sub_amount',
+		       d.nx_department_dis_id 'nx_department_dis_id',
+			   dd.nx_department_id 'dd_nx_department_id', dd.nx_department_name 'dd_nx_department_name',
+		       dd.nx_department_sub_amount 'dd_nx_department_sub_amount',
+		       dd.nx_department_father_id 'dd_nx_department_father_id'
+		       from nx_department as d
+		left join nx_department as dd on d.nx_department_id = dd.nx_department_father_id
+		left join nx_department_user as du on dd.nx_department_id = du.nx_DU_department_id
+		where d.nx_department_id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.nongxinle.entity.NxDepartmentEntity">
@@ -24,14 +50,15 @@
 		<id property="nxDuWxPhone" column="nx_DU_wx_phone"/>
 	</resultMap>
 
-	<resultMap id="departments" type="NxDepartmentEntity">
+	<resultMap id="departmentsWithUsers" type="NxDepartmentEntity">
 		<id property="nxDepartmentId" column="nx_department_id"/>
 		<result property="nxDepartmentName" column="nx_department_name"/>
 		<result property="nxDepartmentType" column="nx_department_type"/>
 		<collection property="nxDepartmentUserEntities" resultMap="depUsers"/>
+		<collection property="nxDepartmentEntities" resultMap="subDeps"/>
  	</resultMap>
 
-	<select id="queryDisDepartments" resultMap="departments">
+	<select id="queryDisDepartments" resultMap="departmentsWithUsers">
 		select * from nx_department as d
 		left join nx_department_user as u on u.nx_DU_department_id = d.nx_department_id
 		where d.nx_department_dis_id = #{disId}  and u.nx_DU_admin = 1 and
@@ -43,9 +70,29 @@
 			d.nx_department_type  = 2
 		</when>
 		</choose>
-
-
 	</select>
+
+	<resultMap id="fatherDep" type="NxDepartmentEntity">
+		<id property="nxDepartmentId" column="f_nx_department_id"/>
+		<result property="nxDepartmentName" column="f_nx_department_name"/>
+		<result property="nxDepartmentDisId" column="f_nx_department_dis_id"/>
+	</resultMap>
+
+	<resultMap id="depInfo" type="NxDepartmentEntity">
+		<id property="nxDepartmentId" column="s_nx_department_id"/>
+		<result property="nxDepartmentName" column="s_nx_department_name"/>
+		<association property="fatherDepartmentEntity" resultMap="fatherDep"/>
+	</resultMap>
+
+	<select id="queryDepInfo" resultMap="depInfo">
+		select d.nx_department_id 's_nx_department_id',  d.nx_department_name 's_nx_department_name',
+		dd.nx_department_id 'f_nx_department_id', dd.nx_department_name 'f_nx_department_name',
+		       dd.nx_department_dis_id 'f_nx_department_dis_id'
+		from nx_department as d
+		left join nx_department as dd on d.nx_department_father_id = dd.nx_department_id
+		where d.nx_department_id = #{nxDuDepartmentId}
+	</select>
+
 
 	<insert id="save" parameterType="com.nongxinle.entity.NxDepartmentEntity"
 			useGeneratedKeys="true" keyProperty="nxDepartmentId">
@@ -68,7 +115,9 @@
 		 	#{nxDepartmentDisId}
 		)
 	</insert>
-	 
+
+
+
 	<update id="update" parameterType="com.nongxinle.entity.NxDepartmentEntity">
 		update nx_department 
 		<set>

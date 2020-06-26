@@ -7,9 +7,8 @@ package com.nongxinle.service;
  * @date 05-21 22:15
  */
 
-import com.nongxinle.entity.NxOrdersEntity;
+import com.nongxinle.entity.NxCommunityOrdersEntity;
 import com.nongxinle.entity.NxWxOrdersEntity;
-import org.springframework.http.HttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -31,6 +30,6 @@ public interface NxWxOrdersService {
 	
 	void deleteBatch(Integer[] nxWxOrdersIds);
 
-    Boolean saveWxOrders(NxOrdersEntity nxOrders, HttpServletRequest request);
+    Boolean saveWxOrders(NxCommunityOrdersEntity nxOrders, HttpServletRequest request);
 
 }

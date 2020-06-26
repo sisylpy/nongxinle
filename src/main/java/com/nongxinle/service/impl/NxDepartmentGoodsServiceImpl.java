@@ -51,5 +51,11 @@ public class NxDepartmentGoodsServiceImpl implements NxDepartmentGoodsService {
 	public void deleteBatch(Integer[] nxCommunityGoodsIds){
 		nxDepartmentGoodsDao.deleteBatch(nxCommunityGoodsIds);
 	}
-	
+
+    @Override
+    public List<NxDepartmentGoodsEntity> queryDepartGoods(Integer depId) {
+
+		return  nxDepartmentGoodsDao.queryAllDepartmentGoods(depId);
+    }
+
 }

@@ -35,7 +35,7 @@
 		 	`nx_CU_join_date`,
 		 	`nx_CU_order_amount`,
 		 	`nx_CU_order_times`
-		)
+		 	)
 		values
 		(
 			#{nxCuUserId}, 
@@ -47,7 +47,8 @@
 			#{nxCuWxPhoneNumber},
 		 	#{nxCuJoinDate},
 		 	#{nxCuOrderAmount},
-		 	#{nxCuOrderTimes}
+		 	#{nxCuOrderTimes},
+
 		)
 	</insert>
 	 

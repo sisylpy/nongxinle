@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.nongxinle.dao.NxPromoteDao">
+<mapper namespace="com.nongxinle.dao.NxCommunityPromoteDao">
 
 	<select id="queryObject" resultMap="promote">
-		select * from nx_promote  as p
+		select * from nx_community_promote  as p
 			left join nx_community_goods as cg on cg.nx_community_goods_id = p.nx_promote_cg_id
 		where nx_promote_id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.nongxinle.entity.NxPromoteEntity">
-		select * from nx_promote 
+	<select id="queryList" resultType="com.nongxinle.entity.NxCommunityPromoteEntity">
+		select * from nx_community_promote
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from nx_promote 
+		select count(*) from nx_community_promote
 	</select>
 
 	<resultMap id="commGoods" type="NxCommunityGoodsEntity">
@@ -46,7 +46,7 @@
 		<!--</association>-->
 	</resultMap>
 
-	<resultMap id="promote" type="NxPromoteEntity">
+	<resultMap id="promote" type="NxCommunityPromoteEntity">
 		<id property="nxPromoteId" column="nx_promote_id"/>
 		<result property="nxOrignalPrice" column="nx_orignal_price"/>
 		<result property="nxPromotePrice" column="nx_promote_price"/>
@@ -61,17 +61,17 @@
 	</resultMap>
 
 	<select id="getListByCommunityId" resultMap="promote">
-		select * from nx_promote  as p
+		select * from nx_community_promote  as p
 			left join nx_community_goods as cg on cg.nx_community_goods_id = p.nx_promote_cg_id
 # 		left join nx_goods as g on cg.nx_cg_nx_goods_id = g.nx_goods_id
 		where nx_promote_community_id = #{communityId};
 	</select>
-	<select id="queryPromoteByFatherId" resultType="com.nongxinle.entity.NxPromoteEntity">
-		select * from nx_promote where nx_promote_cg_father_id = #{nxCommunityFatherGoodsId}
+	<select id="queryPromoteByFatherId" resultType="com.nongxinle.entity.NxCommunityPromoteEntity">
+		select * from nx_community_promote where nx_promote_cg_father_id = #{nxCommunityFatherGoodsId}
 	</select>
 
-	<insert id="save" parameterType="com.nongxinle.entity.NxPromoteEntity">
-		insert into nx_promote
+	<insert id="save" parameterType="com.nongxinle.entity.NxCommunityPromoteEntity">
+		insert into nx_community_promote
 		(
 			`nx_promote_id`, 
 			`nx_promote_cg_id`, 
@@ -105,8 +105,8 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.nongxinle.entity.NxPromoteEntity">
-		update nx_promote 
+	<update id="update" parameterType="com.nongxinle.entity.NxCommunityPromoteEntity">
+		update nx_community_promote
 		<set>
 			<if test="nxPromoteCgId != null">`nx_promote_cg_id` = #{nxPromoteCgId}, </if>
 			<if test="nxOrignalPrice != null">`nx_orignal_price` = #{nxOrignalPrice}, </if>
@@ -125,11 +125,11 @@
 	</update>
 	
 	<delete id="delete">
-		delete from nx_promote where nx_promote_id = #{value}
+		delete from nx_community_promote where nx_promote_id = #{value}
 	</delete>
 	
 	<delete id="deleteBatch">
-		delete from nx_promote where nx_promote_id in 
+		delete from nx_community_promote where nx_promote_id in
 		<foreach item="nxPromoteId" collection="array" open="(" separator="," close=")">
 			#{nxPromoteId}
 		</foreach>
