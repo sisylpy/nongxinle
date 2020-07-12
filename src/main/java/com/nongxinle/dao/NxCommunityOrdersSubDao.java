@@ -16,7 +16,7 @@ import java.util.Map;
 
 public interface NxCommunityOrdersSubDao extends BaseDao<NxCommunityOrdersSubEntity> {
 
-    List<NxCommunityOrdersSubEntity> queryPurchaseGoods(Map<String, Object> map);
+//    List<NxCommunityOrdersSubEntity> queryPurchaseGoods(Map<String, Object> map);
 
     List<NxCommunityOrdersSubEntity> querySubsByGoodsId(Map<String, Object> subMap);
 

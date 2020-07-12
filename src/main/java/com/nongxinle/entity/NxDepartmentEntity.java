@@ -9,6 +9,7 @@ package com.nongxinle.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ import lombok.ToString;
 
 @Setter@Getter@ToString
 
-public class NxDepartmentEntity implements Serializable {
+public class NxDepartmentEntity implements Serializable, Comparable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -41,6 +42,10 @@ public class NxDepartmentEntity implements Serializable {
 	 */
 	private Integer nxDepartmentSubAmount;
 
+	private String nxDepartmentFilePath;
+
+	private Boolean isSelected;
+
 
 	private Integer nxDepUserId;
 
@@ -53,6 +58,42 @@ public class NxDepartmentEntity implements Serializable {
 	private List<NxDepartmentUserEntity>  nxDepartmentUserEntities;
 
 	private List<NxDepartmentEntity> nxDepartmentEntities;
-	
 
+	private List<NxDepartmentOrdersEntity> nxDepartmentOrdersEntities;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		NxDepartmentEntity that = (NxDepartmentEntity) o;
+		return Objects.equals(nxDepartmentId, that.nxDepartmentId) &&
+				Objects.equals(nxDepartmentName, that.nxDepartmentName) &&
+				Objects.equals(nxDepartmentFatherId, that.nxDepartmentFatherId) &&
+				Objects.equals(nxDepartmentType, that.nxDepartmentType) &&
+				Objects.equals(nxDepartmentSubAmount, that.nxDepartmentSubAmount) &&
+				Objects.equals(nxDepartmentFilePath, that.nxDepartmentFilePath) &&
+				Objects.equals(isSelected, that.isSelected) &&
+				Objects.equals(nxDepUserId, that.nxDepUserId) &&
+				Objects.equals(nxDepartmentDisId, that.nxDepartmentDisId) &&
+				Objects.equals(fatherDepartmentEntity, that.fatherDepartmentEntity) &&
+				Objects.equals(nxDepartmentUserEntity, that.nxDepartmentUserEntity) &&
+				Objects.equals(nxDepartmentUserEntities, that.nxDepartmentUserEntities) &&
+				Objects.equals(nxDepartmentEntities, that.nxDepartmentEntities) &&
+				Objects.equals(nxDepartmentOrdersEntities, that.nxDepartmentOrdersEntities);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nxDepartmentId, nxDepartmentName, nxDepartmentFatherId, nxDepartmentType, nxDepartmentSubAmount, nxDepartmentFilePath, isSelected, nxDepUserId, nxDepartmentDisId, fatherDepartmentEntity, nxDepartmentUserEntity, nxDepartmentUserEntities, nxDepartmentEntities, nxDepartmentOrdersEntities);
+	}
+
+	@Override
+	public int compareTo(Object o) {
+
+		if (o instanceof NxDepartmentEntity) {
+			NxDepartmentEntity e = (NxDepartmentEntity) o;
+			return this.nxDepartmentId.compareTo(e.nxDepartmentId);
+		}
+		return 0;
+	}
 }

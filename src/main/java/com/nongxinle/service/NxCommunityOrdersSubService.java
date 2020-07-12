@@ -29,7 +29,7 @@ public interface NxCommunityOrdersSubService {
 	
 	void deleteBatch(Integer[] nxOrdersSubIds);
 
-    List<NxCommunityOrdersSubEntity> queryToPurchaseGoods(Map<String, Object> map);
+//    List<NxCommunityOrdersSubEntity> queryToPurchaseGoods(Map<String, Object> map);
 
 	List<NxCommunityOrdersSubEntity> querySubsByGoodsId(Map<String, Object> subMap);
 

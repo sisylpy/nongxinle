@@ -311,32 +311,13 @@ public class NxCommunityOrdersController {
      * @param disId 批发商id
      * @return 分配拣货员列表
      */
-    @RequestMapping(value = "/disGetIndexData/{disId}")
-    @ResponseBody
-    public R disGetIndexData(@PathVariable Integer disId) {
-        Map<String, Object> list = nxCommunityOrdersService.queryDistributerIndexData(disId);
-        return R.ok().put("data", list);
-    }
+//    @RequestMapping(value = "/disGetIndexData/{disId}")
+//    @ResponseBody
+//    public R disGetIndexData(@PathVariable Integer disId) {
+//        Map<String, Object> list = nxCommunityOrdersService.queryDistributerIndexData(disId);
+//        return R.ok().put("data", list);
+//    }
 
-
-    @RequestMapping(value = "/distributionWeighing", method = RequestMethod.POST)
-    @ResponseBody
-    public R distributionWeighing(Integer pickUserId, String ordersEntities) {
-
-
-        JSONArray jsonArray = JSONArray.fromObject(ordersEntities);
-        for (Object obj : jsonArray) {
-            JSONObject jsonObject2 = JSONObject.fromObject(obj);
-            NxCommunityOrdersEntity ordersEntity = (NxCommunityOrdersEntity) JSONObject.toBean(jsonObject2, NxCommunityOrdersEntity.class);
-
-            ordersEntity.setNxCoStatus(1);
-            ordersEntity.setNxCoWeighUserId(pickUserId);
-            nxCommunityOrdersService.update(ordersEntity);
-
-        }
-
-        return R.ok();
-    }
 
 
     /**

@@ -1,6 +1,8 @@
 package com.nongxinle.service.impl;
 
+import com.nongxinle.entity.NxDepartmentOrdersEntity;
 import com.nongxinle.entity.NxDepartmentUserEntity;
+import com.nongxinle.service.NxDepartmentOrdersService;
 import com.nongxinle.service.NxDepartmentUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 
 	@Autowired
 	private NxDepartmentUserService nxDepartmentUserService;
+
+	@Autowired
+	private NxDepartmentOrdersService nxDepartmentOrdersService;
 	
 	@Override
 	public NxDepartmentEntity queryObject(Integer nxDepartmentId){
@@ -119,13 +124,32 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 		Integer nxDuDepartmentId = userEntity.getNxDuDepartmentId();
 		NxDepartmentEntity group =  nxDepartmentDao.queryObject(nxDuDepartmentId);
 
+		List<NxDepartmentOrdersEntity> ordersEntities = nxDepartmentOrdersService.queryGroupTodayOrders(nxDuDepartmentId);
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("userInfo", userEntity);
 		map.put("groupInfo", group);
+		map.put("orders", ordersEntities);
 
 
 		return map;
 
+	}
+
+	@Override
+	public void saveJustDepartment(NxDepartmentEntity nxDepartmentEntity) {
+		nxDepartmentDao.save(nxDepartmentEntity);
+	}
+
+	@Override
+	public List<NxDepartmentEntity> querySubDepartments(Integer depId) {
+		return nxDepartmentDao.querySubDepartments(depId);
+
+	}
+
+	@Override
+	public List<NxDepartmentEntity> queryFatherDep(Integer depId) {
+		return nxDepartmentDao.queryFatherDep(depId);
 	}
 
 

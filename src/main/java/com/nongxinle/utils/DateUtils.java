@@ -45,6 +45,33 @@ public class DateUtils {
         return format1;
     }
 
+    public static  String formatWhatDate(int what) {
+        Date whatDay = calendarDay(what).getTime();
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("MM-dd");
+        String format1 = dateFormat2.format(whatDay);
+        return format1;
+    }
+    public static  String formatWhatTime(int what) {
+        Date whatDay = calendarDay(what).getTime();
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm");
+        String format1 = dateFormat2.format(whatDay);
+        return format1;
+    }
+
+    public static  String formatWhatHour(int what) {
+        Date whatDay = calendarDay(what).getTime();
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH");
+        String format1 = dateFormat2.format(whatDay);
+        return format1;
+    }
+    public static  String formatWhatMinute(int what) {
+        Date whatDay = calendarDay(what).getTime();
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("mm");
+        String format1 = dateFormat2.format(whatDay);
+        return format1;
+    }
+
+
     public static  String formatWhatYearDayTime(int what) {
         Date whatDay = calendarDay(what).getTime();
         SimpleDateFormat dateFormat2 = new SimpleDateFormat(YEAR_DATE_TIME_PATTERN);

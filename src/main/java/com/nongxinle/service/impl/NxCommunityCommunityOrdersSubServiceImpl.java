@@ -52,11 +52,11 @@ public class NxCommunityCommunityOrdersSubServiceImpl implements NxCommunityOrde
 		nxCommunityOrdersSubDao.deleteBatch(nxOrdersSubIds);
 	}
 
-    @Override
-    public List<NxCommunityOrdersSubEntity> queryToPurchaseGoods(Map<String, Object> map) {
-
-		return nxCommunityOrdersSubDao.queryPurchaseGoods(map);
-    }
+//    @Override
+//    public List<NxCommunityOrdersSubEntity> queryToPurchaseGoods(Map<String, Object> map) {
+//
+//		return nxCommunityOrdersSubDao.queryPurchaseGoods(map);
+//    }
 
 	@Override
 	public List<NxCommunityOrdersSubEntity> querySubsByGoodsId(Map<String, Object> subMap) {

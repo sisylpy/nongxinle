@@ -8,6 +8,7 @@ package com.nongxinle.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,5 +32,7 @@ public class NxDistributerDepartmentEntity implements Serializable {
 	 *  
 	 */
 	private Integer nxDdDepartmentId;
+
+	private NxDepartmentEntity nxDepartmentEntity;
 
 }

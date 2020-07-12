@@ -98,6 +98,7 @@ public class NxCustomerUserController {
 	@RequestMapping("/save")
 	@RequiresPermissions("nxcustomeruser:save")
 	public R save(@RequestBody NxCustomerUserEntity nxCustomerUser){
+
 		nxCustomerUserService.save(nxCustomerUser);
 		
 		return R.ok();

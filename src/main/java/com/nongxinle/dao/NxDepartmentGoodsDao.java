@@ -18,4 +18,8 @@ public interface NxDepartmentGoodsDao extends BaseDao<NxDepartmentGoodsEntity> {
     List<NxDepartmentGoodsEntity> queryDepartmentGoods(Map<String, Object> map);
 
     List<NxDepartmentGoodsEntity> queryAllDepartmentGoods(Integer depId);
+
+    List<NxDepartmentGoodsEntity> queryDepGoodsByFatherId(Map<String, Object> map);
+
+    List<NxDepartmentGoodsEntity> queryIfHasDepartmentGoods(Map<String, Object> map);
 }

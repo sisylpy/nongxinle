@@ -3,8 +3,10 @@
 
 <mapper namespace="com.nongxinle.dao.NxDistributerUserDao">
 
-	<select id="queryObject" resultType="com.nongxinle.entity.NxDistributerUserEntity">
-		select * from nx_distributer_user where nx_distributer_user_id = #{value}
+	<select id="queryObject" resultMap="disUser">
+		select * from nx_distributer_user as du
+						  left join nx_distributer as d on d.nx_distributer_id = du.nx_DIU_distributer_id
+		where nx_distributer_user_id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.nongxinle.entity.NxDistributerUserEntity">
@@ -43,6 +45,7 @@
 	<select id="queryUser" resultMap="disUser">
 		select * from nx_distributer_user as du
 		left join nx_distributer_user_role as r on du.nx_distributer_user_id = r.nx_DUR_user_id
+		left join nx_distributer as d on d.nx_distributer_id = du.nx_DIU_distributer_id
 		where nx_DIU_distributer_id= #{disId}
 	</select>
 
@@ -50,7 +53,13 @@
 	<select id="queryUserInfo" resultMap="disUser">
 		select * from nx_distributer_user as u
 		left join nx_distributer as d on u.nx_DIU_distributer_id = d.nx_distributer_id
+
 		where nx_distributer_user_id = #{nxDistributerUserId}
+	</select>
+	<select id="queryUserByOpenId" resultMap="disUser">
+		select * from nx_distributer_user as du
+						  left join nx_distributer as d on d.nx_distributer_id = du.nx_DIU_distributer_id
+		where nx_DIU_wx_open_id = #{openid}
 	</select>
 
 	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerUserEntity"
@@ -63,7 +72,7 @@
 			`nx_DIU_wx_open_id`, 
 			`nx_DIU_wx_phone`, 
 			`nx_DIU_distributer_id`
-		)
+					)
 		values
 		(
 			#{nxDistributerUserId}, 
@@ -80,8 +89,8 @@
 		<set>
 			<if test="nxDiuWxAvartraUrl != null">`nx_DIU_wx_avartra_url` = #{nxDiuWxAvartraUrl}, </if>
 			<if test="nxDiuWxNickName != null">`nx_DIU_wx_nick_name` = #{nxDiuWxNickName}, </if>
-			<if test="nxDiuWxOpenId != null">`nx_DIU_wx_open_id` = #{nxDiuWxOpenId}, </if>
 			<if test="nxDiuWxPhone != null">`nx_DIU_wx_phone` = #{nxDiuWxPhone}, </if>
+			<if test="nxDiuWxOpenId != null">`nx_DIU_wx_open_id` = #{nxDiuWxOpenId}, </if>
 			<if test="nxDiuDistributerId != null">`nx_DIU_distributer_id` = #{nxDiuDistributerId}</if>
 		</set>
 		where nx_distributer_user_id = #{nxDistributerUserId}

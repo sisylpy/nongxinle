@@ -125,17 +125,18 @@
 		where nx_community_orders_id = #{value}
 
 	</select>
-	<select id="queryOrders" resultMap="orders">
-		select * from nx_community_orders as o
-		left join nx_customer as c on o.nx_CO_customer_id = c.nx_customer_id
-		left join nx_customer_user as u on o.nx_CO_user_id = u.nx_Cu_user_id
-        where o.nx_CO_distributer_id = #{disId} and o.nx_CO_status = #{status}
-		<if test="pickerUserId != null">
-			and o.nx_CO_weigh_user_id = #{pickerUserId}
-		</if>
-		order by  o.nx_CO_service, o.nx_CO_service_date, o.nx_CO_service_time
 
-	</select>
+	<!--<select id="queryOrders" resultMap="orders">-->
+		<!--select * from nx_community_orders as o-->
+		<!--left join nx_customer as c on o.nx_CO_customer_id = c.nx_customer_id-->
+		<!--left join nx_customer_user as u on o.nx_CO_user_id = u.nx_Cu_user_id-->
+        <!--where o.nx_CO_distributer_id = #{disId} and o.nx_CO_status = #{status}-->
+		<!--<if test="pickerUserId != null">-->
+			<!--and o.nx_CO_weigh_user_id = #{pickerUserId}-->
+		<!--</if>-->
+		<!--order by  o.nx_CO_service, o.nx_CO_service_date, o.nx_CO_service_time-->
+
+	<!--</select>-->
 	<select id="queryOrdersToWeigh" resultMap="orders">
 		select * from nx_community_orders as o
           left join nx_customer_user as u on o.nx_CO_user_id = u.nx_CU_user_id

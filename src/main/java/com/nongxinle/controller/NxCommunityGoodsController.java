@@ -119,16 +119,16 @@ public class NxCommunityGoodsController {
 
 
 
-    @RequestMapping(value = "/getPurchaserGoods", method = RequestMethod.POST)
-    @ResponseBody
-    public R getPurchaserGoods (Integer purchaserUserId, Integer status) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("purchaserUserId", purchaserUserId);
-        map.put("status", status);
-        List<NxCommunityGoodsEntity> distributerGoodsEntities  = cgService.queryPurchaseGoods(map);
-
-        return R.ok().put("data", distributerGoodsEntities);
-    }
+//    @RequestMapping(value = "/getPurchaserGoods", method = RequestMethod.POST)
+//    @ResponseBody
+//    public R getPurchaserGoods (Integer purchaserUserId, Integer status) {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("purchaserUserId", purchaserUserId);
+//        map.put("status", status);
+//        List<NxCommunityGoodsEntity> distributerGoodsEntities  = cgService.queryPurchaseGoods(map);
+//
+//        return R.ok().put("data", distributerGoodsEntities);
+//    }
 
 
      @RequestMapping(value = "/purchaseDisGoods", method = RequestMethod.POST)

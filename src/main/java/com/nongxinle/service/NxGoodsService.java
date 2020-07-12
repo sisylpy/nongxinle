@@ -46,4 +46,6 @@ public interface NxGoodsService {
     List<NxGoodsEntity> queryGoodsTree();
 
     List<NxGoodsEntity> queryGoodsByFatherId(Integer fatherId);
+
+    List<NxGoodsEntity> queryQuickSearch(String str);
 }

@@ -37,4 +37,10 @@ public interface NxDepartmentService {
 	Integer saveNewRestraunt(NxDepartmentEntity dep);
 
 	Map<String, Object> queryGroupInfo(Integer userId);
+
+	void saveJustDepartment(NxDepartmentEntity nxDepartmentEntity);
+
+	List<NxDepartmentEntity> querySubDepartments(Integer depId);
+
+	List<NxDepartmentEntity> queryFatherDep(Integer depId);
 }

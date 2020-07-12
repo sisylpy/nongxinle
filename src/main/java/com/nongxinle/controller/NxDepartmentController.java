@@ -7,11 +7,13 @@ package com.nongxinle.controller;
  * @date 06-16 11:26
  */
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.nongxinle.entity.NxDepartmentUserEntity;
+import com.nongxinle.service.NxDepartmentOrdersService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,40 @@ public class NxDepartmentController {
 	@Autowired
 	private NxDepartmentService nxDepartmentService;
 
+	@Autowired
+	private NxDepartmentOrdersService nxDepartmentOrdersService;
+
+	@RequestMapping(value = "/getFatherDep/{depId}")
+	@ResponseBody
+	public R getFatherDep(@PathVariable Integer depId) {
+		List<NxDepartmentEntity> departmentEntities = nxDepartmentService.queryFatherDep(depId);
+
+
+	    return R.ok().put("data", departmentEntities.get(0));
+	}
+
+
+	@RequestMapping(value = "/getSubDepartments/{depId}")
+	@ResponseBody
+	public R getSubDepartments(@PathVariable Integer depId) {
+	     List<NxDepartmentEntity> departmentEntities =   nxDepartmentService.querySubDepartments(depId);
+
+	    return R.ok().put("data", departmentEntities);
+	}
+
+
+	 @RequestMapping(value = "/getPrintPickerData", method = RequestMethod.POST)
+	  @ResponseBody
+	  public R getPrintPickerData (@RequestBody List<NxDepartmentEntity>  depArr) {
+		 System.out.println(depArr);
+		 List<NxDepartmentEntity> departmentEntityList = new ArrayList<>();
+		 for (NxDepartmentEntity dep : depArr) {
+			NxDepartmentEntity departmentEntities =   nxDepartmentOrdersService.queryPrintPickerData(dep.getNxDepartmentId());
+			 departmentEntityList.add(departmentEntities);
+		 }
+
+	    return R.ok().put("data", departmentEntityList);
+	  }
 
 
 	@RequestMapping(value = "/groupInfo/{userId}")

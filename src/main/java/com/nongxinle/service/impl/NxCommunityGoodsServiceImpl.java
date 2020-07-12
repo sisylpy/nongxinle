@@ -82,10 +82,10 @@ public class NxCommunityGoodsServiceImpl implements NxCommunityGoodsService {
 //		return  nxCommunityGoodsDao.queryPlanGoods(planMap);
 //    }
 
-    @Override
-    public List<NxCommunityGoodsEntity> queryPurchaseGoods(Map<String, Object> map) {
-        return nxCommunityGoodsDao.queryPurchaseGoods(map);
-    }
+//    @Override
+//    public List<NxCommunityGoodsEntity> queryPurchaseGoods(Map<String, Object> map) {
+//        return nxCommunityGoodsDao.queryPurchaseGoods(map);
+//    }
 
     @Override
     public List<NxCommunityGoodsEntity> queryCommunityDownloadGoods(Map<String, Object> map) {

@@ -13,8 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.nongxinle.entity.NxCommunityGoodsEntity;
+import com.nongxinle.entity.NxPurchaseStandardEntity;
 import com.nongxinle.entity.NxStandardEntity;
 import com.nongxinle.service.NxCommunityGoodsService;
+import com.nongxinle.service.NxPurchaseStandardService;
 import com.nongxinle.service.NxStandardService;
 import com.nongxinle.utils.UploadFile;
 import org.apache.commons.io.IOUtils;
@@ -40,8 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static com.nongxinle.utils.PinYin4jUtils.getHeadStringByString;
-import static com.nongxinle.utils.PinYin4jUtils.hanziToPinyin;
+import static com.nongxinle.utils.PinYin4jUtils.*;
 
 
 @RestController
@@ -55,6 +56,26 @@ public class NxGoodsController {
 
     @Autowired
     private NxStandardService standardService;
+
+    @Autowired
+    private NxPurchaseStandardService purchaseStandardService;
+
+
+
+
+
+    @RequestMapping(value = "/queryGoodsByQuickSearch/{str}")
+    @ResponseBody
+    public R queryGoodsByQuickSearch(@PathVariable  String str) {
+        System.out.println(str);
+        List<NxGoodsEntity> goodsEntities = nxGoodsService.queryQuickSearch(str);
+//        System.out.println(goodsEntities);
+
+
+        return R.ok().put("data", goodsEntities);
+    }
+
+
 
 
      @RequestMapping(value = "/restrauntGetGoodsByFatherId", method = RequestMethod.POST)

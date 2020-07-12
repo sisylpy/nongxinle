@@ -83,6 +83,8 @@ public class NxGoodsEntity implements Serializable, Comparable {
 	 */
 	private  Integer isDownload;
 
+	private Integer nxDepartmentGoodsId;
+
 	private List<NxStandardEntity> nxGoodsStandardEntities;
 
 	private String nxGoodsDetail;

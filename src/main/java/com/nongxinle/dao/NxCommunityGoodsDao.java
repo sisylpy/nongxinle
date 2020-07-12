@@ -25,7 +25,7 @@ public interface NxCommunityGoodsDao extends BaseDao<NxCommunityGoodsEntity> {
 
 //    List<NxCommunityGoodsEntity> queryPlanGoods(Map<String, Object> planMap);
 
-    List<NxCommunityGoodsEntity> queryPurchaseGoods(Map<String, Object> map);
+//    List<NxCommunityGoodsEntity> queryPurchaseGoods(Map<String, Object> map);
 
     List<NxCommunityGoodsEntity> queryCommunityDownloadGoods(Map<String, Object> map);
 

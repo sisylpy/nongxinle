@@ -204,82 +204,82 @@ public class NxCommunityOrdersSubController {
     }
 
 
-    @RequestMapping(value = "/getToPurchaseGoods", method = RequestMethod.POST)
-    @ResponseBody
-    public R getToPurchaseGoods(Integer disId, Integer status) {
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("disId", disId);
-        map.put("status", status);
-        List<NxCommunityOrdersSubEntity> subEntities = nxCommunityOrdersSubService.queryToPurchaseGoods(map);
-
-        List<Map<String, Object>> resultData = new ArrayList<>();
-        System.out.println("fhakfdaslkfjaskl" + subEntities.size());
-
-        if (subEntities.size() > 0) {
-
-            TreeSet<NxCommunityFatherGoodsEntity> fatherGoodsList = new TreeSet<>();
-            //获取父级商品
-            for (NxCommunityOrdersSubEntity subEntity : subEntities) {
-                Integer nxOsGoodsFatherId = subEntity.getNxCosCommunityGoodsFatherId();
-                NxCommunityFatherGoodsEntity fatherGoods = nxCommunityFatherGoodsService.queryObject(nxOsGoodsFatherId);
-                fatherGoodsList.add(fatherGoods);
-            }
-            System.out.println(fatherGoodsList + "fatherGoodsList");
-
-
-            // 一，父级商品子商品组装
-            for (NxCommunityFatherGoodsEntity fatherGoods : fatherGoodsList) {
-                // 父级商品和子商品和子订单
-                Map<String, Object> mapFather = new HashMap<>();
-                mapFather.put("fatherName", fatherGoods.getNxFatherGoodsName());
-                mapFather.put("show", false);
-                List<Map<String, Object>> goodsList = new ArrayList<>();
-                TreeSet<NxCommunityGoodsEntity> commGoodsEntityTreeSet = new TreeSet<>();
-
-                // 二，获取配送商商品列表
-                for (NxCommunityOrdersSubEntity subEntity : subEntities) {
-
-                    System.out.println("kankan:" + subEntity.getNxCommunityGoodsEntity());
-                    System.out.println("father" + fatherGoods.getNxCommunityFatherGoodsId());
-//                    System.out.println("subFather" + subEntity.getNxOsGoodsFatherId());
-                    // 组装子商品和子订单
-                    if (fatherGoods.getNxCommunityFatherGoodsId().equals(subEntity.getNxCosCommunityGoodsFatherId())) {
-                        commGoodsEntityTreeSet.add(subEntity.getNxCommunityGoodsEntity());
-                    }
-                }
-
-                System.out.println("trees:" + commGoodsEntityTreeSet);
-
-                // 组装商品的子订单
-                for (NxCommunityGoodsEntity commGoods : commGoodsEntityTreeSet) {
-                    Map<String, Object> mapSub = new HashMap<>();
-
-                    mapSub.put("goodsName", commGoods.getNxCgGoodsName());
-                    mapSub.put("standardName", commGoods.getNxCgGoodsStandardname());
-                    mapSub.put("purchase", commGoods.getNxCgPurchaseQuantity());
-                    mapSub.put("disGoodsId", commGoods.getNxCommunityGoodsId());
-                    mapSub.put("show", true);
-                    Map<String, Object> subMap = new HashMap<>();
-                    subMap.put("disGoodsId", commGoods.getNxCommunityGoodsId());
-                    subMap.put("status", status);
-                    List<NxCommunityOrdersSubEntity> subEntities1 = nxCommunityOrdersSubService.querySubsByGoodsId(subMap);
-                    mapSub.put("subList", subEntities1);
-                    goodsList.add(mapSub);
-
-                }
-
-                mapFather.put("goodsList", goodsList);
-
-                resultData.add(mapFather);
-
-            }
-
-        }
-
-        return R.ok().put("data", resultData);
-
-    }
+//    @RequestMapping(value = "/getToPurchaseGoods", method = RequestMethod.POST)
+//    @ResponseBody
+//    public R getToPurchaseGoods(Integer disId, Integer status) {
+//
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("disId", disId);
+//        map.put("status", status);
+//        List<NxCommunityOrdersSubEntity> subEntities = nxCommunityOrdersSubService.queryToPurchaseGoods(map);
+//
+//        List<Map<String, Object>> resultData = new ArrayList<>();
+//        System.out.println("fhakfdaslkfjaskl" + subEntities.size());
+//
+//        if (subEntities.size() > 0) {
+//
+//            TreeSet<NxCommunityFatherGoodsEntity> fatherGoodsList = new TreeSet<>();
+//            //获取父级商品
+//            for (NxCommunityOrdersSubEntity subEntity : subEntities) {
+//                Integer nxOsGoodsFatherId = subEntity.getNxCosCommunityGoodsFatherId();
+//                NxCommunityFatherGoodsEntity fatherGoods = nxCommunityFatherGoodsService.queryObject(nxOsGoodsFatherId);
+//                fatherGoodsList.add(fatherGoods);
+//            }
+//            System.out.println(fatherGoodsList + "fatherGoodsList");
+//
+//
+//            // 一，父级商品子商品组装
+//            for (NxCommunityFatherGoodsEntity fatherGoods : fatherGoodsList) {
+//                // 父级商品和子商品和子订单
+//                Map<String, Object> mapFather = new HashMap<>();
+//                mapFather.put("fatherName", fatherGoods.getNxFatherGoodsName());
+//                mapFather.put("show", false);
+//                List<Map<String, Object>> goodsList = new ArrayList<>();
+//                TreeSet<NxCommunityGoodsEntity> commGoodsEntityTreeSet = new TreeSet<>();
+//
+//                // 二，获取配送商商品列表
+//                for (NxCommunityOrdersSubEntity subEntity : subEntities) {
+//
+//                    System.out.println("kankan:" + subEntity.getNxCommunityGoodsEntity());
+//                    System.out.println("father" + fatherGoods.getNxCommunityFatherGoodsId());
+////                    System.out.println("subFather" + subEntity.getNxOsGoodsFatherId());
+//                    // 组装子商品和子订单
+//                    if (fatherGoods.getNxCommunityFatherGoodsId().equals(subEntity.getNxCosCommunityGoodsFatherId())) {
+//                        commGoodsEntityTreeSet.add(subEntity.getNxCommunityGoodsEntity());
+//                    }
+//                }
+//
+//                System.out.println("trees:" + commGoodsEntityTreeSet);
+//
+//                // 组装商品的子订单
+//                for (NxCommunityGoodsEntity commGoods : commGoodsEntityTreeSet) {
+//                    Map<String, Object> mapSub = new HashMap<>();
+//
+//                    mapSub.put("goodsName", commGoods.getNxCgGoodsName());
+//                    mapSub.put("standardName", commGoods.getNxCgGoodsStandardname());
+//                    mapSub.put("purchase", commGoods.getNxCgPurchaseQuantity());
+//                    mapSub.put("disGoodsId", commGoods.getNxCommunityGoodsId());
+//                    mapSub.put("show", true);
+//                    Map<String, Object> subMap = new HashMap<>();
+//                    subMap.put("disGoodsId", commGoods.getNxCommunityGoodsId());
+//                    subMap.put("status", status);
+//                    List<NxCommunityOrdersSubEntity> subEntities1 = nxCommunityOrdersSubService.querySubsByGoodsId(subMap);
+//                    mapSub.put("subList", subEntities1);
+//                    goodsList.add(mapSub);
+//
+//                }
+//
+//                mapFather.put("goodsList", goodsList);
+//
+//                resultData.add(mapFather);
+//
+//            }
+//
+//        }
+//
+//        return R.ok().put("data", resultData);
+//
+//    }
 
 
     /**

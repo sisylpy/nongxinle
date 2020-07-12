@@ -176,6 +176,11 @@
 		left join nx_standard as s on g.nx_goods_id = s.nx_s_goods_id
 		where nx_goods_father_id = #{fatherId}
 	</select>
+    <select id="queryQuickSearch" resultType="com.nongxinle.entity.NxGoodsEntity">
+		select * from nx_goods where (nx_goods_py like concat('%', #{str}, '%')
+			or nx_goods_pinyin like concat('%', #{str}, '%')
+			or nx_goods_name like concat('%', #{str}, '%'))
+	</select>
 
 
     <insert id="save" parameterType="com.nongxinle.entity.NxGoodsEntity">

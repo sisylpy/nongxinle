@@ -98,5 +98,11 @@ public class NxGoodsServiceImpl implements NxGoodsService {
         return nxGoodsDao.queryGoodsByFatherId(fatherId);
     }
 
+    @Override
+    public List<NxGoodsEntity> queryQuickSearch(String str) {
+
+		return nxGoodsDao.queryQuickSearch(str);
+    }
+
 
 }

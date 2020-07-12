@@ -30,7 +30,7 @@ public interface NxCommunityOrdersService {
 
     List<NxCommunityOrdersEntity> queryOrders(Map<String, Object> map);
 
-	Map<String, Object> queryDistributerIndexData(Integer communityId);
+//	Map<String, Object> queryDistributerIndexData(Integer communityId);
 
 	List<NxCommunityOrdersEntity> queryOrdersToWeigh(Map<String, Object> map);
 

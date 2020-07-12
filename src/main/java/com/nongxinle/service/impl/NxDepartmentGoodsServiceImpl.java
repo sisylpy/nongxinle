@@ -58,4 +58,16 @@ public class NxDepartmentGoodsServiceImpl implements NxDepartmentGoodsService {
 		return  nxDepartmentGoodsDao.queryAllDepartmentGoods(depId);
     }
 
+    @Override
+    public List<NxDepartmentGoodsEntity> queryDepGoodsByFatherId(Map<String, Object> map) {
+
+		return nxDepartmentGoodsDao.queryDepGoodsByFatherId(map);
+    }
+
+    @Override
+    public List<NxDepartmentGoodsEntity> queryIfHasDepartmentGoods(Map<String, Object> map) {
+
+		return nxDepartmentGoodsDao.queryIfHasDepartmentGoods(map);
+	}
+
 }

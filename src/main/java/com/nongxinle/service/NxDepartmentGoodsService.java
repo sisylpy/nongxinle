@@ -29,4 +29,8 @@ public interface NxDepartmentGoodsService {
 	void deleteBatch(Integer[] nxCommunityGoodsIds);
 
     List<NxDepartmentGoodsEntity> queryDepartGoods(Integer depId);
+
+    List<NxDepartmentGoodsEntity> queryDepGoodsByFatherId(Map<String, Object> map);
+
+	List<NxDepartmentGoodsEntity> queryIfHasDepartmentGoods(Map<String, Object> map);
 }

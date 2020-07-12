@@ -17,8 +17,25 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from nx_distributer_department 
 	</select>
-	 
-	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerDepartmentEntity">
+
+	<resultMap id="customer" type="NxDepartmentEntity">
+		<id property="nxDepartmentId" column="nx_department_id"/>
+		<result property="nxDepartmentName" column="nx_department_name"/>
+		<result property="nxDepartmentType" column="nx_department_type"/>
+	</resultMap>
+
+	<resultMap id="allMyCustomer" type="NxDistributerDepartmentEntity">
+		<id property="nxDistributerDepId" column="nx_distributer_dep_id"/>
+		<association property="nxDepartmentEntity" resultMap="customer" />
+
+	</resultMap>
+    <select id="queryAllCustomer" resultMap="allMyCustomer">
+		select * from nx_distributer_department dd
+		left join nx_department as d on d.nx_department_id = dd.nx_DD_department_id
+		where nx_DD_distributer_id = #{disId}
+	</select>
+
+    <insert id="save" parameterType="com.nongxinle.entity.NxDistributerDepartmentEntity">
 		insert into nx_distributer_department
 		(
 			`nx_distributer_dep_id`, 

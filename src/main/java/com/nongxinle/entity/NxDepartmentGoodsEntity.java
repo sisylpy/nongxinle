@@ -56,4 +56,18 @@ public class NxDepartmentGoodsEntity implements Serializable {
 	 */
 	private Integer nxDgDistributeId;
 
+	private String nxDgOrderQuantity;
+	private String nxDgOrderStandard;
+	private String nxDgOrderTime;
+	private String nxDgOrderOnlyDate;
+	private String nxDgOrderOnlyTime;
+
+
+	private NxGoodsEntity nxGoodsEntity;
+
+	private String nxDgOrderEditQuantity;
+	private String nxDgOrderEditStandard;
+	private String nxDgOrderEditRemark;
+	private Boolean isSelected;
+
 }

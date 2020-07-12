@@ -28,7 +28,16 @@ import com.nongxinle.utils.R;
 public class NxDistributerUserController {
 	@Autowired
 	private NxDistributerUserService nxDistributerUserService;
-	
+
+
+	@RequestMapping(value = "/getDisInfoByUserId/{userId}")
+	@ResponseBody
+	public R getDisInfoByUserId(@PathVariable Integer userId) {
+
+		NxDistributerUserEntity nxDistributerUserEntity = nxDistributerUserService.queryObject(userId);
+
+		return R.ok().put("data", nxDistributerUserEntity);
+	}
 
 
 	@RequestMapping(value = "/disGetUserByRole", method = RequestMethod.POST)

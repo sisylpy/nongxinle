@@ -17,6 +17,7 @@
 		<result property="nxDepartmentName" column="nx_department_name"/>
 		<result property="nxDepartmentSubAmount" column="nx_department_sub_amount"/>
 		<result property="nxDepartmentDisId" column="nx_department_dis_id"/>
+		<result property="nxDepartmentFilePath" column="nx_department_file_path"/>
 		<collection property="nxDepartmentEntities" resultMap="subDeps"/>
 	</resultMap>
 
@@ -24,6 +25,7 @@
 		select d.nx_department_id 'nx_department_id', d.nx_department_name 'nx_department_name',
 		       d.nx_department_sub_amount 'nx_department_sub_amount',
 		       d.nx_department_dis_id 'nx_department_dis_id',
+		       d.nx_department_file_path 'nx_department_file_path',
 			   dd.nx_department_id 'dd_nx_department_id', dd.nx_department_name 'dd_nx_department_name',
 		       dd.nx_department_sub_amount 'dd_nx_department_sub_amount',
 		       dd.nx_department_father_id 'dd_nx_department_father_id'
@@ -92,6 +94,15 @@
 		left join nx_department as dd on d.nx_department_father_id = dd.nx_department_id
 		where d.nx_department_id = #{nxDuDepartmentId}
 	</select>
+    <select id="querySubDepartments" resultType="com.nongxinle.entity.NxDepartmentEntity">
+		select * from nx_department
+		where nx_department_father_id = #{depId}
+	</select>
+	<select id="queryFatherDep" resultType="com.nongxinle.entity.NxDepartmentEntity">
+		select fd.nx_department_id, fd.nx_department_name from nx_department as d
+		left join nx_department as fd on d.nx_department_father_id = fd.nx_department_id
+		where d.nx_department_id = #{depId}
+	</select>
 
 
 	<insert id="save" parameterType="com.nongxinle.entity.NxDepartmentEntity"
@@ -103,7 +114,8 @@
 			`nx_department_father_id`, 
 			`nx_department_type`, 
 			`nx_department_sub_amount`,
-		 	`nx_department_dis_id`
+		 	`nx_department_dis_id`,
+		 	`nx_department_file_path`
 		)
 		values
 		(
@@ -112,7 +124,8 @@
 			#{nxDepartmentFatherId}, 
 			#{nxDepartmentType}, 
 			#{nxDepartmentSubAmount},
-		 	#{nxDepartmentDisId}
+		 	#{nxDepartmentDisId},
+		 	#{nxDepartmentFilePath}
 		)
 	</insert>
 
@@ -125,6 +138,7 @@
 			<if test="nxDepartmentFatherId != null">`nx_department_father_id` = #{nxDepartmentFatherId}, </if>
 			<if test="nxDepartmentType != null">`nx_department_type` = #{nxDepartmentType}, </if>
 			<if test="nxDepartmentDisId != null">`nx_department_dis_id` = #{nxDepartmentDisId}, </if>
+			<if test="nxDepartmentFilePath != null">`nx_department_file_path` = #{nxDepartmentFilePath}, </if>
 			<if test="nxDepartmentSubAmount != null">`nx_department_sub_amount` = #{nxDepartmentSubAmount}</if>
 		</set>
 		where nx_department_id = #{nxDepartmentId}

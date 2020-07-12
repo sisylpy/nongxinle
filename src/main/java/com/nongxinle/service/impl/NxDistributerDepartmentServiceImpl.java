@@ -1,5 +1,6 @@
 package com.nongxinle.service.impl;
 
+import com.nongxinle.entity.NxDistributerCommunityEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +52,11 @@ public class NxDistributerDepartmentServiceImpl implements NxDistributerDepartme
 	public void deleteBatch(Integer[] nxDistributerDepIds){
 		nxDistributerDepartmentDao.deleteBatch(nxDistributerDepIds);
 	}
-	
+
+    @Override
+    public List<NxDistributerDepartmentEntity> queryAllCustomer(Integer disId) {
+
+		return nxDistributerDepartmentDao.queryAllCustomer(disId);
+    }
+
 }

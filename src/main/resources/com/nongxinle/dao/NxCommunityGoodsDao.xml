@@ -163,12 +163,13 @@
 
 
 
-	<select id="queryPurchaseGoods" resultMap="dgGoodsWithSubOrder">
-		select * from nx_community_goods as cg
-			left join nx_orders_sub as os on os.nx_OS_community_goods_id = cg.nx_community_goods_id
-		    left join nx_goods as g on g.nx_goods_id = cg.nx_cg_nx_goods_id
-		where nx_cg_buy_purchase_user_id = #{purchaserUserId} and   nx_cg_buy_status = #{status}
-	</select>
+	<!--<select id="queryPurchaseGoods" resultMap="dgGoodsWithSubOrder">-->
+		<!--select * from nx_community_goods as cg-->
+			<!--left join nx_orders_sub as os on os.nx_OS_community_goods_id = cg.nx_community_goods_id-->
+		    <!--left join nx_goods as g on g.nx_goods_id = cg.nx_cg_nx_goods_id-->
+		<!--where nx_cg_buy_purchase_user_id = #{purchaserUserId} and   nx_cg_buy_status = #{status}-->
+	<!--</select>-->
+	<!---->
 	<select id="queryCommunityDownloadGoods" resultType="com.nongxinle.entity.NxCommunityGoodsEntity">
 		select * from nx_community_goods where nx_cg_community_id = #{communityId} and nx_cg_nx_goods_id = #{goodsId}
 	</select>

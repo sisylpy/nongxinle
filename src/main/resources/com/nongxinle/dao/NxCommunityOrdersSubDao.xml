@@ -48,11 +48,11 @@
         <association property="nxCommunityEntity" resultMap="community"/>
 
     </resultMap>
-    <select id="queryPurchaseGoods" resultMap="subOrders">
-        select * from nx_community_orders_sub as os
-          left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_COS_community_goods_id
-        where nx_COS_distributer_id = #{disId} and nx_COS_buy_status = #{status}
-    </select>
+    <!--<select id="queryPurchaseGoods" resultMap="subOrders">-->
+        <!--select * from nx_community_orders_sub as os-->
+          <!--left join nx_community_goods as dg on dg.nx_community_goods_id = os.nx_COS_community_goods_id-->
+        <!--where nx_COS_distributer_id = #{disId} and nx_COS_buy_status = #{status}-->
+    <!--</select>-->
     <select id="querySubsByGoodsId" resultType="com.nongxinle.entity.NxCommunityOrdersSubEntity">
         select * from nx_community_orders_sub where nx_COS_community_goods_id = #{disGoodsId} and nx_COS_buy_status = #{status}
     </select>
