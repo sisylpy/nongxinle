@@ -1,9 +1,7 @@
 package com.nongxinle.service.impl;
 
-import com.nongxinle.entity.NxDepartmentOrdersEntity;
-import com.nongxinle.entity.NxDepartmentUserEntity;
-import com.nongxinle.service.NxDepartmentOrdersService;
-import com.nongxinle.service.NxDepartmentUserService;
+import com.nongxinle.entity.*;
+import com.nongxinle.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.nongxinle.dao.NxDepartmentDao;
-import com.nongxinle.entity.NxDepartmentEntity;
-import com.nongxinle.service.NxDepartmentService;
-
 
 
 @Service("nxDepartmentService")
@@ -27,6 +22,13 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 
 	@Autowired
 	private NxDepartmentOrdersService nxDepartmentOrdersService;
+
+	@Autowired
+	private NxDepartmentIndependentOrderService nxDepIndependentOrderService;
+
+	@Autowired
+	private NxDistributerDepartmentService nxDistributerDepartmentService;
+
 	
 	@Override
 	public NxDepartmentEntity queryObject(Integer nxDepartmentId){
@@ -91,6 +93,8 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 
 		//1.保存餐馆
 		nxDepartmentDao.save(dep);
+		System.out.println("new depdpeppepepeep");
+		System.out.println(dep);
 
 		//2，保存用户
 		Integer nxDepartmentId = dep.getNxDepartmentId();
@@ -107,9 +111,17 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 			List<NxDepartmentEntity> nxDepartmentEntities = dep.getNxDepartmentEntities();
 			for (NxDepartmentEntity subDep : nxDepartmentEntities) {
 				subDep.setNxDepartmentFatherId(nxDepartmentId);
+				subDep.setNxDepartmentDisId(dep.getNxDepartmentDisId());
 				nxDepartmentDao.save(subDep);
 			}
 		}
+
+		//3, 保存批发商客户
+		Integer nxDepartmentDisId = dep.getNxDepartmentDisId();
+		NxDistributerDepartmentEntity entity = new NxDistributerDepartmentEntity();
+		entity.setNxDdDistributerId(nxDepartmentDisId);
+		entity.setNxDdDepartmentId(nxDepartmentId);
+		nxDistributerDepartmentService.save(entity);
 
 
 		Integer nxDepartmentUserId = nxDepartmentUserEntity.getNxDepartmentUserId();
@@ -126,10 +138,13 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 
 		List<NxDepartmentOrdersEntity> ordersEntities = nxDepartmentOrdersService.queryGroupTodayOrders(nxDuDepartmentId);
 
+	   List<NxDepartmentIndependentOrderEntity>  indepenOrder =	nxDepIndependentOrderService.queryGroupTodayIndependentOrders(nxDuDepartmentId);
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("userInfo", userEntity);
 		map.put("groupInfo", group);
 		map.put("orders", ordersEntities);
+		map.put("independentOrders", indepenOrder);
 
 
 		return map;
@@ -151,6 +166,8 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 	public List<NxDepartmentEntity> queryFatherDep(Integer depId) {
 		return nxDepartmentDao.queryFatherDep(depId);
 	}
+
+
 
 
 }

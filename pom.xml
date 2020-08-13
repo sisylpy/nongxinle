@@ -398,6 +398,7 @@
           <verbose>true</verbose>
           <overwrite>false</overwrite>
         </configuration>
+
         <dependencies>
           <dependency>
             <groupId>mysql</groupId>

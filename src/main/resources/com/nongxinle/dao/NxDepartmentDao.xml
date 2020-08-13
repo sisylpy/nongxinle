@@ -12,26 +12,40 @@
 		<collection property="nxDepartmentUserEntities" resultMap="depUsers"/>
 	</resultMap>
 
+	<resultMap id="distributer" type="NxDistributerEntity">
+		<id property="nxDistributerId" column="nx_distributer_id"/>
+		<result property="nxDistributerName" column="nx_distributer_name"/>
+	</resultMap>
 	<resultMap id="departmentsWithSubDeps" type="NxDepartmentEntity">
 		<id property="nxDepartmentId" column="nx_department_id"/>
 		<result property="nxDepartmentName" column="nx_department_name"/>
 		<result property="nxDepartmentSubAmount" column="nx_department_sub_amount"/>
+		<result property="nxDepartmentHasSubs" column="nx_department_has_subs"/>
 		<result property="nxDepartmentDisId" column="nx_department_dis_id"/>
 		<result property="nxDepartmentFilePath" column="nx_department_file_path"/>
+		<result property="nxDepartmentFatherId" column="nx_department_father_id"/>
+		<result property="nxDepartmentType" column="nx_department_type"/>
+		<association property="nxDistributerEntity" resultMap="distributer"/>
 		<collection property="nxDepartmentEntities" resultMap="subDeps"/>
 	</resultMap>
 
 	<select id="queryObject" resultMap="departmentsWithSubDeps">
 		select d.nx_department_id 'nx_department_id', d.nx_department_name 'nx_department_name',
 		       d.nx_department_sub_amount 'nx_department_sub_amount',
+		       d.nx_department_has_subs 'nx_department_has_subs',
 		       d.nx_department_dis_id 'nx_department_dis_id',
+		       d.nx_department_father_id 'nx_department_father_id',
 		       d.nx_department_file_path 'nx_department_file_path',
+		       d.nx_department_type 'nx_department_type',
 			   dd.nx_department_id 'dd_nx_department_id', dd.nx_department_name 'dd_nx_department_name',
 		       dd.nx_department_sub_amount 'dd_nx_department_sub_amount',
-		       dd.nx_department_father_id 'dd_nx_department_father_id'
+		       dd.nx_department_has_subs 'dd_nx_department_has_subs',
+		       dd.nx_department_father_id 'dd_nx_department_father_id',
+		       dis.nx_distributer_id, dis.nx_distributer_name
 		       from nx_department as d
 		left join nx_department as dd on d.nx_department_id = dd.nx_department_father_id
 		left join nx_department_user as du on dd.nx_department_id = du.nx_DU_department_id
+		left join nx_distributer as dis on dis.nx_distributer_id = d.nx_department_dis_id
 		where d.nx_department_id = #{value}
 	</select>
 
@@ -83,11 +97,15 @@
 	<resultMap id="depInfo" type="NxDepartmentEntity">
 		<id property="nxDepartmentId" column="s_nx_department_id"/>
 		<result property="nxDepartmentName" column="s_nx_department_name"/>
+		<result property="nxDepartmentFatherId" column="s_nx_department_father_id"/>
+		<result property="nxDepartmentHasSubs" column="s_nx_department_has_subs"/>
 		<association property="fatherDepartmentEntity" resultMap="fatherDep"/>
 	</resultMap>
 
 	<select id="queryDepInfo" resultMap="depInfo">
 		select d.nx_department_id 's_nx_department_id',  d.nx_department_name 's_nx_department_name',
+		       d.nx_department_father_id 's_nx_department_father_id',
+		       d.nx_department_has_subs 's_nx_department_has_subs',
 		dd.nx_department_id 'f_nx_department_id', dd.nx_department_name 'f_nx_department_name',
 		       dd.nx_department_dis_id 'f_nx_department_dis_id'
 		from nx_department as d
@@ -115,7 +133,8 @@
 			`nx_department_type`, 
 			`nx_department_sub_amount`,
 		 	`nx_department_dis_id`,
-		 	`nx_department_file_path`
+		 	`nx_department_file_path`,
+		 	`nx_department_has_subs`
 		)
 		values
 		(
@@ -125,7 +144,8 @@
 			#{nxDepartmentType}, 
 			#{nxDepartmentSubAmount},
 		 	#{nxDepartmentDisId},
-		 	#{nxDepartmentFilePath}
+		 	#{nxDepartmentFilePath},
+		 	#{nxDepartmentHasSubs}
 		)
 	</insert>
 
@@ -139,6 +159,7 @@
 			<if test="nxDepartmentType != null">`nx_department_type` = #{nxDepartmentType}, </if>
 			<if test="nxDepartmentDisId != null">`nx_department_dis_id` = #{nxDepartmentDisId}, </if>
 			<if test="nxDepartmentFilePath != null">`nx_department_file_path` = #{nxDepartmentFilePath}, </if>
+			<if test="nxDepartmentHasSubs != null">`nx_department_has_subs` = #{nxDepartmentHasSubs}, </if>
 			<if test="nxDepartmentSubAmount != null">`nx_department_sub_amount` = #{nxDepartmentSubAmount}</if>
 		</set>
 		where nx_department_id = #{nxDepartmentId}

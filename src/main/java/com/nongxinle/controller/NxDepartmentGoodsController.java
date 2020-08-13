@@ -124,6 +124,8 @@ public class NxDepartmentGoodsController {
 		List<NxDepartmentGoodsEntity> depGoods = nxDepartmentGoodsService.queryIfHasDepartmentGoods(map);
 		if (depGoods.size() > 0){
 			goodsEntity.setNxDepartmentGoodsId(depGoods.get(0).getNxDepartmentGoodsId());
+			goodsEntity.setNxDepartmentGoodsPrice(depGoods.get(0).getNxDgGoodsPrice());
+
 		}else {
 			goodsEntity.setNxDepartmentGoodsId(-1);
 		}

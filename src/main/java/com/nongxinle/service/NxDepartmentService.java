@@ -43,4 +43,5 @@ public interface NxDepartmentService {
 	List<NxDepartmentEntity> querySubDepartments(Integer depId);
 
 	List<NxDepartmentEntity> queryFatherDep(Integer depId);
+
 }

@@ -27,6 +27,7 @@ public class NxDepartmentGoodsEntity implements Serializable {
 	 *  部门id
 	 */
 	private Integer nxDgDepartmentId;
+	private Integer nxDgDepartmentFatherId;
 	/**
 	 *  nx商品id
 	 */
@@ -46,7 +47,7 @@ public class NxDepartmentGoodsEntity implements Serializable {
 	/**
 	 *  部门商品价格
 	 */
-	private Float nxDgGoodsPrice;
+	private String nxDgGoodsPrice;
 	/**
 	 *  部门商品价格更新日期
 	 */

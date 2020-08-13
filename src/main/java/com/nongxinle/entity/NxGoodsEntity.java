@@ -73,6 +73,9 @@ public class NxGoodsEntity implements Serializable, Comparable {
 	 */
 	private List<NxGoodsEntity> nxGoodsEntityList;
 
+	private List<NxDistributerStandardEntity> nxDisStandardEntities;
+	private List<NxDepartmentStandardEntity> nxDepStandardEntities;
+
 	/**
 	 * 子名称
 	 */
@@ -84,6 +87,8 @@ public class NxGoodsEntity implements Serializable, Comparable {
 	private  Integer isDownload;
 
 	private Integer nxDepartmentGoodsId;
+	private String  nxDepartmentGoodsPrice;
+
 
 	private List<NxStandardEntity> nxGoodsStandardEntities;
 
@@ -96,6 +101,14 @@ public class NxGoodsEntity implements Serializable, Comparable {
 	private NxGoodsEntity greatGrandGoods;
 
 	private Integer nxGoodsStandardAmount;
+
+	private Integer subAmount;
+
+	private NxDistributerGoodsEntity nxDistributerGoodsEntity;
+
+	private NxDepartmentDisGoodsEntity nxDepartmentDisGoodsEntity;
+
+	private Boolean isShow = false;
 
 
 	@Override
@@ -115,15 +128,23 @@ public class NxGoodsEntity implements Serializable, Comparable {
 				Objects.equals(nxGoodsFile, that.nxGoodsFile) &&
 				Objects.equals(color, that.color) &&
 				Objects.equals(nxGoodsEntityList, that.nxGoodsEntityList) &&
+				Objects.equals(nxDisStandardEntities, that.nxDisStandardEntities) &&
 				Objects.equals(nxGoodsSubNames, that.nxGoodsSubNames) &&
 				Objects.equals(isDownload, that.isDownload) &&
+				Objects.equals(nxDepartmentGoodsId, that.nxDepartmentGoodsId) &&
+				Objects.equals(nxDepartmentGoodsPrice, that.nxDepartmentGoodsPrice) &&
 				Objects.equals(nxGoodsStandardEntities, that.nxGoodsStandardEntities) &&
-				Objects.equals(nxGoodsDetail, that.nxGoodsDetail);
+				Objects.equals(nxGoodsDetail, that.nxGoodsDetail) &&
+				Objects.equals(fatherGoods, that.fatherGoods) &&
+				Objects.equals(grandGoods, that.grandGoods) &&
+				Objects.equals(greatGrandGoods, that.greatGrandGoods) &&
+				Objects.equals(nxGoodsStandardAmount, that.nxGoodsStandardAmount) &&
+				Objects.equals(subAmount, that.subAmount);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(nxGoodsId, nxGoodsName, nxGoodsStandardname, nxGoodsBrand, nxGoodsPlace, nxGoodsPinyin, nxGoodsPy, nxGoodsFatherId, nxGoodsSort, nxGoodsFile, color, nxGoodsEntityList, nxGoodsSubNames, isDownload, nxGoodsStandardEntities, nxGoodsDetail);
+		return Objects.hash(nxGoodsId, nxGoodsName, nxGoodsStandardname, nxGoodsBrand, nxGoodsPlace, nxGoodsPinyin, nxGoodsPy, nxGoodsFatherId, nxGoodsSort, nxGoodsFile, color, nxGoodsEntityList, nxDisStandardEntities, nxGoodsSubNames, isDownload, nxDepartmentGoodsId, nxDepartmentGoodsPrice, nxGoodsStandardEntities, nxGoodsDetail, fatherGoods, grandGoods, greatGrandGoods, nxGoodsStandardAmount, subAmount);
 	}
 
 	@Override

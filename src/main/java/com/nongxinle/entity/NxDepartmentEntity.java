@@ -51,6 +51,7 @@ public class NxDepartmentEntity implements Serializable, Comparable {
 
 	private Integer nxDepartmentDisId;
 
+	private Integer nxDepartmentHasSubs;
 	private NxDepartmentEntity fatherDepartmentEntity;
 
 	private NxDepartmentUserEntity nxDepartmentUserEntity;
@@ -60,6 +61,8 @@ public class NxDepartmentEntity implements Serializable, Comparable {
 	private List<NxDepartmentEntity> nxDepartmentEntities;
 
 	private List<NxDepartmentOrdersEntity> nxDepartmentOrdersEntities;
+
+	private NxDistributerEntity nxDistributerEntity;
 
 	@Override
 	public boolean equals(Object o) {

@@ -12,7 +12,7 @@ import com.nongxinle.service.NxCommunityGoodsService;
 
 
 
-@Service("nxDistributerGoodsService")
+@Service("NxCommunityGoodsService")
 public class NxCommunityGoodsServiceImpl implements NxCommunityGoodsService {
 	@Autowired
 	private NxCommunityGoodsDao nxCommunityGoodsDao;
@@ -33,23 +33,23 @@ public class NxCommunityGoodsServiceImpl implements NxCommunityGoodsService {
 	}
 	
 	@Override
-	public void save(NxCommunityGoodsEntity nxDistributerGoods){
-		nxCommunityGoodsDao.save(nxDistributerGoods);
+	public void save(NxCommunityGoodsEntity nxCommunityGoods){
+		nxCommunityGoodsDao.save(nxCommunityGoods);
 	}
 	
 	@Override
-	public void update(NxCommunityGoodsEntity nxDistributerGoods){
-		nxCommunityGoodsDao.update(nxDistributerGoods);
+	public void update(NxCommunityGoodsEntity nxCommunityGoods){
+		nxCommunityGoodsDao.update(nxCommunityGoods);
 	}
 	
 	@Override
-	public void delete(Integer disGoodsId){
-		nxCommunityGoodsDao.delete(disGoodsId);
+	public void delete(Integer commGoodsId){
+		nxCommunityGoodsDao.delete(commGoodsId);
 	}
 	
 	@Override
-	public void deleteBatch(Integer[] disGoodsIds){
-		nxCommunityGoodsDao.deleteBatch(disGoodsIds);
+	public void deleteBatch(Integer[] commGoodsIds){
+		nxCommunityGoodsDao.deleteBatch(commGoodsIds);
 	}
 
     @Override

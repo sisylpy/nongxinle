@@ -22,6 +22,8 @@
 		<id property="nxDepartmentId" column="nx_department_id"/>
 		<result property="nxDepartmentName" column="nx_department_name"/>
 		<result property="nxDepartmentType" column="nx_department_type"/>
+		<result property="nxDepartmentFatherId" column="nx_department_father_id"/>
+		<result property="nxDepartmentHasSubs" column="nx_department_has_subs"/>
 	</resultMap>
 
 	<resultMap id="allMyCustomer" type="NxDistributerDepartmentEntity">

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nongxinle.dao.NxDistributerFatherGoodsDao">
+
+	<select id="queryObject" resultType="com.nongxinle.entity.NxDistributerFatherGoodsEntity">
+		select * from nx_distributer_father_goods where nx_distributer_father_goods_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.nongxinle.entity.NxDistributerFatherGoodsEntity">
+		select * from nx_distributer_father_goods 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from nx_distributer_father_goods 
+	</select>
+	<select id="queryDistFatherGoods" resultType="com.nongxinle.entity.NxDistributerFatherGoodsEntity">
+		select * from nx_distributer_father_goods where nx_DFG_distributer_id = #{disId}
+		and nx_DF_father_goods_level &lt; #{level}
+	</select>
+
+	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerFatherGoodsEntity" useGeneratedKeys="true"
+	keyProperty="nxDistributerFatherGoodsId">
+		insert into nx_distributer_father_goods
+		(
+			`nx_distributer_father_goods_id`, 
+			`nx_DF_father_goods_name`, 
+			`nx_DF_father_goods_img`, 
+			`nx_DF_father_goods_sort`, 
+			`nx_DF_father_goods_color`, 
+			`nx_DF_fathers_father_id`, 
+			`nx_DF_father_goods_level`, 
+			`nx_DFG_distributer_id`,
+			`nx_DFG_goods_amount`
+		)
+		values
+		(
+			#{nxDistributerFatherGoodsId}, 
+			#{nxDfFatherGoodsName}, 
+			#{nxDfFatherGoodsImg}, 
+			#{nxDfFatherGoodsSort}, 
+			#{nxDfFatherGoodsColor}, 
+			#{nxDfFathersFatherId}, 
+			#{nxDfFatherGoodsLevel}, 
+			#{nxDfgDistributerId},
+			#{nxDfgGoodsAmount}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.nongxinle.entity.NxDistributerFatherGoodsEntity">
+		update nx_distributer_father_goods 
+		<set>
+			<if test="nxDfFatherGoodsName != null">`nx_DF_father_goods_name` = #{nxDfFatherGoodsName}, </if>
+			<if test="nxDfFatherGoodsImg != null">`nx_DF_father_goods_img` = #{nxDfFatherGoodsImg}, </if>
+			<if test="nxDfFatherGoodsSort != null">`nx_DF_father_goods_sort` = #{nxDfFatherGoodsSort}, </if>
+			<if test="nxDfFatherGoodsColor != null">`nx_DF_father_goods_color` = #{nxDfFatherGoodsColor}, </if>
+			<if test="nxDfFathersFatherId != null">`nx_DF_fathers_father_id` = #{nxDfFathersFatherId}, </if>
+			<if test="nxDfFatherGoodsLevel != null">`nx_DF_father_goods_level` = #{nxDfFatherGoodsLevel}, </if>
+			<if test="nxDfgDistributerId != null">`nx_DFG_distributer_id` = #{nxDfgDistributerId}, </if>
+			<if test="nxDfgGoodsAmount != null">`nx_DFG_goods_amount` = #{nxDfgGoodsAmount}</if>
+		</set>
+		where nx_distributer_father_goods_id = #{nxDistributerFatherGoodsId}
+	</update>
+	
+	<delete id="delete">
+		delete from nx_distributer_father_goods where nx_distributer_father_goods_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from nx_distributer_father_goods where nx_distributer_father_goods_id in 
+		<foreach item="nxDistributerFatherGoodsId" collection="array" open="(" separator="," close=")">
+			#{nxDistributerFatherGoodsId}
+		</foreach>
+	</delete>
+
+</mapper>

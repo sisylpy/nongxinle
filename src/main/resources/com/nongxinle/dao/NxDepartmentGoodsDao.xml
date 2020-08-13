@@ -82,7 +82,8 @@
 		insert into nx_department_goods
 		(
 			`nx_department_goods_id`, 
-			`nx_dg_department_id`, 
+			`nx_dg_department_id`,
+		 	`nx_dg_department_father_id`,
 			`nx_dg_nx_goods_id`, 
 			`nx_dg_nx_goods_father_id`, 
 			`nx_dg_goods_is_weight`, 
@@ -99,7 +100,8 @@
 		values
 		(
 			#{nxDepartmentGoodsId}, 
-			#{nxDgDepartmentId}, 
+			#{nxDgDepartmentId},
+		 	#{nxDgDepartmentFatherId},
 			#{nxDgNxGoodsId}, 
 			#{nxDgNxGoodsFatherId}, 
 			#{nxDgGoodsIsWeight}, 
@@ -119,6 +121,7 @@
 		update nx_department_goods 
 		<set>
 			<if test="nxDgDepartmentId != null">`nx_dg_department_id` = #{nxDgDepartmentId}, </if>
+			<if test="nxDgDepartmentFatherId != null">`nx_dg_department_father_id` = #{nxDgDepartmentFatherId}, </if>
 			<if test="nxDgNxGoodsId != null">`nx_dg_nx_goods_id` = #{nxDgNxGoodsId}, </if>
 			<if test="nxDgNxGoodsFatherId != null">`nx_dg_nx_goods_father_id` = #{nxDgNxGoodsFatherId}, </if>
 			<if test="nxDgGoodsIsWeight != null">`nx_dg_goods_is_weight` = #{nxDgGoodsIsWeight}, </if>

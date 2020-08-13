@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nongxinle.entity.NxCommunityEntity;
 import com.nongxinle.entity.NxDepartmentUserEntity;
 import com.nongxinle.service.NxDepartmentOrdersService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -33,6 +34,34 @@ public class NxDepartmentController {
 	@Autowired
 	private NxDepartmentOrdersService nxDepartmentOrdersService;
 
+
+	/**
+	 * 微信二维码扫描校验文件内容
+	 * @return 文件内容
+	 */
+	@RequestMapping(value = "/depRegist/i7948FzJJ6.txt")
+	@ResponseBody
+
+	public String depRegist( ) {
+//
+		return "bb7a0c73e61112c45ebd6ad3743bb05e"; }
+
+	/**
+	 * 二维码扫描打开固定页面
+	 * @param disId 社区id
+	 * @return 社区列表
+	 */
+	@RequestMapping(value = "/depRegist/{disId}")
+	@ResponseBody
+	public R customerRegist(@PathVariable Integer disId) {
+
+//		NxCommunityEntity nxCommunity = nxCommunityService.queryObject(disId);
+
+		return R.ok().put("data", "a");
+	}
+
+
+
 	@RequestMapping(value = "/getFatherDep/{depId}")
 	@ResponseBody
 	public R getFatherDep(@PathVariable Integer depId) {
@@ -50,6 +79,8 @@ public class NxDepartmentController {
 
 	    return R.ok().put("data", departmentEntities);
 	}
+
+
 
 
 	 @RequestMapping(value = "/getPrintPickerData", method = RequestMethod.POST)

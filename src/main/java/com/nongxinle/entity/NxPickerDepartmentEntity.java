@@ -24,7 +24,7 @@ public class NxPickerDepartmentEntity implements Serializable {
 	 */
 	private Integer pickerUserId;
 
-	List<NxDepartmentEntity> nxDepartmentEntities;
+	private List<NxDepartmentEntity> nxDepartmentEntities;
 
 
 }

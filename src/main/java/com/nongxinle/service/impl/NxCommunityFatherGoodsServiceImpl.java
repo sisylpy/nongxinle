@@ -12,7 +12,7 @@ import com.nongxinle.service.NxCommunityFatherGoodsService;
 
 
 
-@Service("nxDistributerFatherGoodsService")
+@Service("nxCommunityFatherGoodsService")
 public class NxCommunityFatherGoodsServiceImpl implements NxCommunityFatherGoodsService {
 	@Autowired
 	private NxCommunityFatherGoodsDao nxCommunityFatherGoodsDao;
@@ -33,13 +33,13 @@ public class NxCommunityFatherGoodsServiceImpl implements NxCommunityFatherGoods
 	}
 	
 	@Override
-	public void save(NxCommunityFatherGoodsEntity nxDistributerFatherGoods){
-		nxCommunityFatherGoodsDao.save(nxDistributerFatherGoods);
+	public void save(NxCommunityFatherGoodsEntity nxCommunityFatherGoods){
+		nxCommunityFatherGoodsDao.save(nxCommunityFatherGoods);
 	}
 	
 	@Override
-	public void update(NxCommunityFatherGoodsEntity nxDistributerFatherGoods){
-		nxCommunityFatherGoodsDao.update(nxDistributerFatherGoods);
+	public void update(NxCommunityFatherGoodsEntity nxCommunityFatherGoods){
+		nxCommunityFatherGoodsDao.update(nxCommunityFatherGoods);
 	}
 	
 	@Override

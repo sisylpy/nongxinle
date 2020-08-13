@@ -143,7 +143,6 @@
 	<select id="queryCommunityGoods" resultMap="cgGoods">
 		select  * from nx_community_goods as cg
 # 			left join nx_goods as g on cg.nx_cg_nx_goods_id = g.nx_goods_id
-		left join nx_supplier as s on cg.nx_cg_supplier_id = s.nx_supplier_id
 		left join nx_community as c on c.nx_community_id = cg.nx_cg_community_id
 		where cg.nx_cg_cf_goods_father_id = #{nxCommunityFatherGoodsId}
 		order by cg.nx_cg_goods_total_hits desc
