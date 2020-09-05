@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.TreeSet;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,53 +29,47 @@ public class NxDistributerFatherGoodsEntity implements Serializable , Comparable
 	/**
 	 *  
 	 */
-	private String nxDfFatherGoodsName;
+	private String nxDfgFatherGoodsName;
 	/**
 	 *  
 	 */
-	private String nxDfFatherGoodsImg;
+	private String nxDfgFatherGoodsImg;
 	/**
 	 *  
 	 */
-	private Integer nxDfFatherGoodsSort;
+	private Integer nxDfgFatherGoodsSort;
 	/**
 	 *  
 	 */
-	private String nxDfFatherGoodsColor;
+	private String nxDfgFatherGoodsColor;
 	/**
 	 *  
 	 */
-	private Integer nxDfFathersFatherId;
+	private Integer nxDfgFathersFatherId;
 	/**
 	 *  
 	 */
-	private Integer nxDfFatherGoodsLevel;
+	private Integer nxDfgFatherGoodsLevel;
 	/**
 	 *  
 	 */
 	private Integer nxDfgDistributerId;
 
 	List<NxDistributerFatherGoodsEntity> fatherGoodsEntities;
+	TreeSet<NxDistributerFatherGoodsEntity> treeSet;
+	List<NxDistributerGoodsEntity> nxDistributerGoodsEntities;
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		NxDistributerFatherGoodsEntity that = (NxDistributerFatherGoodsEntity) o;
-		return Objects.equals(nxDistributerFatherGoodsId, that.nxDistributerFatherGoodsId) &&
-				Objects.equals(nxDfFatherGoodsName, that.nxDfFatherGoodsName) &&
-				Objects.equals(nxDfFatherGoodsImg, that.nxDfFatherGoodsImg) &&
-				Objects.equals(nxDfFatherGoodsSort, that.nxDfFatherGoodsSort) &&
-				Objects.equals(nxDfFatherGoodsColor, that.nxDfFatherGoodsColor) &&
-				Objects.equals(nxDfFathersFatherId, that.nxDfFathersFatherId) &&
-				Objects.equals(nxDfFatherGoodsLevel, that.nxDfFatherGoodsLevel) &&
-				Objects.equals(nxDfgDistributerId, that.nxDfgDistributerId) &&
-				Objects.equals(nxDfgGoodsAmount, that.nxDfgGoodsAmount);
+		return Objects.equals(nxDistributerFatherGoodsId, that.nxDistributerFatherGoodsId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(nxDistributerFatherGoodsId, nxDfFatherGoodsName, nxDfFatherGoodsImg, nxDfFatherGoodsSort, nxDfFatherGoodsColor, nxDfFathersFatherId, nxDfFatherGoodsLevel, nxDfgDistributerId, nxDfgGoodsAmount);
+		return Objects.hash(nxDistributerFatherGoodsId, nxDfgFatherGoodsName, nxDfgFatherGoodsImg, nxDfgFatherGoodsSort, nxDfgFatherGoodsColor, nxDfgFathersFatherId, nxDfgFatherGoodsLevel, nxDfgDistributerId, nxDfgGoodsAmount);
 	}
 
 	/**

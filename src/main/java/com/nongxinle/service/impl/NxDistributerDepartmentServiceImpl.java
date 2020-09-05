@@ -1,5 +1,6 @@
 package com.nongxinle.service.impl;
 
+import com.nongxinle.entity.NxDepartmentEntity;
 import com.nongxinle.entity.NxDistributerCommunityEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,10 @@ public class NxDistributerDepartmentServiceImpl implements NxDistributerDepartme
 
 		return nxDistributerDepartmentDao.queryAllCustomer(disId);
     }
+
+	@Override
+	public List<NxDepartmentEntity> queryAllDisDepartments(Integer disId) {
+		return nxDistributerDepartmentDao.queryAllDisDepartments(disId);
+	}
 
 }

@@ -52,5 +52,20 @@ public class NxDepartmentUserServiceImpl implements NxDepartmentUserService {
 	public void deleteBatch(Integer[] nxDepartmentUserIds){
 		nxDepartmentUserDao.deleteBatch(nxDepartmentUserIds);
 	}
-	
+
+    @Override
+    public List<NxDepartmentUserEntity> queryAllUsersByDepId(Integer depId) {
+		return nxDepartmentUserDao.queryAllUsersByDepId(depId);
+    }
+
+    @Override
+    public List<NxDepartmentUserEntity> queryDepUserByOpenId(String openId) {
+		return nxDepartmentUserDao.queryDepUserByOpenId(openId);
+    }
+
+    @Override
+    public List<NxDepartmentUserEntity> queryGroupAdminUserAmount(Integer nxDuDepartmentId) {
+		return nxDepartmentUserDao.queryGroupAdminUserAmount(nxDuDepartmentId);
+    }
+
 }

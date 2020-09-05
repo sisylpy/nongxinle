@@ -17,8 +17,12 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from nx_department_standard 
 	</select>
-	 
-	<insert id="save" parameterType="com.nongxinle.entity.NxDepartmentStandardEntity">
+    <select id="queryDepGoodsStandards" resultType="com.nongxinle.entity.NxDepartmentStandardEntity">
+		select * from nx_department_standard where nx_DDS_dds_goods_id =#{depGoodsId}
+	</select>
+
+    <insert id="save" parameterType="com.nongxinle.entity.NxDepartmentStandardEntity" useGeneratedKeys="true"
+	keyProperty="nxDepartmentStandardId">
 		insert into nx_department_standard
 		(
 			`nx_department_standard_id`, 

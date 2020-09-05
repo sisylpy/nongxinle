@@ -17,9 +17,13 @@ public interface NxDepartmentDao extends BaseDao<NxDepartmentEntity> {
 
     List<NxDepartmentEntity> queryDisDepartments(Map<String, Object> map);
 
+    NxDepartmentEntity queryGroupInfo(Integer nxDuDepartmentId);
+
     NxDepartmentEntity queryDepInfo(Integer nxDuDepartmentId);
+
 
     List<NxDepartmentEntity> querySubDepartments(Integer depId);
 
     List<NxDepartmentEntity> queryFatherDep(Integer depId);
+
 }

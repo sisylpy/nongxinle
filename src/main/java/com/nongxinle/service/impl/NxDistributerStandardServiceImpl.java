@@ -16,7 +16,16 @@ import com.nongxinle.service.NxDistributerStandardService;
 public class NxDistributerStandardServiceImpl implements NxDistributerStandardService {
 	@Autowired
 	private NxDistributerStandardDao nxDistributerStandardDao;
-	
+
+
+	@Override
+	public List<NxDistributerStandardEntity> queryDisStandardByDisGoodsId(Integer nxDdgDisGoodsId) {
+
+		return nxDistributerStandardDao.queryDisStandardByDisGoodsId(nxDdgDisGoodsId);
+	}
+
+
+
 	@Override
 	public NxDistributerStandardEntity queryObject(Integer nxDistributerStandardId){
 		return nxDistributerStandardDao.queryObject(nxDistributerStandardId);
@@ -51,5 +60,6 @@ public class NxDistributerStandardServiceImpl implements NxDistributerStandardSe
 	public void deleteBatch(Integer[] nxDistributerStandardIds){
 		nxDistributerStandardDao.deleteBatch(nxDistributerStandardIds);
 	}
-	
+
+
 }

@@ -1,6 +1,9 @@
 package com.nongxinle.service.impl;
 
+import com.nongxinle.entity.NxDistributerStandardEntity;
 import com.nongxinle.entity.NxGoodsEntity;
+import com.nongxinle.service.NxDepartmentStandardService;
+import com.nongxinle.service.NxDistributerStandardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +20,19 @@ import com.nongxinle.service.NxDistributerGoodsService;
 public class NxDistributerGoodsServiceImpl implements NxDistributerGoodsService {
 	@Autowired
 	private NxDistributerGoodsDao nxDistributerGoodsDao;
-	
-	@Override
+
+
+    @Override
+    public List<NxDistributerGoodsEntity> queryDisGoodsByParams(Map<String, Object> map) {
+        return nxDistributerGoodsDao.queryDisGoodsByParams(map);
+    }
+
+    @Override
+    public int queryDisGoodsTotal(Map<String, Object> map3) {
+    	return nxDistributerGoodsDao.queryDisGoodsTotal(map3);
+    }
+
+    @Override
 	public NxDistributerGoodsEntity queryObject(Integer nxDistributerGoodsId){
 		return nxDistributerGoodsDao.queryObject(nxDistributerGoodsId);
 	}
@@ -36,6 +50,19 @@ public class NxDistributerGoodsServiceImpl implements NxDistributerGoodsService 
 	@Override
 	public void save(NxDistributerGoodsEntity nxDistributerGoods){
 		nxDistributerGoodsDao.save(nxDistributerGoods);
+
+//		Integer distributerGoodsId = nxDistributerGoods.getNxDistributerGoodsId();
+
+//		List<NxDistributerStandardEntity> disStandardEntities = nxDistributerGoods.getDistributerStandardEntities();
+//		if(disStandardEntities.size() > 0){
+//			for (NxDistributerStandardEntity standard : disStandardEntities) {
+//				standard.setNxDsDisGoodsId(distributerGoodsId);
+//				nxDistributerStandardService.save(standard);
+//			}
+//		}
+
+
+
 	}
 	
 	@Override
@@ -54,9 +81,9 @@ public class NxDistributerGoodsServiceImpl implements NxDistributerGoodsService 
 	}
 
     @Override
-    public List<NxDistributerGoodsEntity> queryHasDisGoodsFather(Map<String, Object> map) {
+    public List<NxDistributerGoodsEntity> queryDisGoodsHasNxGoodsFather(Map<String, Object> map) {
 
-		return nxDistributerGoodsDao.queryHasDisGoodsFather(map);
+		return nxDistributerGoodsDao.queryDisGoodsHasNxGoodsFather(map);
     }
 
     @Override
@@ -66,9 +93,9 @@ public class NxDistributerGoodsServiceImpl implements NxDistributerGoodsService 
     }
 
     @Override
-    public List<NxGoodsEntity> queryAllDistributerGoods(Integer disId) {
+    public List<NxGoodsEntity> queryAllDistributerGoodsCata(Integer disId) {
 
-		return nxDistributerGoodsDao.queryAllDistributerGoods(disId);
+		return nxDistributerGoodsDao.queryAllDistributerGoodsCata(disId);
     }
 
     @Override
@@ -106,16 +133,44 @@ public class NxDistributerGoodsServiceImpl implements NxDistributerGoodsService 
 	}
 
     @Override
-    public List<NxGoodsEntity> queryListWithFatherId(Map<String, Object> map) {
+    public List<NxGoodsEntity> queryDisGoodsListWithFatherId(Map<String, Object> map) {
 
-		return nxDistributerGoodsDao.queryListWithFatherId(map);
+		return nxDistributerGoodsDao.queryDisGoodsListWithFatherId(map);
     }
 
     @Override
-    public List<NxDistributerGoodsEntity> queryQuickSearch(String str) {
+    public List<NxDistributerGoodsEntity> queryQuickSearch(Map<String, Object> map) {
 
-		return nxDistributerGoodsDao.queryQuickSearch(str);
+		return nxDistributerGoodsDao.queryQuickSearch(map);
     }
+
+    @Override
+    public NxDistributerGoodsEntity queryObjectWithStandards(Integer nxDdgDisGoodsId) {
+
+		return nxDistributerGoodsDao.queryDisGoodsWithStandards(nxDdgDisGoodsId);
+    }
+
+	@Override
+	public List<NxDistributerGoodsEntity> queryDisGoodsListByDisFatherId(Integer nxDgDfgGoodsFatherId) {
+
+		return nxDistributerGoodsDao.queryDisGoodsListByDisFatherId(nxDgDfgGoodsFatherId);
+	}
+
+//    @Override
+//    public List<NxDistributerGoodsEntity> queryHasDisGrandGoodsFather(Map<String, Object> map) {
+//
+//		return nxDistributerGoodsDao.queryHasDisGrandGoodsFather(map);
+//    }
+
+//	@Override
+//	public List<NxDistributerGoodsEntity> queryHasDisGreatGrandGoodsFather(Map<String, Object> map) {
+//		return nxDistributerGoodsDao.queryHasDisGreatGrandGoodsFather(map);
+//	}
+
+//	@Override
+//	public List<NxDistributerGoodsEntity> queryDisGoodsListByFatherId(Map<String, Object> map) {
+//		return nxDistributerGoodsDao.queryDisGoodsByFatherId(map);
+//	}
 
 
 }

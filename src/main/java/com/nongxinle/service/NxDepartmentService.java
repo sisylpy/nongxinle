@@ -13,7 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 public interface NxDepartmentService {
-	
+
+	Integer saveNewRestraunt(NxDepartmentEntity dep);
+
+	Map<String, Object> queryGroupAndUserInfo(Integer nxGroupUserId);
+
+	Map<String, Object> queryDepAndUserInfo(Integer nxDepartmentUserId);
+
+
 	NxDepartmentEntity queryObject(Integer nxDepartmentId);
 	
 	List<NxDepartmentEntity> queryList(Map<String, Object> map);
@@ -32,16 +39,14 @@ public interface NxDepartmentService {
 
 	void saveSubDepartment(NxDepartmentEntity dep);
 
-	NxDepartmentEntity queryDepartmentInfo(Integer nxDuDepartmentId);
 
-	Integer saveNewRestraunt(NxDepartmentEntity dep);
-
-	Map<String, Object> queryGroupInfo(Integer userId);
 
 	void saveJustDepartment(NxDepartmentEntity nxDepartmentEntity);
 
 	List<NxDepartmentEntity> querySubDepartments(Integer depId);
 
 	List<NxDepartmentEntity> queryFatherDep(Integer depId);
+
+
 
 }

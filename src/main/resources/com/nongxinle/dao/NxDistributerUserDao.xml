@@ -71,7 +71,8 @@
 			`nx_DIU_wx_nick_name`,
 			`nx_DIU_wx_open_id`, 
 			`nx_DIU_wx_phone`, 
-			`nx_DIU_distributer_id`
+			`nx_DIU_distributer_id`,
+			`nx_DIU_admin`
 					)
 		values
 		(
@@ -80,7 +81,8 @@
 			#{nxDiuWxNickName},
 			#{nxDiuWxOpenId}, 
 			#{nxDiuWxPhone}, 
-			#{nxDiuDistributerId}
+			#{nxDiuDistributerId},
+		 	#{nxDiuAdmin}
 		)
 	</insert>
 	 
@@ -91,6 +93,7 @@
 			<if test="nxDiuWxNickName != null">`nx_DIU_wx_nick_name` = #{nxDiuWxNickName}, </if>
 			<if test="nxDiuWxPhone != null">`nx_DIU_wx_phone` = #{nxDiuWxPhone}, </if>
 			<if test="nxDiuWxOpenId != null">`nx_DIU_wx_open_id` = #{nxDiuWxOpenId}, </if>
+			<if test="nxDiuAdmin != null">`nx_DIU_admin` = #{nxDiuAdmin}, </if>
 			<if test="nxDiuDistributerId != null">`nx_DIU_distributer_id` = #{nxDiuDistributerId}</if>
 		</set>
 		where nx_distributer_user_id = #{nxDistributerUserId}

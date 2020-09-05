@@ -9,7 +9,10 @@ package com.nongxinle.dao;
 
 import com.nongxinle.entity.NxDepartmentStandardEntity;
 
+import java.util.List;
+
 
 public interface NxDepartmentStandardDao extends BaseDao<NxDepartmentStandardEntity> {
-	
+
+    List<NxDepartmentStandardEntity> queryDepGoodsStandards(Integer depGoodsId);
 }

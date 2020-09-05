@@ -76,7 +76,8 @@ public class NxDistributerUserServiceImpl implements NxDistributerUserService {
 
     @Override
     public List<NxDistributerUserEntity> queryUser(Integer disId) {
-        return nxDistributerUserDao.queryUser(disId);
+
+		return nxDistributerUserDao.queryUser(disId);
     }
 
 	@Override
@@ -89,5 +90,7 @@ public class NxDistributerUserServiceImpl implements NxDistributerUserService {
 
 		return nxDistributerUserDao.queryUserByOpenId(openid);
     }
+
+
 
 }

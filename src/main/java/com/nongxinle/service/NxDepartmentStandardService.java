@@ -27,4 +27,6 @@ public interface NxDepartmentStandardService {
 	void delete(Integer nxDepartmentStandardId);
 	
 	void deleteBatch(Integer[] nxDepartmentStandardIds);
+
+    List<NxDepartmentStandardEntity> queryDepGoodsStandards(Integer depGoodsId);
 }

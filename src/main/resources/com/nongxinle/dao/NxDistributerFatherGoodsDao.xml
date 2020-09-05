@@ -17,9 +17,62 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from nx_distributer_father_goods 
 	</select>
-	<select id="queryDistFatherGoods" resultType="com.nongxinle.entity.NxDistributerFatherGoodsEntity">
-		select * from nx_distributer_father_goods where nx_DFG_distributer_id = #{disId}
-		and nx_DF_father_goods_level &lt; #{level}
+<!--	<select id="queryDistFatherGoods" resultType="com.nongxinle.entity.NxDistributerFatherGoodsEntity">-->
+<!--		select * from nx_distributer_father_goods where nx_DFG_distributer_id = #{disId}-->
+<!--		and nx_DF_father_goods_level &lt; #{level}-->
+<!--	</select>-->
+
+<!--	<select id="queryHasDisGrandGoodsFather" resultType="com.nongxinle.entity.NxDistributerGoodsEntity">-->
+<!--		select * from nx_distributer_goods where nx_dg_nx_grand_name = #{grandName} and nx_dg_distributer_id = #{disId}-->
+<!--	</select>-->
+
+<!--	<select id="queryHasDisGreatGrandGoodsFather" resultType="com.nongxinle.entity.NxDistributerGoodsEntity">-->
+<!--		select * from nx_distributer_goods where nx_dg_nx_great_grand_id = #{greatGrandId} and nx_dg_distributer_id = #{disId}-->
+<!--	</select>-->
+
+	<resultMap id="fatherDisGoods" type="NxDistributerFatherGoodsEntity">
+		<id property="nxDistributerFatherGoodsId" column="father_nx_distributer_father_goods_id"/>
+		<result property="nxDfgFathersFatherId" column="father_nx_dfg_fathers_father_id"/>
+		<result property="nxDfgFatherGoodsName" column="father_nx_dfg_father_goods_name"/>
+	</resultMap>
+
+	<resultMap id="grandDisGoods" type="NxDistributerFatherGoodsEntity">
+		<id property="nxDistributerFatherGoodsId" column="grand_nx_distributer_father_goods_id"/>
+		<result property="nxDfgFathersFatherId" column="grand_nx_dfg_fathers_father_id"/>
+		<result property="nxDfgFatherGoodsName" column="grand_nx_dfg_father_goods_name"/>
+		<collection property="fatherGoodsEntities" resultMap="fatherDisGoods"/>
+	</resultMap>
+
+	<resultMap id="disGoodsCata" type="NxDistributerFatherGoodsEntity">
+		<id property="nxDistributerFatherGoodsId" column="greatGrand_nx_distributer_father_goods_id"/>
+		<result property="nxDfgFathersFatherId" column="greatGrand_nx_dfg_fathers_father_id"/>
+		<result property="nxDfgFatherGoodsName" column="greatGrand_nx_dfg_father_goods_name"/>
+		<collection property="fatherGoodsEntities" resultMap="grandDisGoods"/>
+	</resultMap>
+
+	<select id="queryDisGoodsCata" resultMap="disGoodsCata">
+		select father.nx_distributer_father_goods_id 'father_nx_distributer_father_goods_id',
+		       father.nx_dfg_fathers_father_id 'father_nx_dfg_fathers_father_id',
+		       father.nx_dfg_father_goods_name 'father_nx_dfg_father_goods_name',
+			   grand.nx_distributer_father_goods_id 'grand_nx_distributer_father_goods_id',
+		       grand.nx_dfg_fathers_father_id 'grand_nx_dfg_fathers_father_id',
+		       grand.nx_dfg_father_goods_name 'grand_nx_dfg_father_goods_name',
+			   greatGrand.nx_distributer_father_goods_id 'greatGrand_nx_distributer_father_goods_id',
+			   greatGrand.nx_dfg_fathers_father_id 'greatGrand_nx_dfg_fathers_father_id',
+			   greatGrand.nx_dfg_father_goods_name 'greatGrand_nx_dfg_father_goods_name'
+		from nx_distributer_father_goods as father
+		left join nx_distributer_father_goods as grand on  grand.nx_distributer_father_goods_id = father.nx_dfg_fathers_father_id
+		left join nx_distributer_father_goods as greatGrand on greatGrand.nx_distributer_father_goods_id = grand.nx_dfg_fathers_father_id
+		where greatGrand.nx_DFG_distributer_id = #{disId}
+	</select>
+
+	<select id="queryHasDisGrandFather" resultType="com.nongxinle.entity.NxDistributerFatherGoodsEntity">
+		select * from nx_distributer_father_goods where nx_dfg_distributer_id = #{disId}
+		and nx_dfg_father_goods_name like  #{grandName}
+	</select>
+	<select id="queryHasGreatGrandGoods" resultType="com.nongxinle.entity.NxDistributerFatherGoodsEntity">
+		select * from nx_distributer_father_goods where nx_dfg_distributer_id = #{disId}
+		and nx_dfg_father_goods_name like  #{greatGrandName}
 	</select>
 
 	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerFatherGoodsEntity" useGeneratedKeys="true"
@@ -27,24 +80,24 @@
 		insert into nx_distributer_father_goods
 		(
 			`nx_distributer_father_goods_id`, 
-			`nx_DF_father_goods_name`, 
-			`nx_DF_father_goods_img`, 
-			`nx_DF_father_goods_sort`, 
-			`nx_DF_father_goods_color`, 
-			`nx_DF_fathers_father_id`, 
-			`nx_DF_father_goods_level`, 
-			`nx_DFG_distributer_id`,
-			`nx_DFG_goods_amount`
+			`nx_dfg_father_goods_name`,
+			`nx_dfg_father_goods_img`,
+			`nx_dfg_father_goods_sort`,
+			`nx_dfg_father_goods_color`,
+			`nx_dfg_fathers_father_id`,
+			`nx_dfg_father_goods_level`,
+			`nx_dfg_distributer_id`,
+			`nx_dfg_goods_amount`
 		)
 		values
 		(
 			#{nxDistributerFatherGoodsId}, 
-			#{nxDfFatherGoodsName}, 
-			#{nxDfFatherGoodsImg}, 
-			#{nxDfFatherGoodsSort}, 
-			#{nxDfFatherGoodsColor}, 
-			#{nxDfFathersFatherId}, 
-			#{nxDfFatherGoodsLevel}, 
+			#{nxDfgFatherGoodsName},
+			#{nxDfgFatherGoodsImg},
+			#{nxDfgFatherGoodsSort},
+			#{nxDfgFatherGoodsColor},
+			#{nxDfgFathersFatherId},
+			#{nxDfgFatherGoodsLevel},
 			#{nxDfgDistributerId},
 			#{nxDfgGoodsAmount}
 		)
@@ -53,14 +106,14 @@
 	<update id="update" parameterType="com.nongxinle.entity.NxDistributerFatherGoodsEntity">
 		update nx_distributer_father_goods 
 		<set>
-			<if test="nxDfFatherGoodsName != null">`nx_DF_father_goods_name` = #{nxDfFatherGoodsName}, </if>
-			<if test="nxDfFatherGoodsImg != null">`nx_DF_father_goods_img` = #{nxDfFatherGoodsImg}, </if>
-			<if test="nxDfFatherGoodsSort != null">`nx_DF_father_goods_sort` = #{nxDfFatherGoodsSort}, </if>
-			<if test="nxDfFatherGoodsColor != null">`nx_DF_father_goods_color` = #{nxDfFatherGoodsColor}, </if>
-			<if test="nxDfFathersFatherId != null">`nx_DF_fathers_father_id` = #{nxDfFathersFatherId}, </if>
-			<if test="nxDfFatherGoodsLevel != null">`nx_DF_father_goods_level` = #{nxDfFatherGoodsLevel}, </if>
-			<if test="nxDfgDistributerId != null">`nx_DFG_distributer_id` = #{nxDfgDistributerId}, </if>
-			<if test="nxDfgGoodsAmount != null">`nx_DFG_goods_amount` = #{nxDfgGoodsAmount}</if>
+			<if test="nxDfgFatherGoodsName != null">`nx_dfg_father_goods_name` = #{nxDfgFatherGoodsName}, </if>
+			<if test="nxDfgFatherGoodsImg != null">`nx_dfg_father_goods_img` = #{nxDfgFatherGoodsImg}, </if>
+			<if test="nxDfgFatherGoodsSort != null">`nx_dfg_father_goods_sort` = #{nxDfgFatherGoodsSort}, </if>
+			<if test="nxDfgFatherGoodsColor != null">`nx_dfg_father_goods_color` = #{nxDfgFatherGoodsColor}, </if>
+			<if test="nxDfgFathersFatherId != null">`nx_dfg_fathers_father_id` = #{nxDfgFathersFatherId}, </if>
+			<if test="nxDfgFatherGoodsLevel != null">`nx_dfg_father_goods_level` = #{nxDfgFatherGoodsLevel}, </if>
+			<if test="nxDfgDistributerId != null">`nx_dfg_distributer_id` = #{nxDfgDistributerId}, </if>
+			<if test="nxDfgGoodsAmount != null">`nx_dfg_goods_amount` = #{nxDfgGoodsAmount}</if>
 		</set>
 		where nx_distributer_father_goods_id = #{nxDistributerFatherGoodsId}
 	</update>

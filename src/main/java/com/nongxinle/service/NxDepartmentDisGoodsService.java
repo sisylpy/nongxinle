@@ -7,15 +7,27 @@ package com.nongxinle.service;
  * @date 07-30 23:58
  */
 
-import com.nongxinle.entity.NxDepartmentDisGoodsEntity;
-import com.nongxinle.entity.NxDistributerGoodsEntity;
-import com.nongxinle.entity.NxGoodsEntity;
+import com.nongxinle.entity.*;
 
 import java.util.List;
 import java.util.Map;
 
 public interface NxDepartmentDisGoodsService {
-	
+
+	List<NxDistributerFatherGoodsEntity> depGetDepDisGoodsCata(Integer depId);
+
+	List<NxDepartmentDisGoodsEntity> queryDepGoodsByFatherId(Map<String, Object> map);
+
+	List<NxDepartmentDisGoodsEntity> queryAddDisDepGoods(Map<String, Object> map);
+
+	int queryDepGoodsTotal(Map<String, Object> map3);
+
+
+
+//	/////
+List<NxGoodsEntity> queryResGoodsDetail(Integer depDisGoodsId);
+
+
 	NxDepartmentDisGoodsEntity queryObject(Integer nxDepartmentDisGoodsId);
 	
 	List<NxDepartmentDisGoodsEntity> queryList(Map<String, Object> map);
@@ -30,13 +42,14 @@ public interface NxDepartmentDisGoodsService {
 	
 	void deleteBatch(Integer[] nxDepartmentDisGoodsIds);
 
-    List<NxDepartmentDisGoodsEntity> queryAddDisDepGoods(Map<String, Object> map);
 
-    List<NxGoodsEntity> depGetDepDisGoodsCata(Integer depId);
 
     List<NxGoodsEntity> querySearchStr(Map<String, Object> map);
 
-	List<NxGoodsEntity> queryDepGoodsByFatherId(Map<String, Object> map);
 
-    List<NxGoodsEntity> queryResGoodsDetail(Integer depDisGoodsId);
+
+	List<NxDepartmentEntity> queryDepartmentsByDisGoodsId(Integer disGoodsId);
+
+	List<NxDepartmentDisGoodsEntity> queryDepGoodsByDisGoodsFatherId(Map<String, Object> map);
+
 }

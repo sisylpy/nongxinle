@@ -1,7 +1,6 @@
 package com.nongxinle.service.impl;
 
-import com.nongxinle.entity.NxDepartmentStandardEntity;
-import com.nongxinle.entity.NxGoodsEntity;
+import com.nongxinle.entity.*;
 import com.nongxinle.service.NxDepartmentStandardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.nongxinle.dao.NxDepartmentDisGoodsDao;
-import com.nongxinle.entity.NxDepartmentDisGoodsEntity;
 import com.nongxinle.service.NxDepartmentDisGoodsService;
 
 
@@ -22,7 +20,36 @@ public class NxDepartmentDisGoodsServiceImpl implements NxDepartmentDisGoodsServ
 
 	@Autowired
 	private NxDepartmentStandardService nxDepartmentStandardService;
-	
+
+	@Override
+	public List<NxDistributerFatherGoodsEntity> depGetDepDisGoodsCata(Integer depId) {
+		return nxDepartmentDisGoodsDao.depGetDepDisGoodsCata(depId);
+	}
+
+	@Override
+	public List<NxDepartmentDisGoodsEntity> queryDepGoodsByFatherId(Map<String, Object> map) {
+		return nxDepartmentDisGoodsDao.queryDepGoodsByFatherId(map);
+	}
+	@Override
+	public List<NxDepartmentDisGoodsEntity> queryAddDisDepGoods(Map<String, Object> map) {
+		return nxDepartmentDisGoodsDao.queryDisDepGoods(map);
+	}
+
+    @Override
+    public int queryDepGoodsTotal(Map<String, Object> map3) {
+
+		return nxDepartmentDisGoodsDao.queryDisGoodsTotal(map3);
+    }
+
+
+//	///////
+
+
+	@Override
+	public List<NxGoodsEntity> queryResGoodsDetail(Integer depDisGoodsId) {
+		return nxDepartmentDisGoodsDao.queryResGoodsDetail(depDisGoodsId);
+	}
+
 	@Override
 	public NxDepartmentDisGoodsEntity queryObject(Integer nxDepartmentDisGoodsId){
 		return nxDepartmentDisGoodsDao.queryObject(nxDepartmentDisGoodsId);
@@ -40,17 +67,9 @@ public class NxDepartmentDisGoodsServiceImpl implements NxDepartmentDisGoodsServ
 	
 	@Override
 	public void save(NxDepartmentDisGoodsEntity nxDepartmentDisGoods){
-		System.out.println(nxDepartmentDisGoods.getNxDdgNxGoodsId()  + "kankangoodsidshiduoshao");
+
 		nxDepartmentDisGoodsDao.save(nxDepartmentDisGoods);
 
-		List<NxDepartmentStandardEntity> nxDepStandardEntities = nxDepartmentDisGoods.getNxDepStandardEntities();
-		if(nxDepStandardEntities.size() > 0){
-			for (NxDepartmentStandardEntity standard : nxDepStandardEntities) {
-				Integer nxDepartmentDisGoodsId = nxDepartmentDisGoods.getNxDepartmentDisGoodsId();
-				standard.setNxDdsDdsGoodsId(nxDepartmentDisGoodsId);
-				nxDepartmentStandardService.save(standard);
-			}
-		}
 	}
 	
 	@Override
@@ -68,16 +87,8 @@ public class NxDepartmentDisGoodsServiceImpl implements NxDepartmentDisGoodsServ
 		nxDepartmentDisGoodsDao.deleteBatch(nxDepartmentDisGoodsIds);
 	}
 
-	@Override
-	public List<NxDepartmentDisGoodsEntity> queryAddDisDepGoods(Map<String, Object> map) {
-		return nxDepartmentDisGoodsDao.queryDisDepGoods(map);
-	}
 
-	@Override
-	public List<NxGoodsEntity> depGetDepDisGoodsCata(Integer depId) {
 
-		return nxDepartmentDisGoodsDao.depGetDepDisGoodsCata(depId);
-	}
 
     @Override
     public List<NxGoodsEntity> querySearchStr(Map<String, Object> map) {
@@ -85,15 +96,17 @@ public class NxDepartmentDisGoodsServiceImpl implements NxDepartmentDisGoodsServ
 		return nxDepartmentDisGoodsDao.querySearchStr (map);
     }
 
+
 	@Override
-	public List<NxGoodsEntity> queryDepGoodsByFatherId(Map<String, Object> map) {
-		return nxDepartmentDisGoodsDao.queryDepGoodsByFatherId(map);
+	public List<NxDepartmentEntity> queryDepartmentsByDisGoodsId(Integer disGoodsId) {
+
+		return nxDepartmentDisGoodsDao.queryDepartmentsByDisGoodsId(disGoodsId);
 	}
 
-    @Override
-    public List<NxGoodsEntity> queryResGoodsDetail(Integer depDisGoodsId) {
+	@Override
+	public List<NxDepartmentDisGoodsEntity> queryDepGoodsByDisGoodsFatherId(Map<String, Object> map) {
+		return nxDepartmentDisGoodsDao.queryDepGoodsByDisGoodsFatherId(map);
+	}
 
-		return nxDepartmentDisGoodsDao.queryResGoodsDetail(depDisGoodsId);
-    }
 
 }

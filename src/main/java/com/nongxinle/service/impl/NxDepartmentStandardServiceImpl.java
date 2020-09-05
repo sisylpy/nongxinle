@@ -51,5 +51,11 @@ public class NxDepartmentStandardServiceImpl implements NxDepartmentStandardServ
 	public void deleteBatch(Integer[] nxDepartmentStandardIds){
 		nxDepartmentStandardDao.deleteBatch(nxDepartmentStandardIds);
 	}
-	
+
+    @Override
+    public List<NxDepartmentStandardEntity> queryDepGoodsStandards(Integer depGoodsId) {
+
+		return nxDepartmentStandardDao.queryDepGoodsStandards(depGoodsId);
+    }
+
 }

@@ -52,4 +52,6 @@ public class NxDepartmentIndependentGoodsEntity implements Serializable {
 	 */
 	private String nxDigGoodsPy;
 
+	private Boolean isShow;
+
 }

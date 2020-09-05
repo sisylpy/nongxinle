@@ -3,6 +3,17 @@
 
 <mapper namespace="com.nongxinle.dao.NxDistributerStandardDao">
 
+
+	<select id="queryDisStandardByDisGoodsId" resultType="com.nongxinle.entity.NxDistributerStandardEntity">
+		select * from nx_distributer_standard where nx_DS_dis_goods_id = #{nxDdgDisGoodsId}
+	</select>
+
+
+
+<!--	/////////   -->
+
+
+
 	<select id="queryObject" resultType="com.nongxinle.entity.NxDistributerStandardEntity">
 		select * from nx_distributer_standard where nx_distributer_standard_id = #{value}
 	</select>
@@ -17,8 +28,9 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from nx_distributer_standard 
 	</select>
-	 
-	<insert id="save" parameterType="com.nongxinle.entity.NxDistributerStandardEntity">
+
+
+    <insert id="save" parameterType="com.nongxinle.entity.NxDistributerStandardEntity">
 		insert into nx_distributer_standard
 		(
 			`nx_distributer_standard_id`, 

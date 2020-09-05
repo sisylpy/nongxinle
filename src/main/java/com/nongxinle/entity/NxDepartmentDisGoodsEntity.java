@@ -36,40 +36,43 @@ public class NxDepartmentDisGoodsEntity implements Serializable {
 	 *  
 	 */
 	private Integer nxDdgDisGoodsId;
+	private Integer nxDdgDisGoodsFatherId;
+
 	/**
 	 *  
 	 */
-	private Integer nxDdgNxGoodsId;
-	private String nxDdgNxGoodsName;
+	private String nxDdgDepGoodsName;
 	/**
 	 *  
 	 */
-	private String nxDdgNxGoodsPinyin;
+	private String nxDdgDepGoodsPinyin;
 	/**
 	 *  
 	 */
-	private String nxDdgNxGoodsPy;
+	private String nxDdgDepGoodsPy;
 	/**
 	 *  
 	 */
-	private Integer nxDdgNxGoodsSort;
+	private Integer nxDdgDepGoodsSort;
 	/**
 	 *  
 	 */
-	private String nxDdgNxGoodsStandardname;
+	private String nxDdgDepGoodsStandardname;
 	/**
 	 *  
 	 */
-	private String nxDdgNxGoodsDetail;
+	private String nxDdgDepGoodsDetail;
+	private String nxDdgDepGoodsBrand;
+	private String nxDdgDepGoodsPlace;
 	/**
 	 *  
 	 */
-	private Integer nxDdgAlarmRate;
 
 	private Integer isDownload;
 
-	private Integer nxDdgDisGoodsFatherId;
 
 	private List<NxDepartmentStandardEntity> nxDepStandardEntities;
+
+	private NxDistributerGoodsEntity nxDistributerGoodsEntity;
 
 }

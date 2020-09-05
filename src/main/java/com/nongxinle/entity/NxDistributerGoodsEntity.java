@@ -27,7 +27,7 @@ public class NxDistributerGoodsEntity implements Serializable {
 	/**
 	 *  批发商id
 	 */
-	private Integer nxDgDistributeId;
+	private Integer nxDgDistributerId;
 	/**
 	 *  商品状态
 	 */
@@ -47,9 +47,15 @@ public class NxDistributerGoodsEntity implements Serializable {
 	/**
 	 *  采购数量
 	 */
-	private Integer nxDgNxGoodsFatherId;
-	private Integer nxDgNxGoodsGrandId;
-	private String nxDgNxGoodsFatherName;
+	private Integer nxDgNxFatherId;
+	private String nxDgNxFatherImg;
+	private String nxDgNxFatherName;
+
+	private Integer nxDgNxGrandId;
+	private String nxDgNxGrandName;
+	private Integer nxDgNxGreatGrandId;
+	private String nxDgNxGreatGrandName;
+
 	/**
 	 *
 	 */
@@ -62,6 +68,8 @@ public class NxDistributerGoodsEntity implements Serializable {
 	 *  商品详细
 	 */
 	private String nxDgGoodsDetail;
+	private String nxDgGoodsBrand;
+	private String nxDgGoodsPlace;
 	/**
 	 *  商品规格
 	 */
@@ -75,11 +83,8 @@ public class NxDistributerGoodsEntity implements Serializable {
 	 */
 	private String nxDgGoodsPy;
 
-	private String nxDgGreatGrandFatherId;
-	private String nxDgGreatGrandFatherName;
-	private String nxDgGrandFatherId;
-	private String nxDgGrandFatherName;
-	private String nxDgGrandFatherImg;
+
+	private Integer nxDgPullOff;
 
 	private NxGoodsEntity nxGoodsEntity;
 
@@ -87,6 +92,10 @@ public class NxDistributerGoodsEntity implements Serializable {
 
 	private List<NxStandardEntity> nxStandardEntities;
 
+	private List<NxDepartmentStandardEntity> nxDepartmentStandardEntities;
+
 	private Integer isDownload;
+
+	private List<NxDepartmentOrdersEntity> nxDepartmentOrdersEntities; ;
 
 }

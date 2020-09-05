@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.nongxinle.entity.NxDepartmentEntity;
-import com.nongxinle.entity.NxDistributerCommunityEntity;
 import com.nongxinle.service.NxDepartmentService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +47,10 @@ public class NxDistributerDepartmentController {
 		//1,保存部门
 		nxDepartmentService.saveJustDepartment(nxDepartmentEntity);
 
+
 		//2，保存批发商部门
 		Integer nxDepartmentId = nxDepartmentEntity.getNxDepartmentId();
 		distributerDepartmentEntity.setNxDdDepartmentId(nxDepartmentId);
-
 		nxDistributerDepartmentService.save(distributerDepartmentEntity);
 
 		//3，如果有子部门，则保存子部门
@@ -62,24 +61,17 @@ public class NxDistributerDepartmentController {
 				nxDepartmentService.saveJustDepartment(sub);
 			}
 		}
-
-
 		return R.ok();
 	}
 
 
-
-
 	@RequestMapping(value = "/disGetAllCustomer/{disId}")
 	@ResponseBody
-	public R disGetAllCustomer(@PathVariable Integer disId) {
-	      List<NxDistributerDepartmentEntity> entities =  nxDistributerDepartmentService.queryAllCustomer(disId);
-
-	    return R.ok().put("data", entities);
+	public R disGetAllDisDepartments(@PathVariable Integer disId) {
+		System.out.println("conterrlekl");
+		List<NxDepartmentEntity> entities =  nxDistributerDepartmentService.queryAllDisDepartments(disId);
+		return R.ok().put("data", entities);
 	}
-	
-
-
 	
 	/**
 	 * 列表
@@ -95,9 +87,7 @@ public class NxDistributerDepartmentController {
 		//查询列表数据
 		List<NxDistributerDepartmentEntity> nxDistributerDepartmentList = nxDistributerDepartmentService.queryList(map);
 		int total = nxDistributerDepartmentService.queryTotal(map);
-		
 		PageUtils pageUtil = new PageUtils(nxDistributerDepartmentList, total, limit, page);
-		
 		return R.ok().put("page", pageUtil);
 	}
 	
@@ -110,7 +100,6 @@ public class NxDistributerDepartmentController {
 	@RequiresPermissions("nxdistributerdepartment:info")
 	public R info(@PathVariable("nxDistributerDepId") Integer nxDistributerDepId){
 		NxDistributerDepartmentEntity nxDistributerDepartment = nxDistributerDepartmentService.queryObject(nxDistributerDepId);
-		
 		return R.ok().put("nxDistributerDepartment", nxDistributerDepartment);
 	}
 	
@@ -122,7 +111,6 @@ public class NxDistributerDepartmentController {
 	@RequiresPermissions("nxdistributerdepartment:save")
 	public R save(@RequestBody NxDistributerDepartmentEntity nxDistributerDepartment){
 		nxDistributerDepartmentService.save(nxDistributerDepartment);
-		
 		return R.ok();
 	}
 	
@@ -134,7 +122,6 @@ public class NxDistributerDepartmentController {
 	@RequiresPermissions("nxdistributerdepartment:update")
 	public R update(@RequestBody NxDistributerDepartmentEntity nxDistributerDepartment){
 		nxDistributerDepartmentService.update(nxDistributerDepartment);
-		
 		return R.ok();
 	}
 	
@@ -146,7 +133,6 @@ public class NxDistributerDepartmentController {
 	@RequiresPermissions("nxdistributerdepartment:delete")
 	public R delete(@RequestBody Integer[] nxDistributerDepIds){
 		nxDistributerDepartmentService.deleteBatch(nxDistributerDepIds);
-		
 		return R.ok();
 	}
 	

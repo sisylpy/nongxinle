@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mac
+ Source Server         : mysql
  Source Server Type    : MySQL
- Source Server Version : 80012
- Source Host           : localhost:3306
+ Source Server Version : 50725
+ Source Host           : 140.143.186.94:3306
  Source Schema         : nongxinle
 
  Target Server Type    : MySQL
- Target Server Version : 80012
+ Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 03/09/2020 13:03:49
+ Date: 04/09/2020 17:25:24
 */
 
 SET NAMES utf8mb4;
@@ -23,8 +23,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `nx_adsense`;
 CREATE TABLE `nx_adsense` (
   `nx_adsense_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '广告位id',
-  `nx_adsense_file_path` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '广告位图片',
-  `nx_adsense_click` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '广告位链接',
+  `nx_adsense_file_path` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '广告位图片',
+  `nx_adsense_click` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '广告位链接',
   `nx_adsense_community_id` int(20) DEFAULT NULL COMMENT '社区id',
   `nx_adsense_sort` int(4) DEFAULT NULL COMMENT '广告位排序',
   PRIMARY KEY (`nx_adsense_id`)
@@ -45,7 +45,7 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_agent`;
 CREATE TABLE `nx_agent` (
   `agent_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '批发商用户id',
-  `agent_name` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '送货员名字',
+  `agent_name` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '送货员名字',
   `agent_dis_id` int(20) DEFAULT NULL COMMENT '批发商id',
   PRIMARY KEY (`agent_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -63,11 +63,11 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_agent_user`;
 CREATE TABLE `nx_agent_user` (
   `nx_agent_user_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '代理商用户id',
-  `AU_wx_nick_name` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户微信昵称',
-  `AU_wx_avartra_url` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户微信头像',
-  `AU_wx_agender` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户微信性别',
-  `AU_name` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户姓名',
-  `AU_phone` varchar(11) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户手机号码',
+  `AU_wx_nick_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户微信昵称',
+  `AU_wx_avartra_url` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户微信头像',
+  `AU_wx_agender` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户微信性别',
+  `AU_name` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户姓名',
+  `AU_phone` varchar(11) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '代理商用户手机号码',
   PRIMARY KEY (`nx_agent_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -77,7 +77,7 @@ CREATE TABLE `nx_agent_user` (
 DROP TABLE IF EXISTS `nx_alias`;
 CREATE TABLE `nx_alias` (
   `nx_alias_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '别名id',
-  `nx_alias_name` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '别名名称',
+  `nx_alias_name` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '别名名称',
   `nx_als_goods_id` int(20) DEFAULT NULL COMMENT '别名商品id',
   `nx_als_sort` int(10) DEFAULT NULL COMMENT '别名排序',
   PRIMARY KEY (`nx_alias_id`)
@@ -94,7 +94,7 @@ CREATE TABLE `nx_applys` (
   `nx_apply_distributer_id` int(20) DEFAULT NULL COMMENT '批发商id',
   `nx_apply_goods_id` int(20) DEFAULT NULL COMMENT '申请商品id',
   `nx_apply_quantity` float(10,1) DEFAULT NULL COMMENT '申请数量',
-  `nx_apply_date` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '申请日期',
+  `nx_apply_date` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '申请日期',
   `nx_apply_status` tinyint(2) DEFAULT NULL COMMENT '申请状态',
   `nx_apply_remark` tinyint(200) DEFAULT NULL COMMENT '申请备注',
   `nx_apply_weight` float(10,1) DEFAULT NULL COMMENT '申请数量',
@@ -112,12 +112,12 @@ CREATE TABLE `nx_applys` (
 DROP TABLE IF EXISTS `nx_community`;
 CREATE TABLE `nx_community` (
   `nx_community_id` int(20) NOT NULL,
-  `nx_community_name` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_community_lat` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_community_lng` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_community_name` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_community_lat` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_community_lng` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_community_route_id` int(20) DEFAULT NULL,
   `nx_community_dis_id` int(20) DEFAULT NULL,
-  `nx_community_polygon` varchar(10000) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_community_polygon` varchar(10000) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_community_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -136,8 +136,8 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_community_adsense`;
 CREATE TABLE `nx_community_adsense` (
   `nx_community_adsense_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '广告位id',
-  `nx_CA_file_path` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '广告位图片',
-  `nx_CA_click` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '广告位链接',
+  `nx_CA_file_path` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '广告位图片',
+  `nx_CA_click` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '广告位链接',
   `nx_CA_community_id` int(20) DEFAULT NULL COMMENT '社区id',
   `nx_CA_sort` int(4) DEFAULT NULL COMMENT '广告位排序',
   PRIMARY KEY (`nx_community_adsense_id`)
@@ -175,9 +175,9 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_community_daytime`;
 CREATE TABLE `nx_community_daytime` (
   `nx_week_id` int(20) NOT NULL AUTO_INCREMENT,
-  `nx_day_name` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_day_open` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_day_close` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_day_name` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_day_open` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_day_close` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_dis_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`nx_week_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -188,10 +188,10 @@ CREATE TABLE `nx_community_daytime` (
 DROP TABLE IF EXISTS `nx_community_father_goods`;
 CREATE TABLE `nx_community_father_goods` (
   `nx_community_father_goods_id` int(20) NOT NULL AUTO_INCREMENT,
-  `nx_father_goods_name` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_father_goods_img` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_father_goods_name` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_father_goods_img` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_father_goods_sort` int(4) DEFAULT NULL,
-  `nx_father_goods_color` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_father_goods_color` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_fathers_father_id` int(20) DEFAULT NULL,
   `nx_father_goods_level` tinyint(2) DEFAULT NULL,
   `nx_CFG_community_id` int(20) DEFAULT NULL,
@@ -220,27 +220,27 @@ CREATE TABLE `nx_community_goods` (
   `nx_cg_goods_is_weight` tinyint(2) DEFAULT NULL COMMENT '是否称重',
   `nx_cg_goods_price` float(10,1) DEFAULT NULL COMMENT '价格',
   `nx_cg_goods_price_decimal` int(10) DEFAULT NULL COMMENT '价格小数点部分',
-  `nx_cg_nx_goods_file_path` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品图片',
+  `nx_cg_nx_goods_file_path` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品图片',
   `nx_cg_goods_sell_type` tinyint(2) DEFAULT NULL COMMENT '批发商商品销售规格模式0按standardname销售，1 按自己的规格销售',
   `nx_cg_goods_buy_type` tinyint(2) DEFAULT NULL COMMENT '自采购商品的状态',
   `nx_cg_cf_goods_father_id` int(20) DEFAULT NULL COMMENT '社区商品父类id',
   `nx_cg_nx_goods_id` int(10) DEFAULT NULL COMMENT '购买热度',
-  `nx_cg_nx_goods_father_id` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购数量',
-  `nx_cg_nx_goods_father_img` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '进货方式',
+  `nx_cg_nx_goods_father_id` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购数量',
+  `nx_cg_nx_goods_father_img` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '进货方式',
   `nx_cg_goods_total_hits` int(20) DEFAULT NULL COMMENT '自采购员工id',
   `nx_cg_purchase_quantity` int(20) DEFAULT NULL COMMENT 'App订货供货商appid',
   `nx_cg_buy_purchase_user_id` int(20) DEFAULT NULL COMMENT '供货商id',
-  `nx_cg_buy_app_id` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '进价',
+  `nx_cg_buy_app_id` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '进价',
   `nx_cg_buy_status` int(20) DEFAULT NULL COMMENT '商品id',
   `nx_cg_supplier_id` int(20) DEFAULT NULL COMMENT '商品库父类id',
-  `nx_cg_buying_price` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品库image',
+  `nx_cg_buying_price` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品库image',
   `nx_cg_goods_type` tinyint(2) DEFAULT NULL COMMENT '0 供货商，1 社区库存，2 自采购 4 加工',
-  `nx_cg_goods_name` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品名称',
-  `nx_cg_goods_detail` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品详细',
-  `nx_cg_goods_standardname` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品规格',
-  `nx_cg_goods_stock` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区库存商品库存量',
-  `nx_cg_goods_pinyin` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区商品拼音',
-  `nx_cg_goods_py` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区商品拼音简拼',
+  `nx_cg_goods_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品名称',
+  `nx_cg_goods_detail` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品详细',
+  `nx_cg_goods_standardname` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品规格',
+  `nx_cg_goods_stock` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区库存商品库存量',
+  `nx_cg_goods_pinyin` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区商品拼音',
+  `nx_cg_goods_py` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区商品拼音简拼',
   PRIMARY KEY (`nx_community_goods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -262,20 +262,20 @@ CREATE TABLE `nx_community_orders` (
   `nx_CO_community_id` int(20) DEFAULT NULL COMMENT '订单社区id',
   `nx_CO_customer_id` int(20) DEFAULT NULL COMMENT '订单客户id',
   `nx_CO_user_id` int(20) DEFAULT NULL COMMENT '订单用户id',
-  `nx_CO_date` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单日期',
+  `nx_CO_date` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单日期',
   `nx_CO_status` tinyint(2) DEFAULT NULL COMMENT '订单状态',
-  `nx_CO_service` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单送达时间',
+  `nx_CO_service` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单送达时间',
   `nx_CO_amount` float(10,0) DEFAULT NULL COMMENT '订单总金额',
-  `nx_CO_service_date` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单送到日期',
-  `nx_CO_service_time` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单送到时间',
+  `nx_CO_service_date` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单送到日期',
+  `nx_CO_service_time` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单送到时间',
   `nx_CO_weigh_user_id` int(20) DEFAULT NULL COMMENT '订单称重用户id',
   `nx_CO_delivery_user_id` int(20) DEFAULT NULL COMMENT '订单配送员工id',
   `nx_CO_sub_amount` int(10) DEFAULT NULL COMMENT '订单子商品数量',
   `nx_CO_sub_finished` int(10) DEFAULT NULL COMMENT '订单子商品完成数量',
-  `nx_CO_weigh_number` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单称重订单号',
+  `nx_CO_weigh_number` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单称重订单号',
   `nx_CO_payment_status` tinyint(2) DEFAULT NULL COMMENT '订单支付状态',
-  `nx_CO_payment_send_time` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单支付发送时间',
-  `nx_CO_payment_time` varchar(0) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单支付时间',
+  `nx_CO_payment_send_time` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单支付发送时间',
+  `nx_CO_payment_time` varchar(0) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单支付时间',
   `nx_CO_type` tinyint(2) DEFAULT NULL COMMENT '订单类型 0先付款1后付款',
   PRIMARY KEY (`nx_community_orders_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -307,9 +307,9 @@ CREATE TABLE `nx_community_orders_sub` (
   `nx_COS_community_goods_id` int(20) DEFAULT NULL COMMENT '子订单社区商品id',
   `nx_COS_community_goods_father_id` int(20) DEFAULT NULL COMMENT '子订单商品父id',
   `nx_COS_quantity` float(10,1) DEFAULT NULL COMMENT '子订单申请数量',
-  `nx_COS_standard` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '子订单申请规格',
+  `nx_COS_standard` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '子订单申请规格',
   `nx_COS_price` float(10,1) DEFAULT NULL COMMENT '子订单申请商品单价',
-  `nx_COS_remark` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '子订单申请备注',
+  `nx_COS_remark` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '子订单申请备注',
   `nx_COS_weight` float(10,1) DEFAULT NULL COMMENT '子订单申请商品称重',
   `nx_COS_subtotal` float(10,1) DEFAULT NULL COMMENT '子订单申请商品小计',
   `nx_COS_status` tinyint(2) DEFAULT NULL COMMENT '子订单申请商品状态',
@@ -356,15 +356,15 @@ DROP TABLE IF EXISTS `nx_community_promote`;
 CREATE TABLE `nx_community_promote` (
   `nx_promote_id` int(20) NOT NULL AUTO_INCREMENT,
   `nx_promote_cg_id` int(20) DEFAULT NULL,
-  `nx_orignal_price` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_promote_price` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_promote_standard` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_promote_weight` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_promote_expired` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_promote_storage` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_promote_words` varchar(1000) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_promote_recommand_goods` varchar(1000) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_promote_file_path` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_orignal_price` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_price` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_standard` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_weight` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_expired` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_storage` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_words` varchar(1000) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_recommand_goods` varchar(1000) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_file_path` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_promote_community_id` int(20) DEFAULT NULL,
   `nx_promote_cg_father_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`nx_promote_id`)
@@ -377,10 +377,10 @@ DROP TABLE IF EXISTS `nx_community_standard`;
 CREATE TABLE `nx_community_standard` (
   `nx_community_standard_id` int(20) NOT NULL AUTO_INCREMENT,
   `nx_CS_comm_goods_id` int(20) DEFAULT NULL,
-  `nx_CS_standard_name` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_CS_standard_file_path` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_CS_standard_scale` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_CS_standard_error` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_CS_standard_name` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_CS_standard_file_path` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_CS_standard_scale` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_CS_standard_error` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_CS_standard_sort` int(10) DEFAULT NULL,
   PRIMARY KEY (`nx_community_standard_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -399,11 +399,11 @@ DROP TABLE IF EXISTS `nx_community_stock`;
 CREATE TABLE `nx_community_stock` (
   `nx_community_stock_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '社区库存id',
   `nx_cs_community_id` int(20) DEFAULT NULL COMMENT '社区库存社区id',
-  `nx_stock_total` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区库存数量',
-  `nx_stock_requier_date` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区库存请求入库时间',
+  `nx_stock_total` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区库存数量',
+  `nx_stock_requier_date` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区库存请求入库时间',
   `nx_stock_requier_user_id` int(20) DEFAULT NULL COMMENT '社区库存请求入库用户',
   `nx_stock_status` tinyint(2) DEFAULT NULL COMMENT '社区库存状态',
-  `nx_stock_in_date` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区库存入库时间',
+  `nx_stock_in_date` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区库存入库时间',
   `nx_stock_in_user_id` int(20) DEFAULT NULL COMMENT '社区库存入库用户',
   PRIMARY KEY (`nx_community_stock_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -443,12 +443,12 @@ CREATE TABLE `nx_community_stock_sub` (
   `nx_community_sub_stock_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '社区子库存id',
   `nx_cs_id` int(20) DEFAULT NULL COMMENT '社区子库存库存id',
   `nx_css_cg_id` int(20) DEFAULT NULL COMMENT '社区子社区商品id',
-  `nx_css_entry_amount` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库数量',
-  `nx_css_entry_standard` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库单位',
-  `nx_css_entry_price` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库单价',
-  `nx_css_entry_sub_total` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库小计',
-  `nx_css_entry_date` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库日期',
-  `nx_css_stock_amount` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存库存数量',
+  `nx_css_entry_amount` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库数量',
+  `nx_css_entry_standard` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库单位',
+  `nx_css_entry_price` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库单价',
+  `nx_css_entry_sub_total` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库小计',
+  `nx_css_entry_date` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存入库日期',
+  `nx_css_stock_amount` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区子库存库存数量',
   PRIMARY KEY (`nx_community_sub_stock_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -495,11 +495,11 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_community_user`;
 CREATE TABLE `nx_community_user` (
   `nx_agent_user_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '社区用户id',
-  `AU_wx_nick_name` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户微信昵称',
-  `AU_wx_avartra_url` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户微信头像',
-  `AU_wx_agender` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户微信性别',
-  `AU_name` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户姓名',
-  `AU_phone` varchar(11) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户手机号码',
+  `AU_wx_nick_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户微信昵称',
+  `AU_wx_avartra_url` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户微信头像',
+  `AU_wx_agender` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户微信性别',
+  `AU_name` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户姓名',
+  `AU_phone` varchar(11) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区用户用户手机号码',
   PRIMARY KEY (`nx_agent_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -509,21 +509,21 @@ CREATE TABLE `nx_community_user` (
 DROP TABLE IF EXISTS `nx_customer`;
 CREATE TABLE `nx_customer` (
   `nx_customer_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '客户id',
-  `nx_customer_name` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户名称',
-  `nx_customer_print_label` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户打印名称',
-  `nx_customer_out_label` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户对外名称',
+  `nx_customer_name` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户名称',
+  `nx_customer_print_label` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户打印名称',
+  `nx_customer_out_label` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户对外名称',
   `nx_customer_type` tinyint(2) DEFAULT NULL COMMENT '客户类型',
-  `nx_customer_address` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户地址',
-  `nx_customer_phone` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户手机',
+  `nx_customer_address` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户地址',
+  `nx_customer_phone` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户手机',
   `nx_customer_call` int(10) DEFAULT NULL COMMENT '客户称呼',
-  `nx_customer_lat` varchar(30) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_customer_lng` varchar(30) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_customer_lat` varchar(30) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_customer_lng` varchar(30) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_customer_dis_id` int(20) DEFAULT NULL COMMENT '客户批发商id',
   `nx_customer_community_id` int(20) DEFAULT NULL COMMENT '社区id',
   `nx_customer_join_date` date DEFAULT NULL COMMENT '客户加入日期',
   `nx_customer_order_amount` float(10,1) DEFAULT NULL COMMENT '客户订货金额',
   `nx_customer_order_times` int(10) DEFAULT NULL COMMENT '客户订货次数',
-  `nx_customer_detail_address` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户详细地址',
+  `nx_customer_detail_address` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户详细地址',
   PRIMARY KEY (`nx_customer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -543,11 +543,11 @@ DROP TABLE IF EXISTS `nx_customer_user`;
 CREATE TABLE `nx_customer_user` (
   `nx_CU_user_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '客户用户id',
   `nx_CU_customer_id` int(20) DEFAULT NULL COMMENT '客户id',
-  `nx_CU_wx_nick_name` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户用户微信昵称',
-  `nx_CU_wx_avatar_url` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '微信头像',
+  `nx_CU_wx_nick_name` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户用户微信昵称',
+  `nx_CU_wx_avatar_url` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '微信头像',
   `nx_CU_wx_gender` int(2) DEFAULT NULL COMMENT '微信性别',
-  `nx_CU_wx_open_id` varchar(40) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '微信openid',
-  `nx_CU_wx_phone_number` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '微信手机号',
+  `nx_CU_wx_open_id` varchar(40) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '微信openid',
+  `nx_CU_wx_phone_number` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '微信手机号',
   `nx_CU_join_date` date DEFAULT NULL COMMENT '客户加入时间',
   `nx_CU_order_amount` float(10,1) DEFAULT NULL COMMENT '客户订货总金额',
   `nx_CU_order_times` int(10) DEFAULT NULL COMMENT '客户订货次数',
@@ -571,18 +571,18 @@ CREATE TABLE `nx_customer_user_goods` (
   `nx_CUG_goods_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '客户用户商品id',
   `nx_CUG_user_id` int(20) DEFAULT NULL COMMENT '客户用户id',
   `nx_CUG_community_goods_id` int(20) DEFAULT NULL COMMENT '批发商商品id',
-  `nx_CUG_first_order_time` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户用户第一次订货时间',
-  `nx_CUG_last_order_time` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户用户最后一次订货时间',
+  `nx_CUG_first_order_time` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户用户第一次订货时间',
+  `nx_CUG_last_order_time` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户用户最后一次订货时间',
   `nx_CUG_order_amount` float(10,1) DEFAULT NULL COMMENT '客户用户订货总量',
   `nx_CUG_order_times` int(10) DEFAULT NULL COMMENT '客户用户订货次数',
   `nx_CUG_is_love` tinyint(2) DEFAULT NULL COMMENT '客户用户最爱',
   `nx_CUG_order_rate` int(4) DEFAULT NULL COMMENT '客户订货频率',
   `nx_CUG_last_order_quantity` float(10,1) DEFAULT NULL COMMENT '客户最后一次订货数量',
-  `nx_CUG_last_order_standard` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户最后一次订货规格',
+  `nx_CUG_last_order_standard` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '客户最后一次订货规格',
   `nx_CUG_join_my_template` tinyint(2) DEFAULT NULL COMMENT '是否加入用户订货模版',
   `nx_CUG_order_quantity` float(4,1) DEFAULT NULL,
-  `nx_CUG_order_standard` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_CUG_goods_color` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_CUG_order_standard` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_CUG_goods_color` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_CUG_goods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -603,25 +603,23 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_department`;
 CREATE TABLE `nx_department` (
   `nx_department_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '订货部门id',
-  `nx_department_name` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门名称',
+  `nx_department_name` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门名称',
   `nx_department_father_id` int(20) DEFAULT NULL COMMENT '订货部门上级id',
   `nx_department_type` tinyint(2) DEFAULT NULL COMMENT '订货部门类型',
   `nx_department_sub_amount` int(2) DEFAULT NULL COMMENT '订货部门子部门数量',
   `nx_department_dis_id` int(20) DEFAULT NULL COMMENT '订货部门批发商id',
-  `nx_department_file_path` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_department_file_path` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_department_is_group_dep` tinyint(2) DEFAULT NULL COMMENT '是客户吗',
   `nx_department_print_name` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_department_show_weeks` tinyint(2) DEFAULT '1',
   PRIMARY KEY (`nx_department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_department
 -- ----------------------------
 BEGIN;
-INSERT INTO `nx_department` VALUES (1, '餐馆一', 0, 1, 2, 1, 'https://thirdwx.qlogo.cn/mmopen/vi_32/A6HnsicWX5AqTPibokqX0mv49otOSQOejxnkRFyMl9xtjRhAnv4KeH6oiaHf7Qxv8k09M0Y2aQBSReQyFSdiajLlVw/132', 1, NULL, 2);
-INSERT INTO `nx_department` VALUES (2, '前厅', 1, 1, 0, 1, NULL, 0, NULL, 2);
-INSERT INTO `nx_department` VALUES (3, '后厨', 1, 1, 0, 1, NULL, 0, NULL, 1);
+INSERT INTO `nx_department` VALUES (1, 'acc', 0, 1, 0, 1, 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrPWubwbROMC55HdcicQicia2M7OvqibxBkD7FC0icTHV08UmUYIphSo03ZQdG52WDs1cCws1ADPoIeLA/132', 1, NULL, 1);
 COMMIT;
 
 -- ----------------------------
@@ -632,9 +630,9 @@ CREATE TABLE `nx_department_bill` (
   `nx_department_bill_id` int(20) NOT NULL AUTO_INCREMENT,
   `nx_DB_dis_id` int(20) DEFAULT NULL,
   `nx_DB_dep_id` int(20) DEFAULT NULL,
-  `nx_DB_total` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DB_total` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_DB_status` tinyint(2) DEFAULT NULL,
-  `nx_DB_time` varchar(30) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DB_time` varchar(30) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_DB_issue_user_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`nx_department_bill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -649,34 +647,23 @@ CREATE TABLE `nx_department_dis_goods` (
   `nx_DDG_department_id` int(20) DEFAULT NULL,
   `nx_DDG_dis_goods_id` int(20) DEFAULT NULL,
   `nx_DDG_dis_goods_father_id` int(20) DEFAULT NULL,
-  `nx_DDG_dep_goods_name` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DDG_dep_goods_pinyin` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DDG_dep_goods_py` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DDG_dep_goods_standardname` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DDG_dep_goods_detail` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DDG_dep_goods_brand` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DDG_dep_goods_place` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DDG_dep_goods_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DDG_dep_goods_pinyin` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DDG_dep_goods_py` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DDG_dep_goods_standardname` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DDG_dep_goods_detail` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DDG_dep_goods_brand` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DDG_dep_goods_place` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_department_dis_goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_department_dis_goods
 -- ----------------------------
 BEGIN;
-INSERT INTO `nx_department_dis_goods` VALUES (1, 1, NULL, 2, 1, '白萝卜', 'bailuobu', 'blb', '斤', '山东,四川', NULL, NULL);
+INSERT INTO `nx_department_dis_goods` VALUES (1, 1, NULL, 3, 1, '胡萝卜一二三四五六', 'huluobu', 'hlb', '斤', '山东新鲜', NULL, NULL);
 INSERT INTO `nx_department_dis_goods` VALUES (2, 1, NULL, 1, 1, '卞萝卜', 'bianluobu', 'blb', '斤', '', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (3, 1, NULL, 3, 1, '胡萝卜一二三四五六', 'huluobu', 'hlb', '斤', '山东新鲜', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (4, 1, NULL, 4, 1, '红薯', 'hongshu', 'hs', '斤', '', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (5, 1, NULL, 5, 1, '红薯', 'hongshu', 'hs', '斤', '', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (6, 1, NULL, 6, 1, '凉薯', 'liangshu', 'ls', '斤', '广东', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (7, 1, NULL, 7, 1, '藕', 'ou', 'o', '斤', '', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (8, 1, NULL, 8, 1, '青萝卜', 'qingluobu', 'qlb', '斤', '', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (9, 1, NULL, 9, 1, '水萝卜', 'shuiluobu', 'slb', '斤', '', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (10, 1, NULL, 13, 4, '葱', 'cong', 'c', '斤', '', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (11, 1, NULL, 14, 4, '彩椒', 'caijiao', 'cj', '斤', '红,黄', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (12, 1, NULL, 15, 4, '大蒜', 'dasuan', 'ds', '斤', '', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (13, 1, NULL, 16, 4, '黄葱头', 'huangcongtou', 'hct', '斤', '', NULL, NULL);
-INSERT INTO `nx_department_dis_goods` VALUES (14, 1, NULL, 17, 4, '红葱头', 'hongcongtou', 'hct', '斤', '', NULL, NULL);
+INSERT INTO `nx_department_dis_goods` VALUES (3, 1, NULL, 2, 1, '白萝卜', 'bailuobu', 'blb', '斤', '山东,四川', NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -685,23 +672,22 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_department_independent_goods`;
 CREATE TABLE `nx_department_independent_goods` (
   `nx_department_independent_goods_id` int(20) NOT NULL AUTO_INCREMENT,
-  `nx_DIG_goods_name` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DIG_goods_standardname` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DIG_goods_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DIG_goods_standardname` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_DIG_department_father_id` int(20) DEFAULT NULL,
   `nx_DIG_department_id` int(20) DEFAULT NULL,
   `nx_DIG_alarm_rate` int(2) DEFAULT NULL,
-  `nx_DIG_goods_pinyin` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DIG_goods_py` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DIG_goods_pinyin` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DIG_goods_py` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_department_independent_goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_department_independent_goods
 -- ----------------------------
 BEGIN;
-INSERT INTO `nx_department_independent_goods` VALUES (1, '笔', '只', NULL, 1, NULL, 'dd', 'dd');
-INSERT INTO `nx_department_independent_goods` VALUES (3, '菠萝蜜', NULL, NULL, 1, NULL, 'boluo', 'bl');
-INSERT INTO `nx_department_independent_goods` VALUES (5, '盒', NULL, NULL, 1, NULL, 'hezi', 'hz');
+INSERT INTO `nx_department_independent_goods` VALUES (1, '菠萝', NULL, NULL, 1, NULL, 'boluo', 'bl');
+INSERT INTO `nx_department_independent_goods` VALUES (2, '杯子', NULL, NULL, 1, NULL, 'bi', 'b');
 COMMIT;
 
 -- ----------------------------
@@ -714,13 +700,13 @@ CREATE TABLE `nx_department_orders` (
   `nx_DO_nx_goods_father_id` int(20) DEFAULT NULL COMMENT '部门订单商品父id',
   `nx_DO_dis_goods_id` int(20) DEFAULT NULL COMMENT '部门订单社区商品id',
   `nx_DO_dep_dis_goods_id` int(20) DEFAULT NULL,
-  `nx_DO_dep_dis_goods_price` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门商品价格',
-  `nx_DO_quantity` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请数量',
-  `nx_DO_standard` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请规格',
-  `nx_DO_remark` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请备注',
-  `nx_DO_weight` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单重量',
-  `nx_DO_price` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单商品单价',
-  `nx_DO_subtotal` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请商品小计',
+  `nx_DO_dep_dis_goods_price` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门商品价格',
+  `nx_DO_quantity` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请数量',
+  `nx_DO_standard` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请规格',
+  `nx_DO_remark` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请备注',
+  `nx_DO_weight` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单重量',
+  `nx_DO_price` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单商品单价',
+  `nx_DO_subtotal` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请商品小计',
   `nx_DO_department_id` int(20) DEFAULT NULL COMMENT '部门订单部门id',
   `nx_DO_department_father_id` int(20) DEFAULT NULL,
   `nx_DO_distributer_id` int(20) DEFAULT NULL COMMENT '部门订单批发商id',
@@ -731,44 +717,34 @@ CREATE TABLE `nx_department_orders` (
   `nx_DO_account_user_id` int(20) DEFAULT NULL COMMENT '部门订单商品输入单价用户id',
   `nx_DO_purchase_user_id` int(20) DEFAULT NULL COMMENT '部门商品采购员id',
   `nx_DO_buy_status` tinyint(2) DEFAULT NULL COMMENT '部门订单商品进货状态',
-  `nx_DO_apply_date` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请时间',
-  `nx_DO_arrive_date` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单送达时间',
+  `nx_DO_apply_date` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单申请时间',
+  `nx_DO_arrive_date` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门订单送达时间',
   `nx_DO_purchase_goods_id` int(20) DEFAULT NULL COMMENT '订单采购商品id',
-  `nx_DO_apply_only_date` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DO_apply_only_time` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DO_apply_only_date` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DO_apply_only_time` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_DO_goods_type` tinyint(2) DEFAULT NULL,
   `nx_DO_ind_goods_id` int(20) DEFAULT NULL,
-  `nx_DO_ind_goods_py` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DO_operation_time` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DO_apply_what_day` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '星期几',
+  `nx_DO_ind_goods_py` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DO_operation_time` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DO_apply_what_day` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '星期几',
   `nx_DO_is_agent` tinyint(2) DEFAULT NULL,
   `nx_DO_dis_goods_father_id` int(20) DEFAULT NULL COMMENT '批发商父级商品id',
   PRIMARY KEY (`nx_department_orders_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_department_orders
 -- ----------------------------
 BEGIN;
-INSERT INTO `nx_department_orders` VALUES (1, NULL, NULL, 3, 3, NULL, '2', '斤', NULL, '2', NULL, NULL, 2, 1, 1, NULL, 2, 1, NULL, NULL, NULL, 0, '2020-09-02', '2020-09-03', NULL, '09-02', '13:45', 0, NULL, NULL, NULL, '星期三', 0, 1);
-INSERT INTO `nx_department_orders` VALUES (2, NULL, NULL, 4, 4, NULL, '56', '斤', '', NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-02', '2020-09-03', NULL, '09-02', '13:46', 0, NULL, NULL, NULL, '星期三', 0, 1);
-INSERT INTO `nx_department_orders` VALUES (9, NULL, NULL, NULL, NULL, NULL, '333', '只', NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-02', '2020-09-03', NULL, '09-02', '18:27', 1, 1, NULL, NULL, '星期三', 0, NULL);
-INSERT INTO `nx_department_orders` VALUES (10, NULL, NULL, 13, 10, NULL, '1', '捆', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-02', '2020-09-03', NULL, '09-02', '21:44', 0, NULL, NULL, NULL, '星期三', 0, 4);
-INSERT INTO `nx_department_orders` VALUES (11, NULL, NULL, 13, 10, NULL, '2', '捆', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '00:57', 0, NULL, NULL, NULL, '星期四', 0, NULL);
-INSERT INTO `nx_department_orders` VALUES (13, NULL, NULL, 2, 1, NULL, '5', 'dafa', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '08:39', 0, NULL, NULL, NULL, '星期四', 0, 1);
-INSERT INTO `nx_department_orders` VALUES (16, NULL, NULL, NULL, NULL, NULL, '10支', '只', NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '09:52', 1, 1, 'dd', NULL, '星期四', 0, NULL);
-INSERT INTO `nx_department_orders` VALUES (17, NULL, NULL, NULL, NULL, NULL, '10斤', NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '09:54', 1, 4, 'hc', NULL, '星期四', 0, NULL);
-INSERT INTO `nx_department_orders` VALUES (18, NULL, NULL, NULL, NULL, NULL, '2个', NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '09:54', 1, 3, 'bl', NULL, '星期四', 0, NULL);
-INSERT INTO `nx_department_orders` VALUES (19, NULL, NULL, 1, 2, NULL, '5', '颗', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '09:55', 0, NULL, NULL, NULL, '星期四', 0, 1);
-INSERT INTO `nx_department_orders` VALUES (20, NULL, NULL, NULL, NULL, NULL, '1个', NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '09:56', 1, 3, 'bl', NULL, '星期四', 0, NULL);
-INSERT INTO `nx_department_orders` VALUES (21, NULL, NULL, 2, 1, NULL, '4', 'dafa', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '10:53', 0, NULL, NULL, NULL, '星期四', 0, 1);
-INSERT INTO `nx_department_orders` VALUES (22, NULL, NULL, 13, 10, NULL, '10', '根', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '10:58', 0, NULL, NULL, NULL, '星期四', 0, 4);
-INSERT INTO `nx_department_orders` VALUES (23, NULL, NULL, 1, 2, NULL, '3', 'ff', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '12:16', 0, NULL, NULL, NULL, '星期四', 0, 1);
-INSERT INTO `nx_department_orders` VALUES (24, NULL, NULL, 3, 3, NULL, '3', '斤', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '12:40', 0, NULL, NULL, NULL, '星期四', 0, NULL);
-INSERT INTO `nx_department_orders` VALUES (25, NULL, NULL, 1, 2, NULL, '33333', '颗', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '12:41', 0, NULL, NULL, NULL, '星期四', 0, NULL);
-INSERT INTO `nx_department_orders` VALUES (26, NULL, NULL, 3, 3, NULL, '2', '斤', NULL, NULL, NULL, NULL, 2, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '12:42', 0, NULL, NULL, NULL, '星期四', 0, 1);
-INSERT INTO `nx_department_orders` VALUES (27, NULL, NULL, NULL, NULL, NULL, '44', NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '12:46', 1, 3, 'bl', NULL, '星期四', 0, NULL);
-INSERT INTO `nx_department_orders` VALUES (28, NULL, NULL, NULL, NULL, NULL, '44', NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-03', '2020-09-04', NULL, '09-03', '12:46', 1, 1, 'dd', NULL, '星期四', 0, NULL);
+INSERT INTO `nx_department_orders` VALUES (1, NULL, NULL, 2, 3, NULL, '3', '根', NULL, '3.6', NULL, NULL, 1, 1, 1, NULL, 2, 1, NULL, NULL, NULL, 0, '2020-09-04', '2020-09-05', NULL, '09-04', '14:01', 0, NULL, NULL, NULL, '星期五', 0, 1);
+INSERT INTO `nx_department_orders` VALUES (2, NULL, NULL, 3, 1, NULL, '5', '斤', '', '6.5', NULL, NULL, 1, 1, 1, NULL, 2, 1, NULL, NULL, NULL, 0, '2020-09-04', '2020-09-05', NULL, '09-04', '14:01', 0, NULL, NULL, NULL, '星期五', 0, 1);
+INSERT INTO `nx_department_orders` VALUES (3, NULL, NULL, 1, 2, NULL, '111', '斤', '', '9.5', NULL, NULL, 1, 1, 1, NULL, 2, 1, NULL, NULL, NULL, 0, '2020-09-04', '2020-09-05', NULL, '09-04', '14:01', 0, NULL, NULL, NULL, '星期五', 0, 1);
+INSERT INTO `nx_department_orders` VALUES (4, NULL, NULL, NULL, NULL, NULL, '20个', NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-04', '2020-09-05', NULL, '09-04', '14:02', 1, 1, 'bl', NULL, '星期五', 0, NULL);
+INSERT INTO `nx_department_orders` VALUES (5, NULL, NULL, 2, 3, NULL, '3', '斤', NULL, '3', NULL, NULL, 1, 1, 1, NULL, 2, 1, NULL, NULL, NULL, 0, '2020-09-04', '2020-09-05', NULL, '09-04', '14:08', 0, NULL, NULL, NULL, '星期五', 0, NULL);
+INSERT INTO `nx_department_orders` VALUES (6, NULL, NULL, 2, 3, NULL, '18', '根', NULL, NULL, NULL, NULL, 1, 1, 1, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-04', '2020-09-05', NULL, '09-04', '14:24', 0, NULL, NULL, NULL, '星期五', 0, NULL);
+INSERT INTO `nx_department_orders` VALUES (7, NULL, NULL, 2, 3, NULL, '28', '根', NULL, NULL, NULL, NULL, 1, 1, 1, NULL, 0, 2, NULL, NULL, NULL, 0, '2020-09-04', '2020-09-05', NULL, '09-04', '14:30', 0, NULL, NULL, NULL, '星期五', 0, NULL);
+INSERT INTO `nx_department_orders` VALUES (8, NULL, NULL, NULL, NULL, NULL, '10筐', NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, 0, '2020-09-04', '2020-09-05', NULL, '09-04', '15:06', 1, 1, 'bl', NULL, '星期五', 0, NULL);
+INSERT INTO `nx_department_orders` VALUES (9, NULL, NULL, NULL, NULL, NULL, '20筐', NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, 0, 3, NULL, NULL, NULL, 0, '2020-09-04', '2020-09-05', NULL, '09-04', '15:10', 1, 1, 'bl', NULL, '星期五', 0, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -778,26 +754,16 @@ DROP TABLE IF EXISTS `nx_department_standard`;
 CREATE TABLE `nx_department_standard` (
   `nx_department_standard_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '部门规格id',
   `nx_DDS_dds_goods_id` int(20) DEFAULT NULL COMMENT '部门商品id',
-  `nx_DDS_standard_name` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门规格名称',
+  `nx_DDS_standard_name` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门规格名称',
   `nx_DDS_standard_sort` int(10) DEFAULT NULL COMMENT '部门规格排序',
   PRIMARY KEY (`nx_department_standard_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_department_standard
 -- ----------------------------
 BEGIN;
-INSERT INTO `nx_department_standard` VALUES (2, 10, '捆', NULL);
-INSERT INTO `nx_department_standard` VALUES (4, 1, 'ddd', NULL);
-INSERT INTO `nx_department_standard` VALUES (15, 1, 'ff', NULL);
-INSERT INTO `nx_department_standard` VALUES (16, 1, 'dd', NULL);
-INSERT INTO `nx_department_standard` VALUES (17, 1, 'dafa344', NULL);
-INSERT INTO `nx_department_standard` VALUES (18, 1, 'faf', NULL);
-INSERT INTO `nx_department_standard` VALUES (19, 2, '颗1', NULL);
-INSERT INTO `nx_department_standard` VALUES (20, 10, '根', NULL);
-INSERT INTO `nx_department_standard` VALUES (21, NULL, 'dd', NULL);
-INSERT INTO `nx_department_standard` VALUES (22, NULL, 'ddd', NULL);
-INSERT INTO `nx_department_standard` VALUES (26, 2, '你好3', NULL);
+INSERT INTO `nx_department_standard` VALUES (1, 3, '根', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -807,23 +773,24 @@ DROP TABLE IF EXISTS `nx_department_user`;
 CREATE TABLE `nx_department_user` (
   `nx_department_user_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '订货部门用户id',
   `nx_DU_department_id` int(20) DEFAULT NULL COMMENT '订货部门id',
-  `nx_DU_wx_avartra_url` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门用户微信头像',
-  `nx_DU_wx_nick_name` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门用户微信昵称',
-  `nx_DU_wx_open_id` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门用户微信openid',
-  `nx_DU_wx_phone` varchar(15) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门用户微信手机号码',
+  `nx_DU_wx_avartra_url` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门用户微信头像',
+  `nx_DU_wx_nick_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门用户微信昵称',
+  `nx_DU_wx_open_id` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门用户微信openid',
+  `nx_DU_wx_phone` varchar(15) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货部门用户微信手机号码',
   `nx_DU_admin` tinyint(2) DEFAULT NULL COMMENT '订货部门用户是否是管理员',
   `nx_DU_distributer_id` int(20) DEFAULT NULL COMMENT '订货部门批发商id',
   `nx_DU_url_change` tinyint(2) DEFAULT NULL,
   `nx_DU_department_father_id` int(20) DEFAULT NULL,
   `nx_DU_join_date` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_department_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_department_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `nx_department_user` VALUES (1, 1, 'uploadImage/tmp_b6be9ffa8aeb6babe5eae0d260cb2705e8115bcbc15e139e.jpg', '沛3', 'oX2485P8vz6TSn0mB9Ld4HJJt4nU', NULL, 1, 1, 1, 1, '2020-09-02');
+INSERT INTO `nx_department_user` VALUES (1, 1, 'uploadImage/wx042578a6884b5c0d.o6zAJsw3k3_I4jY0lYtqK1TqmM_c.8oyEMKZBP0XRb3456c9ae9835942cfd6064432ecbbdf.jpeg', 'mmmm', 'ofoiw4v7UK6wVYTdDmEL4fMjG9ts', NULL, 1, 1, 1, 1, '2020-09-04');
+INSERT INTO `nx_department_user` VALUES (2, 1, 'uploadImage/tmp_6c825709b774de7649eb1a97648d1b4b945f853584bd4d81.jpg', '李1💐 🌸 🐟', 'ofoiw4jymo11t1boCKwp_JTuwu9U', NULL, 1, 1, 1, 1, '2020-09-04');
 COMMIT;
 
 -- ----------------------------
@@ -851,22 +818,21 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_distributer`;
 CREATE TABLE `nx_distributer` (
   `nx_distributer_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '批发商id',
-  `nx_distributer_name` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '批发商名称',
-  `nx_distributer_lan` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '批发商位置经度',
-  `nx_distributer_lun` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '批发商位置纬度',
+  `nx_distributer_name` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '批发商名称',
+  `nx_distributer_lan` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '批发商位置经度',
+  `nx_distributer_lun` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '批发商位置纬度',
   `nx_distributer_business_type` tinyint(2) DEFAULT NULL COMMENT '批发商商业类型',
   `nx_distributer_manager` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_distributer_phone` varchar(30) COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_distributer_address` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_distributer_address` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_distributer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_distributer
 -- ----------------------------
 BEGIN;
-INSERT INTO `nx_distributer` VALUES (1, '批发商户', NULL, NULL, NULL, '李树国', '13910825707', '京贸物联批发市场D-102');
-INSERT INTO `nx_distributer` VALUES (2, 'aa', NULL, NULL, NULL, '李树国', '13910825707', '京贸物联批发市场D-102');
+INSERT INTO `nx_distributer` VALUES (1, '批发商', NULL, NULL, NULL, '李树国', '13910825707', '京贸物联批发市场D-102');
 COMMIT;
 
 -- ----------------------------
@@ -918,9 +884,9 @@ CREATE TABLE `nx_distributer_customer` (
 DROP TABLE IF EXISTS `nx_distributer_daytime`;
 CREATE TABLE `nx_distributer_daytime` (
   `nx_week_id` int(20) NOT NULL AUTO_INCREMENT,
-  `nx_day_name` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_day_open` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_day_close` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_day_name` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_day_open` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_day_close` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_dis_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`nx_week_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -969,16 +935,16 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_distributer_father_goods`;
 CREATE TABLE `nx_distributer_father_goods` (
   `nx_distributer_father_goods_id` int(20) NOT NULL AUTO_INCREMENT,
-  `nx_dfg_father_goods_name` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_dfg_father_goods_img` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_dfg_father_goods_name` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_dfg_father_goods_img` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_dfg_father_goods_sort` int(4) DEFAULT NULL,
-  `nx_dfg_father_goods_color` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_dfg_father_goods_color` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_dfg_fathers_father_id` int(20) DEFAULT NULL,
   `nx_dfg_father_goods_level` tinyint(2) DEFAULT NULL,
   `nx_dfg_distributer_id` int(20) DEFAULT NULL,
   `nx_dfg_goods_amount` int(4) DEFAULT NULL,
   PRIMARY KEY (`nx_distributer_father_goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_distributer_father_goods
@@ -987,7 +953,6 @@ BEGIN;
 INSERT INTO `nx_distributer_father_goods` VALUES (1, '根茎类', NULL, NULL, NULL, 2, 2, 1, NULL);
 INSERT INTO `nx_distributer_father_goods` VALUES (2, '新鲜蔬菜', NULL, NULL, NULL, 3, 1, 1, NULL);
 INSERT INTO `nx_distributer_father_goods` VALUES (3, '生鲜', NULL, NULL, NULL, NULL, 0, 1, NULL);
-INSERT INTO `nx_distributer_father_goods` VALUES (4, '葱姜蒜椒', NULL, NULL, NULL, 2, 2, 1, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -1000,21 +965,21 @@ CREATE TABLE `nx_distributer_goods` (
   `nx_dg_distributer_id` int(20) DEFAULT NULL COMMENT '批发商id',
   `nx_dg_goods_status` tinyint(2) DEFAULT NULL COMMENT '商品状态',
   `nx_dg_goods_is_weight` tinyint(2) DEFAULT NULL COMMENT '是否称重',
-  `nx_dg_goods_name` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品名称',
-  `nx_dg_goods_detail` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品详细',
-  `nx_dg_goods_standardname` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品规格',
-  `nx_dg_goods_pinyin` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区商品拼音',
-  `nx_dg_goods_py` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区商品拼音简拼',
+  `nx_dg_goods_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品名称',
+  `nx_dg_goods_detail` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品详细',
+  `nx_dg_goods_standardname` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品规格',
+  `nx_dg_goods_pinyin` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区商品拼音',
+  `nx_dg_goods_py` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '社区商品拼音简拼',
   `nx_dg_nx_goods_id` int(10) DEFAULT NULL COMMENT 'nxGoodsId',
-  `nx_dg_nx_father_img` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '进货方式',
-  `nx_dg_nx_father_id` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT 'nxGoodsFatherId',
+  `nx_dg_nx_father_img` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '进货方式',
+  `nx_dg_nx_father_id` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT 'nxGoodsFatherId',
   `nx_dg_nx_grand_id` int(20) DEFAULT NULL COMMENT 'nxGoodsGrandid',
   `nx_dg_nx_great_grand_id` int(20) DEFAULT NULL COMMENT 'nxGreatGrandid',
   `nx_dg_pull_off` tinyint(2) DEFAULT NULL COMMENT '是否下架',
   `nx_dg_goods_brand` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_dg_goods_place` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_distributer_goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_distributer_goods
@@ -1023,20 +988,6 @@ BEGIN;
 INSERT INTO `nx_distributer_goods` VALUES (1, 1, 1, NULL, NULL, '卞萝卜', '', '斤', 'bianluobu', 'blb', 45097, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
 INSERT INTO `nx_distributer_goods` VALUES (2, 1, 1, NULL, NULL, '白萝卜', '山东,四川', '斤', 'bailuobu', 'blb', 45096, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
 INSERT INTO `nx_distributer_goods` VALUES (3, 1, 1, NULL, NULL, '胡萝卜一二三四五六', '山东新鲜', '斤', 'huluobu', 'hlb', 45094, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (4, 1, 1, NULL, NULL, '红薯', '', '斤', 'hongshu', 'hs', 45104, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (5, 1, 1, NULL, NULL, '红薯', '', '斤', 'hongshu', 'hs', 45105, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (6, 1, 1, NULL, NULL, '凉薯', '广东', '斤', 'liangshu', 'ls', 45107, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (7, 1, 1, NULL, NULL, '藕', '', '斤', 'ou', 'o', 45103, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (8, 1, 1, NULL, NULL, '青萝卜', '', '斤', 'qingluobu', 'qlb', 45098, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (9, 1, 1, NULL, NULL, '水萝卜', '', '斤', 'shuiluobu', 'slb', 45099, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (10, 1, 1, NULL, NULL, '水萝卜', '水菜', '斤', 'shuiluobu', 'slb', 45108, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (11, 1, 1, NULL, NULL, '山药', '', '斤', 'shanyao', 'sy', 45101, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (12, 1, 1, NULL, NULL, '土豆', '小个头', '斤', 'tudou', 'td', 44678, 'uploadImage/1.jpg', '111', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (13, 4, 1, NULL, NULL, '葱', '', '斤', 'cong', 'c', 45114, 'uploadImage/2.jpg', '112', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (14, 4, 1, NULL, NULL, '彩椒', '红,黄', '斤', 'caijiao', 'cj', 45126, 'uploadImage/2.jpg', '112', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (15, 4, 1, NULL, NULL, '大蒜', '', '斤', 'dasuan', 'ds', 45117, 'uploadImage/2.jpg', '112', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (16, 4, 1, NULL, NULL, '黄葱头', '', '斤', 'huangcongtou', 'hct', 45112, 'uploadImage/2.jpg', '112', 11, 1, 0, NULL, NULL);
-INSERT INTO `nx_distributer_goods` VALUES (17, 4, 1, NULL, NULL, '红葱头', '', '斤', 'hongcongtou', 'hct', 45113, 'uploadImage/2.jpg', '112', 11, 1, 0, NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -1064,16 +1015,16 @@ CREATE TABLE `nx_distributer_purchase_goods` (
   `nx_distributer_purchase_goods_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '批发商采购商品id',
   `nx_DPG_dis_goods_id` int(20) DEFAULT NULL COMMENT '采购商品id',
   `nx_DPG_dis_goods_father_id` int(20) DEFAULT NULL COMMENT '采购父级商品id',
-  `nx_DPG_quantity` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购数量',
-  `nx_DPG_standard` varchar(6) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购规格',
+  `nx_DPG_quantity` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购数量',
+  `nx_DPG_standard` varchar(6) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购规格',
   `nx_DPG_status` tinyint(2) DEFAULT NULL COMMENT '采购状态',
   `nx_DPG_distributer_id` int(20) DEFAULT NULL COMMENT '采购批发商id',
   `nx_DPG_purchase_type` tinyint(2) DEFAULT NULL COMMENT '采购方式：“1 订单采购”“2 添加采购”',
-  `nx_DPG_time` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购时间',
+  `nx_DPG_time` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购时间',
   `nx_DPG_batch_id` int(20) DEFAULT NULL COMMENT '采购批次号',
   `nx_DPG_buy_user_id` int(20) DEFAULT NULL COMMENT '采购方式为“采购”的采购员id',
   `nx_DPG_buy_price` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购单价',
-  `nx_DPG_buy_quantity` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购数量',
+  `nx_DPG_buy_quantity` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '采购数量',
   `nx_DPG_orders_amount` int(10) DEFAULT NULL COMMENT '订单采购的订单数量',
   `nx_DPG_type_add_user_id` int(11) DEFAULT NULL COMMENT '添加采购用户id',
   PRIMARY KEY (`nx_distributer_purchase_goods_id`)
@@ -1086,10 +1037,10 @@ DROP TABLE IF EXISTS `nx_distributer_standard`;
 CREATE TABLE `nx_distributer_standard` (
   `nx_distributer_standard_id` int(20) NOT NULL AUTO_INCREMENT,
   `nx_DS_dis_goods_id` int(20) DEFAULT NULL,
-  `nx_DS_standard_name` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DS_standard_file_path` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DS_standard_scale` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DS_standard_error` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DS_standard_name` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DS_standard_file_path` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DS_standard_scale` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DS_standard_error` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_DS_standard_sort` int(10) DEFAULT NULL,
   PRIMARY KEY (`nx_distributer_standard_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -1102,27 +1053,44 @@ INSERT INTO `nx_distributer_standard` VALUES (1, 2, '根', 'uploadImage/wxbc6862
 COMMIT;
 
 -- ----------------------------
+-- Table structure for nx_distributer_supplier
+-- ----------------------------
+DROP TABLE IF EXISTS `nx_distributer_supplier`;
+CREATE TABLE `nx_distributer_supplier` (
+  `nx_distributer_supplier_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '批发商供货商id',
+  `nx_DS_distributer_id` int(20) DEFAULT NULL COMMENT '批发商id',
+  `nx_DS_supplier_id` int(20) DEFAULT NULL COMMENT '供货商id',
+  PRIMARY KEY (`nx_distributer_supplier_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+
+-- ----------------------------
+-- Records of nx_distributer_supplier
+-- ----------------------------
+BEGIN;
+INSERT INTO `nx_distributer_supplier` VALUES (1, 1, 1);
+INSERT INTO `nx_distributer_supplier` VALUES (2, 1, 2);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for nx_distributer_user
 -- ----------------------------
 DROP TABLE IF EXISTS `nx_distributer_user`;
 CREATE TABLE `nx_distributer_user` (
   `nx_distributer_user_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '批发商用户id',
-  `nx_DIU_wx_avartra_url` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '用户名',
-  `nx_DIU_wx_nick_name` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '登陆密码',
+  `nx_DIU_wx_avartra_url` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '用户名',
+  `nx_DIU_wx_nick_name` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '登陆密码',
   `nx_DIU_wx_open_id` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DIU_wx_phone` varchar(15) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DIU_wx_phone` varchar(15) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_DIU_distributer_id` int(20) DEFAULT NULL,
   `nx_DIU_admin` tinyint(2) DEFAULT NULL,
   PRIMARY KEY (`nx_distributer_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Records of nx_distributer_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `nx_distributer_user` VALUES (1, 'https://thirdwx.qlogo.cn/mmopen/vi_32/l7zaNdMlO6OlGMLI4BjEShrEkCbB1bqSsNqnnnWcxFGVtYBFsg341H7KZgSeEHMWsXvKtmbb0xxWNOUXmeWIpQ/132', '李树国配送💐 🌸 🐟 🍏', 'obVuH5OHnpLMHY7mX_SdVRrz4Hw0', NULL, 1, 1);
-INSERT INTO `nx_distributer_user` VALUES (2, 'https://thirdwx.qlogo.cn/mmopen/vi_32/l7zaNdMlO6OlGMLI4BjEShrEkCbB1bqSsNqnnnWcxFGVtYBFsg341H7KZgSeEHMWsXvKtmbb0xxWNOUXmeWIpQ/132', 'dddd', 'obVuH5OHnpLMHY7mX_SdVRrz4Hw0', NULL, 1, 1);
-INSERT INTO `nx_distributer_user` VALUES (3, 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIH9Tibwka8Z2xH4tU8xhW0f6hXs7ib8aAswStBUoiaPibVVq5icnNBJzbaSMgzbNGcwQe1ib2uVW7d8Byw/132', '李君', 'obVuH5Dll_F4Okq8YT5zs9UMz-Ug', NULL, 1, 1);
+INSERT INTO `nx_distributer_user` VALUES (1, 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIH9Tibwka8Z2xH4tU8xhW0f6hXs7ib8aAswStBUoiaPibVVq5icnNBJzbaSMgzbNGcwQe1ib2uVW7d8Byw/132', '李君', 'obVuH5Dll_F4Okq8YT5zs9UMz-Ug', NULL, 1, 1);
 COMMIT;
 
 -- ----------------------------
@@ -1134,14 +1102,13 @@ CREATE TABLE `nx_distributer_user_role` (
   `nx_DUR_user_id` int(20) DEFAULT NULL COMMENT '用户ID',
   `nx_DUR_role_id` int(20) DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`nx_distributer_user_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
 
 -- ----------------------------
 -- Records of nx_distributer_user_role
 -- ----------------------------
 BEGIN;
 INSERT INTO `nx_distributer_user_role` VALUES (1, 1, 0);
-INSERT INTO `nx_distributer_user_role` VALUES (2, 3, 0);
 COMMIT;
 
 -- ----------------------------
@@ -1200,16 +1167,16 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_goods`;
 CREATE TABLE `nx_goods` (
   `nx_goods_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '商品id',
-  `nx_goods_name` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品名称',
-  `nx_goods_standardname` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品规格',
-  `nx_goods_detail` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品描述',
-  `nx_goods_brand` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品品牌',
-  `nx_goods_place` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品产地',
-  `nx_goods_pinyin` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '拼音',
-  `nx_goods_py` varchar(50) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '简拼',
+  `nx_goods_name` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品名称',
+  `nx_goods_standardname` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品规格',
+  `nx_goods_detail` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品描述',
+  `nx_goods_brand` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品品牌',
+  `nx_goods_place` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '商品产地',
+  `nx_goods_pinyin` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '拼音',
+  `nx_goods_py` varchar(50) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '简拼',
   `nx_goods_father_id` int(20) DEFAULT NULL COMMENT '父级id',
   `nx_goods_sort` int(10) DEFAULT NULL COMMENT '商品排序',
-  `nx_goods_file` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '图片',
+  `nx_goods_file` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '图片',
   `nx_goods_standard_amount` int(2) DEFAULT NULL COMMENT '销售规格数量',
   PRIMARY KEY (`nx_goods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45545 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -1725,7 +1692,7 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_label`;
 CREATE TABLE `nx_label` (
   `nx_label_id` int(20) NOT NULL AUTO_INCREMENT,
-  `nx_label_name` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_label_name` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_label_hot` int(10) DEFAULT NULL,
   `nx_label_type_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`nx_label_id`)
@@ -1761,7 +1728,7 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_label_type`;
 CREATE TABLE `nx_label_type` (
   `nx_label_type_id` int(20) NOT NULL AUTO_INCREMENT,
-  `nx_label_type_name` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_label_type_name` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_label_amount` int(20) DEFAULT NULL,
   `nx_label_type_sort` int(10) DEFAULT NULL,
   PRIMARY KEY (`nx_label_type_id`)
@@ -1783,8 +1750,8 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_order_template`;
 CREATE TABLE `nx_order_template` (
   `nx_order_template_id` int(20) NOT NULL AUTO_INCREMENT,
-  `nx_OD_file_path` varchar(300) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_OD_name` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_OD_file_path` varchar(300) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_OD_name` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_OD_customer_user_id` int(20) DEFAULT NULL,
   `nx_OD_item_amount` int(6) DEFAULT NULL,
   PRIMARY KEY (`nx_order_template_id`)
@@ -1811,7 +1778,7 @@ CREATE TABLE `nx_order_template_item` (
   `nx_OT_amount` float(4,1) DEFAULT NULL,
   `nx_OT_order_template_id` int(20) DEFAULT NULL,
   `nx_OT_customer_user_id` int(20) DEFAULT NULL,
-  `nx_OT_dis_goods_color` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_OT_dis_goods_color` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_OT_item_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -1824,6 +1791,85 @@ INSERT INTO `nx_order_template_item` VALUES (2, 73, NULL, 3, 76, '#20afb8');
 INSERT INTO `nx_order_template_item` VALUES (3, 76, NULL, 3, 76, '#3cc36e');
 INSERT INTO `nx_order_template_item` VALUES (4, 77, NULL, 3, 76, '#3cc36e');
 COMMIT;
+
+-- ----------------------------
+-- Table structure for nx_orders
+-- ----------------------------
+DROP TABLE IF EXISTS `nx_orders`;
+CREATE TABLE `nx_orders` (
+  `nx_orders_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '订单id',
+  `nx_orders_distributer_id` int(20) DEFAULT NULL COMMENT '批发商id',
+  `nx_orders_community_id` int(20) DEFAULT NULL COMMENT '订单社区id',
+  `nx_orders_customer_id` int(20) DEFAULT NULL COMMENT '订单客户id',
+  `nx_orders_user_id` int(20) DEFAULT NULL COMMENT '订单用户id',
+  `nx_orders_date` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单日期',
+  `nx_orders_status` tinyint(2) DEFAULT NULL COMMENT '订单状态',
+  `nx_orders_service` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单送达时间',
+  `nx_orders_amount` float(10,0) DEFAULT NULL COMMENT '订单总金额',
+  `nx_orders_service_date` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单送到日期',
+  `nx_orders_service_time` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单送到时间',
+  `nx_orders_weigh_user_id` int(20) DEFAULT NULL COMMENT '订单称重用户id',
+  `nx_orders_delivery_user_id` int(20) DEFAULT NULL COMMENT '订单配送员工id',
+  `nx_orders_sub_amount` int(10) DEFAULT NULL COMMENT '订单子商品数量',
+  `nx_orders_sub_finished` int(10) DEFAULT NULL COMMENT '订单子商品完成数量',
+  `nx_orders_weigh_number` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单称重订单号',
+  `nx_orders_payment_status` tinyint(2) DEFAULT NULL COMMENT '订单支付状态',
+  `nx_orders_payment_send_time` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单支付发送时间',
+  `nx_orders_payment_time` varchar(0) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单支付时间',
+  `nx_orders_type` tinyint(2) DEFAULT NULL COMMENT '订单类型 0先付款1后付款',
+  PRIMARY KEY (`nx_orders_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+
+-- ----------------------------
+-- Table structure for nx_orders_sub
+-- ----------------------------
+DROP TABLE IF EXISTS `nx_orders_sub`;
+CREATE TABLE `nx_orders_sub` (
+  `nx_orders_sub_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '子订单id',
+  `nx_OS_orders_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `nx_OS_nx_goods_id` int(20) DEFAULT NULL COMMENT '子订单nx商品id',
+  `nx_OS_community_goods_id` int(20) DEFAULT NULL COMMENT '子订单社区商品id',
+  `nx_OS_community_goods_father_id` int(20) DEFAULT NULL COMMENT '子订单商品父id',
+  `nx_OS_quantity` float(10,1) DEFAULT NULL COMMENT '子订单申请数量',
+  `nx_OS_standard` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '子订单申请规格',
+  `nx_OS_price` float(10,1) DEFAULT NULL COMMENT '子订单申请商品单价',
+  `nx_OS_remark` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '子订单申请备注',
+  `nx_OS_weight` float(10,1) DEFAULT NULL COMMENT '子订单申请商品称重',
+  `nx_OS_subtotal` float(10,1) DEFAULT NULL COMMENT '子订单申请商品小计',
+  `nx_OS_status` tinyint(2) DEFAULT NULL COMMENT '子订单申请商品状态',
+  `nx_OS_weigh_user_id` int(20) DEFAULT NULL COMMENT '子订单商品称重用户id',
+  `nx_OS_account_user_id` int(20) DEFAULT NULL COMMENT '子订单商品输入单价用户id',
+  `nx_OS_purchase_user_id` int(20) DEFAULT NULL COMMENT '子商品采购元id',
+  `nx_OS_distributer_id` int(20) DEFAULT NULL COMMENT '子订单批发商id',
+  `nx_OS_buy_status` tinyint(2) DEFAULT NULL COMMENT '子订单商品进货状态',
+  `nx_OS_order_user_id` int(20) DEFAULT NULL COMMENT '子订单订货用户id',
+  `nx_OS_sub_weight` float(4,1) DEFAULT NULL COMMENT '子订单重量',
+  `nx_OS_sub_supplier_id` int(20) DEFAULT NULL COMMENT '子订单商品供货商id',
+  `nx_OS_community_id` int(20) DEFAULT NULL COMMENT '子订单社区id',
+  `nx_Os_goods_type` tinyint(2) DEFAULT NULL COMMENT '子订单社区商品类型',
+  PRIMARY KEY (`nx_orders_sub_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+
+-- ----------------------------
+-- Table structure for nx_promote
+-- ----------------------------
+DROP TABLE IF EXISTS `nx_promote`;
+CREATE TABLE `nx_promote` (
+  `nx_promote_id` int(20) NOT NULL AUTO_INCREMENT,
+  `nx_promote_cg_id` int(20) DEFAULT NULL,
+  `nx_orignal_price` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_price` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_standard` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_weight` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_expired` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_storage` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_words` varchar(1000) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_recommand_goods` varchar(1000) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_file_path` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_promote_community_id` int(20) DEFAULT NULL,
+  `nx_promote_cg_father_id` int(20) DEFAULT NULL,
+  PRIMARY KEY (`nx_promote_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 -- ----------------------------
 -- Table structure for nx_purchase_standard
@@ -1842,7 +1888,7 @@ CREATE TABLE `nx_purchase_standard` (
 DROP TABLE IF EXISTS `nx_route`;
 CREATE TABLE `nx_route` (
   `nx_route_id` int(20) NOT NULL COMMENT '线路id',
-  `nx_route_name` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '线路名称',
+  `nx_route_name` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '线路名称',
   PRIMARY KEY (`nx_route_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -1860,11 +1906,11 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_standard`;
 CREATE TABLE `nx_standard` (
   `nx_standard_id` int(20) NOT NULL AUTO_INCREMENT,
-  `nx_standard_name` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_standard_name` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_s_goods_id` int(20) DEFAULT NULL,
-  `nx_standard_file_path` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_standard_scale` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_standard_error` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_standard_file_path` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_standard_scale` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_standard_error` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_standard_sort` int(10) DEFAULT NULL,
   PRIMARY KEY (`nx_standard_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -1882,10 +1928,10 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_supplier`;
 CREATE TABLE `nx_supplier` (
   `nx_supplier_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '供货商id',
-  `nx_supplier_name` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '供货商名称',
+  `nx_supplier_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '供货商名称',
   `nx_supplier_father_goods_id` int(20) DEFAULT NULL COMMENT '供货商商品类别id',
   `nx_supplier_payment_type` tinyint(2) DEFAULT NULL COMMENT '供货商结算类别1现金，2记账',
-  `nx_supplier_date` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '供货商加入时间',
+  `nx_supplier_date` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '供货商加入时间',
   PRIMARY KEY (`nx_supplier_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -1903,12 +1949,12 @@ COMMIT;
 DROP TABLE IF EXISTS `nx_wx_orders`;
 CREATE TABLE `nx_wx_orders` (
   `nx_wx_orders_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '微信支付订单id',
-  `nx_wx_orders_out_trade_no` varchar(32) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '随机字符串32位',
-  `nx_wx_orders_body` varchar(128) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单主体',
-  `nx_wx_orders_detail` varchar(6000) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单详细',
-  `nx_wx_orders_attach` varchar(127) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '附加数据，如“深圳分店”',
+  `nx_wx_orders_out_trade_no` varchar(32) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '随机字符串32位',
+  `nx_wx_orders_body` varchar(128) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单主体',
+  `nx_wx_orders_detail` varchar(6000) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订单详细',
+  `nx_wx_orders_attach` varchar(127) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '附加数据，如“深圳分店”',
   `nx_wx_orders_total_fee` int(88) DEFAULT NULL COMMENT '支付金额单位“分”',
-  `nx_wx_orders_spbill_create_ip` varchar(64) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '支付api的机器ip',
+  `nx_wx_orders_spbill_create_ip` varchar(64) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '支付api的机器ip',
   PRIMARY KEY (`nx_wx_orders_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -2106,12 +2152,12 @@ CREATE TABLE `zznx_department_nx_goods` (
   `nx_DNG_department_father_id` int(20) DEFAULT NULL,
   `nx_DNG_department_id` int(20) DEFAULT NULL,
   `nx_DNG_nx_goods_id` int(20) DEFAULT NULL,
-  `nx_DNG_nx_goods_name` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DNG_nx_goods_pinyin` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DNG_nx_goods_py` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DNG_nx_goods_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DNG_nx_goods_pinyin` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DNG_nx_goods_py` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_DNG_nx_goods_sort` int(20) DEFAULT NULL,
-  `nx_DNG_nx_goods_standardname` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_DNG_nx_goods_detail` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DNG_nx_goods_standardname` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DNG_nx_goods_detail` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
   `nx_DNG_alarm_rate` int(2) DEFAULT NULL,
   PRIMARY KEY (`nx_department_nx_goods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
@@ -2142,6 +2188,27 @@ INSERT INTO `zznx_department_nx_goods` VALUES (27, 0, 7, 45110, '尖椒', 'jianj
 COMMIT;
 
 -- ----------------------------
+-- Table structure for zzz_nx_supplier
+-- ----------------------------
+DROP TABLE IF EXISTS `zzz_nx_supplier`;
+CREATE TABLE `zzz_nx_supplier` (
+  `nx_supplier_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '供货商id',
+  `nx_supplier_name` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '供货商名称',
+  `nx_supplier_father_goods_id` int(20) DEFAULT NULL COMMENT '供货商商品类别id',
+  `nx_supplier_payment_type` tinyint(2) DEFAULT NULL COMMENT '供货商结算类别1现金，2记账',
+  `nx_supplier_date` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '供货商加入时间',
+  PRIMARY KEY (`nx_supplier_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+
+-- ----------------------------
+-- Records of zzz_nx_supplier
+-- ----------------------------
+BEGIN;
+INSERT INTO `zzz_nx_supplier` VALUES (1, '蔬菜李国树', NULL, NULL, NULL);
+INSERT INTO `zzz_nx_supplier` VALUES (2, '牛肉张', NULL, NULL, NULL);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for zzznx_department_goods
 -- ----------------------------
 DROP TABLE IF EXISTS `zzznx_department_goods`;
@@ -2153,14 +2220,14 @@ CREATE TABLE `zzznx_department_goods` (
   `nx_dg_nx_goods_father_id` int(20) DEFAULT NULL COMMENT 'nx商品父类id',
   `nx_dg_goods_is_weight` tinyint(2) DEFAULT NULL COMMENT '是否称重',
   `nx_dg_goods_status` tinyint(2) DEFAULT NULL COMMENT '商品状态',
-  `nx_dg_goods_price` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门商品价格',
-  `nx_dg_price_date` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门商品价格更新日期',
+  `nx_dg_goods_price` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门商品价格',
+  `nx_dg_price_date` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '部门商品价格更新日期',
   `nx_dg_distribute_id` int(20) DEFAULT NULL COMMENT '批发商id',
-  `nx_dg_order_quantity` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_dg_order_standard` varchar(4) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_dg_order_time` varchar(20) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_dg_order_only_date` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
-  `nx_dg_order_only_time` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_dg_order_quantity` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_dg_order_standard` varchar(4) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_dg_order_time` varchar(20) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_dg_order_only_date` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_dg_order_only_time` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_department_goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -2173,14 +2240,14 @@ CREATE TABLE `zzznx_department_independent_order` (
   `nx_DIO_department_id` int(20) DEFAULT NULL COMMENT '订货部门id',
   `nx_DIO_department_father_id` int(20) DEFAULT NULL COMMENT '订货父级部门id',
   `nx_DIO_apply_user_id` int(20) DEFAULT NULL COMMENT '订货用户id',
-  `nx_DIO_apply_time` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货时间',
-  `nx_DIO_apply_date` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货日期',
+  `nx_DIO_apply_time` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货时间',
+  `nx_DIO_apply_date` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货日期',
   `nx_DIO_apply_status` tinyint(2) DEFAULT NULL COMMENT '订单状态',
-  `nx_DIO_apply_quantity` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货数量',
-  `nx_DIO_apply_standard` varchar(10) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货规格',
-  `nx_DIO_apply_remark` varchar(200) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货备注',
+  `nx_DIO_apply_quantity` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货数量',
+  `nx_DIO_apply_standard` varchar(10) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货规格',
+  `nx_DIO_apply_remark` varchar(200) COLLATE utf16_czech_ci DEFAULT NULL COMMENT '订货备注',
   `nx_DIO_independent_goods_id` int(20) DEFAULT NULL,
-  `nx_DIO_operation_time` varchar(100) CHARACTER SET utf16 COLLATE utf16_czech_ci DEFAULT NULL,
+  `nx_DIO_operation_time` varchar(100) COLLATE utf16_czech_ci DEFAULT NULL,
   PRIMARY KEY (`nx_dep_independent_order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 

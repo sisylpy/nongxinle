@@ -75,6 +75,7 @@ public class NxGoodsEntity implements Serializable, Comparable {
 
 	private List<NxDistributerStandardEntity> nxDisStandardEntities;
 	private List<NxDepartmentStandardEntity> nxDepStandardEntities;
+	private NxDistributerFatherGoodsEntity nxDistributerFatherGoodsEntity;
 
 	/**
 	 * 子名称

@@ -17,8 +17,18 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from nx_department_user 
 	</select>
-	 
-	<insert id="save" parameterType="com.nongxinle.entity.NxDepartmentUserEntity"
+	<select id="queryAllUsersByDepId" resultType="com.nongxinle.entity.NxDepartmentUserEntity">
+		select * from nx_department_user where nx_DU_department_father_id = #{depId}
+			order by  nx_DU_admin DESC
+	</select>
+	<select id="queryDepUserByOpenId" resultType="com.nongxinle.entity.NxDepartmentUserEntity">
+		select * from nx_department_user where nx_DU_wx_open_id = #{openId}
+	</select>
+    <select id="queryGroupAdminUserAmount" resultType="com.nongxinle.entity.NxDepartmentUserEntity">
+		select * from nx_department_user where nx_DU_department_id = #{nxDuDepartmentId} and nx_DU_admin = 1
+	</select>
+
+    <insert id="save" parameterType="com.nongxinle.entity.NxDepartmentUserEntity"
 			useGeneratedKeys="true" keyProperty="nxDepartmentUserId">
 		insert into nx_department_user
 		(
@@ -29,7 +39,10 @@
 			`nx_DU_wx_open_id`, 
 			`nx_DU_wx_phone`, 
 			`nx_DU_admin`,
-		 	`nx_DU_distributer_id`
+		 	`nx_DU_distributer_id`,
+		 	`nx_DU_url_change`,
+		 	`nx_DU_department_father_id`,
+			`nx_DU_join_date`
 		)
 		values
 		(
@@ -40,7 +53,10 @@
 			#{nxDuWxOpenId}, 
 			#{nxDuWxPhone}, 
 			#{nxDuAdmin},
-		 	#{nxDuDistributerId}
+		 	#{nxDuDistributerId},
+		 	#{nxDuUrlChange},
+		 	#{nxDuDepartmentFatherId},
+		 	#{nxDuJoinDate}
 		)
 	</insert>
 	 
@@ -53,6 +69,9 @@
 			<if test="nxDuWxOpenId != null">`nx_DU_wx_open_id` = #{nxDuWxOpenId}, </if>
 			<if test="nxDuWxPhone != null">`nx_DU_wx_phone` = #{nxDuWxPhone}, </if>
 			<if test="nxDuDistributerId != null">`nx_DU_distributer_id` = #{nxDuDistributerId}, </if>
+			<if test="nxDuUrlChange != null">`nx_DU_url_change` = #{nxDuUrlChange}, </if>
+			<if test="nxDuDepartmentFatherId != null">`nx_DU_department_father_id` = #{nxDuDepartmentFatherId}, </if>
+			<if test="nxDuJoinDate != null">`nx_DU_join_date` = #{nxDuJoinDate}, </if>
 			<if test="nxDuAdmin != null">`nx_DU_admin` = #{nxDuAdmin}</if>
 		</set>
 		where nx_department_user_id = #{nxDepartmentUserId}

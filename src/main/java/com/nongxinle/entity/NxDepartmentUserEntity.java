@@ -50,6 +50,12 @@ public class NxDepartmentUserEntity implements Serializable {
 	 */
 	private Integer nxDuAdmin;
 
+	private String nxDuJoinDate;
+
 	private Integer nxDuDistributerId;
+
+	private Integer nxDuUrlChange;
+
+	private Integer nxDuDepartmentFatherId;
 
 }

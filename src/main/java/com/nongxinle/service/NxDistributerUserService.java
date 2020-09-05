@@ -35,4 +35,5 @@ public interface NxDistributerUserService {
 	NxDistributerUserEntity queryUserInfo(Integer nxDistributerUserId);
 
     List<NxDistributerUserEntity> queryUserByOpenId(String openid);
+
 }

@@ -22,6 +22,12 @@ import java.net.URL;
 
 public class WeChatUtil {
 
+
+    public String getPurchaseAppID() {
+        return "wx042578a6884b5c0d";
+    }
+
+
     public static String httpRequest(String requestUrl,String requestMethod,String output){
         try{
             URL url = new URL(requestUrl);

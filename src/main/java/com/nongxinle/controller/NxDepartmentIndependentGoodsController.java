@@ -35,8 +35,76 @@ public class NxDepartmentIndependentGoodsController {
 	private NxDepartmentDisGoodsService nxDepartmentDisGoodsService;
 
 
+	/**
+	 * PURCHASE
+	 * 修改自定义商品
+	 * @param nxDepartmentIndependentGoods 自定义商品
+	 * @return ok
+	 */
+	@ResponseBody
+	@RequestMapping("/update")
+	public R update(@RequestBody NxDepartmentIndependentGoodsEntity nxDepartmentIndependentGoods){
+		nxDepIndepenGoodsService.update(nxDepartmentIndependentGoods);
+		return R.ok();
+	}
+
+	/**
+	 * PURCHASE
+	 * 新添加自定义商品
+	 * @param nxDepIndependentGoods 自定义商品
+	 * @return ok
+	 */
+	@ResponseBody
+	@RequestMapping("/save")
+	public R save(@RequestBody NxDepartmentIndependentGoodsEntity nxDepIndependentGoods){
+
+		String goodsName = nxDepIndependentGoods.getNxDigGoodsName();
+		String pinyin = hanziToPinyin(goodsName);
+		String headPinyin = getHeadStringByString(goodsName, false, null);
+		nxDepIndependentGoods.setNxDigGoodsPinyin(pinyin);
+		nxDepIndependentGoods.setNxDigGoodsPy(headPinyin);
+		nxDepIndepenGoodsService.save(nxDepIndependentGoods);
+		return R.ok();
+	}
+
+	/**
+	 * PURCHASE
+	 * 删除自定义商品
+	 * @param id 自定义商品id
+	 * @return ok
+	 */
+	@ResponseBody
+	@RequestMapping("/delete/{id}")
+	public R delete(@PathVariable  Integer id){
+		nxDepIndepenGoodsService.delete(id);
+		return R.ok();
+	}
 
 
+	/**
+	 * ORDER
+	 * 获取自定义商品
+	 * @param depId 群id
+	 * @return 自定义商品id
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/list/{depId}")
+	public R list(@PathVariable Integer depId){
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("depId",depId);
+
+		//查询列表数据
+		List<NxDepartmentIndependentGoodsEntity> nxDepIndGoodsList = nxDepIndepenGoodsService.queryList(map);
+		List<Map<String, Object>> mapList = letterGoods(nxDepIndGoodsList);
+
+
+		return R.ok().put("data", mapList);
+	}
+
+
+
+//////////////
 
 
 	@RequestMapping(value = "/searchDepDisGoodsAndIndependentGoods", method = RequestMethod.POST)
@@ -61,26 +129,7 @@ public class NxDepartmentIndependentGoodsController {
 	}
 
 
-	/**
-	 * 列表
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/list",method = RequestMethod.POST)
-//	@RequiresPermissions("nxdepartmentindependentgoods:list")
-	public R list(Integer page, Integer limit, Integer depId){
-		System.out.println(limit);
-		Map<String, Object> map = new HashMap<>();
-		map.put("offset", (page - 1) * limit);
-		map.put("limit", limit);
-		map.put("depId",depId);
 
-		//查询列表数据
-		List<NxDepartmentIndependentGoodsEntity> nxDepIndGoodsList = nxDepIndepenGoodsService.queryList(map);
-		List<Map<String, Object>> mapList = letterGoods(nxDepIndGoodsList);
-
-
-		return R.ok().put("data", mapList);
-	}
 
 	private List<Map<String, Object>> letterGoods (List<NxDepartmentIndependentGoodsEntity> nxDepIndGoodsList){
 		Set<NxLettersEntity> lettersEntities = new TreeSet<>();
@@ -115,58 +164,6 @@ public class NxDepartmentIndependentGoodsController {
 	}
 
 
-	/**
-	 * 信息
-	 */
-	@ResponseBody
-	@RequestMapping("/info/{nxDepartmentIndependentGoodsId}")
-	@RequiresPermissions("nxdepartmentindependentgoods:info")
-	public R info(@PathVariable("nxDepartmentIndependentGoodsId") Integer nxDepartmentIndependentGoodsId){
-		NxDepartmentIndependentGoodsEntity nxDepartmentIndependentGoods = nxDepIndepenGoodsService.queryObject(nxDepartmentIndependentGoodsId);
 
-		return R.ok().put("nxDepartmentIndependentGoods", nxDepartmentIndependentGoods);
-	}
-
-	/**
-	 * 保存
-	 */
-	@ResponseBody
-	@RequestMapping("/save")
-//	@RequiresPermissions("nxdepartmentindependentgoods:save")
-	public R save(@RequestBody NxDepartmentIndependentGoodsEntity nxDepIndependentGoods){
-
-		String goodsName = nxDepIndependentGoods.getNxDigGoodsName();
-		String pinyin = hanziToPinyin(goodsName);
-
-		String headPinyin = getHeadStringByString(goodsName, false, null);
-		nxDepIndependentGoods.setNxDigGoodsPinyin(pinyin);
-		nxDepIndependentGoods.setNxDigGoodsPy(headPinyin);
-		nxDepIndepenGoodsService.save(nxDepIndependentGoods);
-		return R.ok();
-	}
-
-	/**
-	 * 修改
-	 */
-	@ResponseBody
-	@RequestMapping("/update")
-	@RequiresPermissions("nxdepartmentindependentgoods:update")
-	public R update(@RequestBody NxDepartmentIndependentGoodsEntity nxDepartmentIndependentGoods){
-		nxDepIndepenGoodsService.update(nxDepartmentIndependentGoods);
-
-		return R.ok();
-	}
-
-	/**
-	 * 删除
-	 */
-	@ResponseBody
-	@RequestMapping("/delete")
-	@RequiresPermissions("nxdepartmentindependentgoods:delete")
-	public R delete(@RequestBody Integer[] nxDepartmentIndependentGoodsIds){
-		nxDepIndepenGoodsService.deleteBatch(nxDepartmentIndependentGoodsIds);
-		
-		return R.ok();
-	}
 	
 }

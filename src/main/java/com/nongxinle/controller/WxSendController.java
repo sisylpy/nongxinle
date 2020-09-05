@@ -39,8 +39,6 @@ public class WxSendController {
     private NxCommunityOrdersService nxCommunityOrdersService;
 
 
-
-
     @RequestMapping(value = "/send/{nxOrdersId}")
     @ResponseBody
     public R sendPaymentWxNotice(@PathVariable Integer nxOrdersId){

@@ -31,20 +31,71 @@ public class NxDepartmentController {
 	@Autowired
 	private NxDepartmentService nxDepartmentService;
 
-	@Autowired
-	private NxDepartmentOrdersService nxDepartmentOrdersService;
 
+	@RequestMapping(value = "/updateGroupName", method = RequestMethod.POST)
+	@ResponseBody
+	public R updateGroupName (@RequestBody  NxDepartmentEntity departmentEntity ) {
+		nxDepartmentService.update(departmentEntity);
+	    return R.ok();
+	}
+	/**
+	 * 微信小程序扫描二维码校验文件
+	 * @return 校验内容
+	 */
+	@RequestMapping(value = "/evR5kgsE0d.txt")
+	@ResponseBody
+
+	public String depRegist( ) {
+		return "b59516a6fda0db869e06518f51400610";
+	}
+
+	/**
+	 * PCS
+	 * 采购员注册
+	 * @param dep 订货客户
+	 * @return 客户信息
+	 */
+	@RequestMapping(value = "/restrauntRegist", method = RequestMethod.POST)
+	@ResponseBody
+	public R restrauntRegist (@RequestBody NxDepartmentEntity dep) {
+		Integer integer = nxDepartmentService.saveNewRestraunt(dep);
+		Map<String, Object> map = nxDepartmentService.queryDepAndUserInfo(integer);
+		return R.ok().put("data", map);
+	}
+
+	/**
+	 * ORDER
+	 * 获取群的子部门
+	 * @param depId 群id
+	 * @return 子部门列表
+	 */
+	@RequestMapping(value = "/getSubDepartments/{depId}")
+	@ResponseBody
+	public R getSubDepartments(@PathVariable Integer depId) {
+		System.out.println(depId);
+		List<NxDepartmentEntity> departmentEntities =   nxDepartmentService.querySubDepartments(depId);
+		return R.ok().put("data", departmentEntities);
+	}
+
+
+
+
+
+
+
+//	//////////////////
 
 	/**
 	 * 微信二维码扫描校验文件内容
 	 * @return 文件内容
 	 */
-	@RequestMapping(value = "/depRegist/i7948FzJJ6.txt")
-	@ResponseBody
-
-	public String depRegist( ) {
+//	@RequestMapping(value = "/depRegist/i7948FzJJ6.txt")
+//	@ResponseBody
 //
-		return "bb7a0c73e61112c45ebd6ad3743bb05e"; }
+//	public String depRegist( ) {
+////
+//		return "bb7a0c73e61112c45ebd6ad3743bb05e";
+//	}
 
 	/**
 	 * 二维码扫描打开固定页面
@@ -61,61 +112,12 @@ public class NxDepartmentController {
 	}
 
 
-
 	@RequestMapping(value = "/getFatherDep/{depId}")
 	@ResponseBody
 	public R getFatherDep(@PathVariable Integer depId) {
 		List<NxDepartmentEntity> departmentEntities = nxDepartmentService.queryFatherDep(depId);
-
-
 	    return R.ok().put("data", departmentEntities.get(0));
 	}
-
-
-	@RequestMapping(value = "/getSubDepartments/{depId}")
-	@ResponseBody
-	public R getSubDepartments(@PathVariable Integer depId) {
-	     List<NxDepartmentEntity> departmentEntities =   nxDepartmentService.querySubDepartments(depId);
-
-	    return R.ok().put("data", departmentEntities);
-	}
-
-
-
-
-	 @RequestMapping(value = "/getPrintPickerData", method = RequestMethod.POST)
-	  @ResponseBody
-	  public R getPrintPickerData (@RequestBody List<NxDepartmentEntity>  depArr) {
-		 System.out.println(depArr);
-		 List<NxDepartmentEntity> departmentEntityList = new ArrayList<>();
-		 for (NxDepartmentEntity dep : depArr) {
-			NxDepartmentEntity departmentEntities =   nxDepartmentOrdersService.queryPrintPickerData(dep.getNxDepartmentId());
-			 departmentEntityList.add(departmentEntities);
-		 }
-
-	    return R.ok().put("data", departmentEntityList);
-	  }
-
-
-	@RequestMapping(value = "/groupInfo/{userId}")
-	@ResponseBody
-	public R groupInfo(@PathVariable Integer userId) {
-	     Map<String, Object> map = nxDepartmentService.queryGroupInfo(userId);
-
-	    return R.ok().put("data", map);
-	}
-
-	 @RequestMapping(value = "/restrauntRegist", method = RequestMethod.POST)
-	  @ResponseBody
-	  public R restrauntRegist (@RequestBody NxDepartmentEntity dep) {
-		 System.out.println(dep);
-
-		 Integer integer = nxDepartmentService.saveNewRestraunt(dep);
-
-
-		 return R.ok().put("data", integer);
-	  }
-
 
 
 
@@ -124,22 +126,15 @@ public class NxDepartmentController {
 	 */
 	@ResponseBody
 	@RequestMapping("/saveSubDepartment")
-//	@RequiresPermissions("nxdepartment:save")
 	public R saveSubDepartment(@RequestBody NxDepartmentEntity nxDepartment){
-		System.out.println("ddddddcccc22222" + nxDepartment);
 		List<NxDepartmentEntity> nxDepartmentEntities = nxDepartment.getNxDepartmentEntities();
 		for (NxDepartmentEntity dep : nxDepartmentEntities) {
-			System.out.println("--===---222222");
 		nxDepartmentService.saveSubDepartment(dep);
-
 		}
 		Integer nxDepartmentId = nxDepartment.getNxDepartmentId();
-		System.out.println();
 		NxDepartmentEntity nxDepartmentEntity = nxDepartmentService.queryObject(nxDepartmentId);
 		Integer nxDepartmentSubAmount = nxDepartmentEntity.getNxDepartmentSubAmount();
-		System.out.println(nxDepartmentSubAmount + "ammmmount2222");
 		nxDepartmentEntity.setNxDepartmentSubAmount(nxDepartmentSubAmount + nxDepartment.getNxDepartmentEntities().size());
-
 		nxDepartmentService.update(nxDepartmentEntity);
 		return R.ok();
 	}
@@ -150,82 +145,31 @@ public class NxDepartmentController {
 	  @ResponseBody
 	  public R getDisDepartments (Integer disId, String type) {
 
-		 System.out.println(disId);
-		 System.out.println(type);
-		 System.out.println("enennen");
-
-
 		 Map<String, Object> map = new HashMap<>();
 		 map.put("disId", disId);
 		 map.put("type", type);
-		 		List<NxDepartmentEntity> list =  nxDepartmentService.queryDisDepartments(map);
-
+		 List<NxDepartmentEntity> list =  nxDepartmentService.queryDisDepartments(map);
 		 return R.ok().put("data", list);
 	  }
 
 
-//
-//
-//	@RequestMapping(value = "//{disId}")
-//	@ResponseBody
-//	public R getDisDepartments(@PathVariable Integer disId) {
-//
-//		List<NxDepartmentEntity> list =  nxDepartmentService.queryDisDepartments(disId);
-//
-//	    return R.ok().put("data", list);
-//	}
-	
-
-
-	
-	
-	/**
-	 * 信息
-	 */
-	@ResponseBody
-	@RequestMapping("/info/{nxDepartmentId}")
-//	@RequiresPermissions("nxdepartment:info")
-	public R info(@PathVariable("nxDepartmentId") Integer nxDepartmentId){
-		NxDepartmentEntity nxDepartment = nxDepartmentService.queryObject(nxDepartmentId);
-		
-		return R.ok().put("data", nxDepartment);
-	}
-	
 	/**
 	 * 保存
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-//	@RequiresPermissions("nxdepartment:save")
 	public R save(@RequestBody NxDepartmentEntity nxDepartment){
-		System.out.println("dddddd" + nxDepartment);
 		nxDepartmentService.save(nxDepartment);
-		
 		return R.ok();
 	}
-	
-	/**
-	 * 修改
-	 */
+
+	@RequestMapping(value = "/getDepInfo/{depId}")
 	@ResponseBody
-	@RequestMapping("/update")
-	@RequiresPermissions("nxdepartment:update")
-	public R update(@RequestBody NxDepartmentEntity nxDepartment){
-		nxDepartmentService.update(nxDepartment);
-		
-		return R.ok();
+	public R getDepInfo(@PathVariable Integer depId) {
+		NxDepartmentEntity nxDepartmentEntity = nxDepartmentService.queryObject(depId);
+		return R.ok().put("data", nxDepartmentEntity);
 	}
+
 	
-	/**
-	 * 删除
-	 */
-	@ResponseBody
-	@RequestMapping("/delete")
-	@RequiresPermissions("nxdepartment:delete")
-	public R delete(@RequestBody Integer[] nxDepartmentIds){
-		nxDepartmentService.deleteBatch(nxDepartmentIds);
-		
-		return R.ok();
-	}
-	
+
 }

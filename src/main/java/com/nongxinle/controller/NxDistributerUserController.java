@@ -30,6 +30,9 @@ public class NxDistributerUserController {
 	private NxDistributerUserService nxDistributerUserService;
 
 
+
+
+
 	@RequestMapping(value = "/getDisInfoByUserId/{userId}")
 	@ResponseBody
 	public R getDisInfoByUserId(@PathVariable Integer userId) {

@@ -26,7 +26,11 @@
 			`nx_distributer_name`,
 			`nx_distributer_lan`,
 			`nx_distributer_lun`,
-			`nx_distributer_business_type`
+			`nx_distributer_business_type`,
+		 	`nx_distributer_manager`,
+		 	`nx_distributer_address`,
+		 	`nx_distributer_phone`,
+		 	`nx_distributer_img`
 		)
 		values
 		(
@@ -34,7 +38,11 @@
 			#{nxDistributerName},
 			#{nxDistributerLan},
 			#{nxDistributerLun},
-			#{nxDistributerBusinessType}
+			#{nxDistributerBusinessType},
+		 	#{nxDistributerManager},
+		 	#{nxDistributerAddress},
+		 	#{nxDistributerPhone},
+		 	#{nxDistributerImg}
 		)
 	</insert>
 	 
@@ -44,6 +52,10 @@
 			<if test="nxDistributerName != null">`nx_distributer_name` = #{nxDistributerName}, </if>
 			<if test="nxDistributerLan != null">`nx_distributer_lan` = #{nxDistributerLan}, </if>
 			<if test="nxDistributerLun != null">`nx_distributer_lun` = #{nxDistributerLun}, </if>
+			<if test="nxDistributerManager != null">`nx_distributer_manager` = #{nxDistributerManager}, </if>
+			<if test="nxDistributerAddress != null">`nx_distributer_address` = #{nxDistributerAddress}, </if>
+			<if test="nxDistributerPhone != null">`nx_distributer_phone` = #{nxDistributerPhone}, </if>
+			<if test="nxDistributerImg != null">`nx_distributer_img` = #{nxDistributerImg}, </if>
 			<if test="nxDistributerBusinessType != null">`nx_distributer_business_type` = #{nxDistributerBusinessType}</if>
 		</set>
 		where distributer_id = #{distributerId}

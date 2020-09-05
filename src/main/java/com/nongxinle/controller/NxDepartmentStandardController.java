@@ -27,40 +27,51 @@ public class NxDepartmentStandardController {
 	@Autowired
 	private NxDepartmentStandardService nxDepartmentStandardService;
 
-
-	
 	/**
-	 * 保存
+	 * PURCHASE
+	 * 保存群商品的订货规格
+	 * @param nxDepartmentStandard 群商品订货规格
+	 * @return ok
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-//	@RequiresPermissions("nxdepartmentstandard:save")
 	public R save(@RequestBody NxDepartmentStandardEntity nxDepartmentStandard){
 		nxDepartmentStandardService.save(nxDepartmentStandard);
-		
-		return R.ok();
+		return R.ok().put("data", nxDepartmentStandard);
 	}
-	
+
 	/**
-	 * 修改
+	 * PURCHSE
+	 * 修改群商品订货规格
+	 * @param nxDepartmentStandard 群规格
+	 * @return ok
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-//	@RequiresPermissions("nxdepartmentstandard:update")
 	public R update(@RequestBody NxDepartmentStandardEntity nxDepartmentStandard){
 		nxDepartmentStandardService.update(nxDepartmentStandard);
-		
-		return R.ok();
+		return R.ok().put("data", nxDepartmentStandard);
 	}
+
+//	///////////
+
+	@RequestMapping(value = "/getDepGoodsStandard/{depGoodsId}")
+	@ResponseBody
+	public R getDepGoodsStandards(@PathVariable Integer depGoodsId) {
+		System.out.println(depGoodsId + "diegiigiiggiigigii");
+	    List<NxDepartmentStandardEntity> standardEntities = nxDepartmentStandardService.queryDepGoodsStandards(depGoodsId);
+	    return R.ok().put("data", standardEntities);
+	}
+
+
 	
 	/**
 	 * 删除
 	 */
 	@ResponseBody
-	@RequestMapping("/delete")
-	@RequiresPermissions("nxdepartmentstandard:delete")
-	public R delete(@RequestBody Integer[] nxDepartmentStandardIds){
-		nxDepartmentStandardService.deleteBatch(nxDepartmentStandardIds);
+	@RequestMapping("/delete/{id}")
+	public R delete(@PathVariable Integer id){
+		nxDepartmentStandardService.delete(id);
 		
 		return R.ok();
 	}

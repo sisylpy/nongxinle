@@ -16,7 +16,6 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxCustomerUserGoodsDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDepartmentBillDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDepartmentDao.xml" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDepartmentGoodsDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDepartmentOrdersDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDepartmentUserDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/NxDistributerCommunityDao.xml" dialect="MySQL" />
@@ -43,6 +42,7 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/SysRoleMenuDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/SysUserDao.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/SysUserRoleDao.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/com/nongxinle/dao/zzzNxDepartmentGoodsDao.xml" dialect="MySQL" />
     <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>

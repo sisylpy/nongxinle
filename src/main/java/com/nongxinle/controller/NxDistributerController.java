@@ -51,13 +51,11 @@ public class NxDistributerController {
 	@Autowired
 	private NxDistributerUserRoleService nxDistributerUserRoleService;
 
-	private static String DIS_APP_ID = "wxbc686226ccc443f1";
+	private static String Fang_APP_ID = "wxbc686226ccc443f1";
 
-	private  static  String DIS_SECRET = "cefb0c474497e74879687862b0d8733e";
+	private  static  String Fang_SECRET = "cefb0c474497e74879687862b0d8733e";
 
-
-
-
+	
 	@RequestMapping(value = "/downLoadFragment/{fragmentId}")
 	public ResponseEntity downLoadFragment (@PathVariable Integer fragmentId, HttpSession session) throws Exception {
 
@@ -95,11 +93,9 @@ public class NxDistributerController {
 	 @RequestMapping(value = "/disLogin", method = RequestMethod.POST)
 	  @ResponseBody
 	  public R disLogin (@RequestBody NxDistributerUserEntity distributerUserEntity ) {
-		 System.out.println("123444");
-		 System.out.println(distributerUserEntity.getNxDiuCode());
 
-		 String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + DIS_APP_ID + "&secret=" +
-				 DIS_SECRET + "&js_code=" + distributerUserEntity.getNxDiuCode() +
+		 String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + Fang_APP_ID + "&secret=" +
+				 Fang_SECRET + "&js_code=" + distributerUserEntity.getNxDiuCode() +
 				 "&grant_type=authorization_code";
 		 // 发送请求，返回Json字符串
 		 String str = WeChatUtil.httpRequest(url, "GET", null);
@@ -108,11 +104,13 @@ public class NxDistributerController {
 
 		 // 我们需要的openid，在一个小程序中，openid是唯一的
 		 String openid = jsonObject.get("openid").toString();
-		 System.out.println(openid + "openididiiddi");
 		List<NxDistributerUserEntity> distributerUserEntities = nxDistributerUserService.queryUserByOpenId(openid);
 		if(distributerUserEntities.size() > 0){
 			NxDistributerUserEntity nxDistributerUserEntity = distributerUserEntities.get(0);
-			return R.ok().put("data", nxDistributerUserEntity);
+			Integer nxDistributerUserId = nxDistributerUserEntity.getNxDistributerUserId();
+			NxDistributerUserEntity nxDistributerEntity = nxDistributerUserService.queryUserInfo(nxDistributerUserId);
+
+			return R.ok().put("data", nxDistributerEntity);
 		}else {
 			return R.error(-1,"用户不存在");
 
@@ -128,8 +126,9 @@ public class NxDistributerController {
 	  public R disAndUserSave (@RequestBody NxDistributerEntity distributerEntity) {
 
 
-		 String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + DIS_APP_ID + "&secret=" +
-				 DIS_SECRET + "&js_code=" + distributerEntity.getNxDistributerUserEntity().getNxDiuCode() +
+		// 1, 先检查微信号是否以前注册过
+		 String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + Fang_APP_ID + "&secret=" +
+				 Fang_SECRET + "&js_code=" + distributerEntity.getNxDistributerUserEntity().getNxDiuCode() +
 				 "&grant_type=authorization_code";
 		 // 发送请求，返回Json字符串
 		 String str = WeChatUtil.httpRequest(url, "GET", null);
@@ -141,17 +140,18 @@ public class NxDistributerController {
 		 System.out.println(openid + "openididiiddi");
 
 		 List<NxDistributerUserEntity> distributerUserEntities = nxDistributerUserService.queryUserByOpenId(openid);
+		//2，如果注册过，则返回提示。
 		 if(distributerUserEntities.size() > 0){
 			 return R.error(-1,"微信号已注册!");
-
-
 		 }else {
 
 
-			 //1,保存批发商
+
+			 // 3，如果没有注册过
+			 // 3.1保存批发商
 			 nxDistributerService.save(distributerEntity);
 
-			 //2，保存批发商用户
+			 // 3.2，保存批发商用户
 			 Integer nxDistributerId = distributerEntity.getNxDistributerId();
 			 NxDistributerUserEntity nxDistributerUserEntity = distributerEntity.getNxDistributerUserEntity();
 
@@ -160,12 +160,10 @@ public class NxDistributerController {
 			 nxDistributerUserEntity.setNxDiuWxOpenId(openid);
 			 nxDistributerUserService.save(nxDistributerUserEntity);
 
-			 //查询注册成功的用户信息
+			 //3..3 返回用户id
 			 Integer nxDistributerUserId = nxDistributerUserEntity.getNxDistributerUserId();
-			 System.out.println("seachdhhchchchc");
 			 NxDistributerUserEntity nxDistributerEntity = nxDistributerUserService.queryUserInfo(nxDistributerUserId);
-			 System.out.println("kfdaklfas;fj");
-			 System.out.println(nxDistributerEntity);
+
 
 
 			 return R.ok().put("data", nxDistributerEntity);
@@ -195,19 +193,7 @@ public class NxDistributerController {
 		return R.ok().put("page", pageUtil);
 	}
 	
-	
-	/**
-	 * 信息
-	 */
-	@ResponseBody
-	@RequestMapping("/info/{distributerId}")
-	@RequiresPermissions("nxdistributer:info")
-	public R info(@PathVariable("distributerId") Integer distributerId){
-		NxDistributerEntity nxDistributer = nxDistributerService.queryObject(distributerId);
-		
-		return R.ok().put("nxDistributer", nxDistributer);
-	}
-	
+
 	/**
 	 * 保存
 	 */

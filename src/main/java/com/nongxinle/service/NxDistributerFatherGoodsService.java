@@ -8,6 +8,8 @@ package com.nongxinle.service;
  */
 
 import com.nongxinle.entity.NxDistributerFatherGoodsEntity;
+import com.nongxinle.entity.NxDistributerGoodsEntity;
+import com.nongxinle.entity.NxGoodsEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -28,5 +30,10 @@ public interface NxDistributerFatherGoodsService {
 	
 	void deleteBatch(Integer[] nxDistributerFatherGoodsIds);
 
-    List<NxDistributerFatherGoodsEntity> queryDisFatherGoods(Map<String, Object> map);
+
+    List<NxDistributerFatherGoodsEntity> queryDistributerGoodsCata(Integer disId);
+
+    List<NxDistributerFatherGoodsEntity> queryHasDisGrandGoodsFather(Map<String, Object> map2);
+
+    List<NxDistributerFatherGoodsEntity> queryHasDisGreatGrandGoodsFather(Map<String, Object> map3);
 }

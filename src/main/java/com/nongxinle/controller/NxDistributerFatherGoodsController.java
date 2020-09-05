@@ -7,10 +7,9 @@ package com.nongxinle.controller;
  * @date 07-27 17:38
  */
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.nongxinle.entity.NxGoodsEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,30 @@ public class NxDistributerFatherGoodsController {
 	@Autowired
 	private NxDistributerFatherGoodsService nxDistributerFatherGoodsService;
 
-	
+
+	/**
+	 * 获取批发商商品的父类列表
+	 * @param disId 批发商id
+	 * @return 批发商父类列表
+	 */
+	@RequestMapping(value = "/getDisGoodsCata/{disId}")
+	@ResponseBody
+	public R getDisGoodsCata(@PathVariable Integer disId) {
+		List<NxDistributerFatherGoodsEntity> disGoods =  nxDistributerFatherGoodsService.queryDistributerGoodsCata(disId);
+		if(disGoods.size() > 0){
+			return R.ok().put("data", disGoods);
+		}
+		List<NxDistributerFatherGoodsEntity> zero = new ArrayList<>();
+		return R.ok().put("data", zero);
+	}
+
+
+
+
+//	///////////
+
+
+
 	/**
 	 * 列表
 	 */

@@ -1,7 +1,10 @@
 package com.nongxinle.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.nongxinle.entity.*;
 import com.nongxinle.service.*;
+import com.nongxinle.utils.MyAPPIDConfig;
+import com.nongxinle.utils.WeChatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.nongxinle.dao.NxDepartmentDao;
+
+import static com.nongxinle.utils.DateUtils.formatWhatDate;
+import static com.nongxinle.utils.DateUtils.formatWhatDay;
 
 
 @Service("nxDepartmentService")
@@ -20,16 +26,95 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 	@Autowired
 	private NxDepartmentUserService nxDepartmentUserService;
 
-	@Autowired
-	private NxDepartmentOrdersService nxDepartmentOrdersService;
-
-	@Autowired
-	private NxDepartmentIndependentOrderService nxDepIndependentOrderService;
 
 	@Autowired
 	private NxDistributerDepartmentService nxDistributerDepartmentService;
 
-	
+
+	@Override
+	public Map<String, Object> queryGroupAndUserInfo(Integer nxGroupUserId) {
+		//订货群信息
+		NxDepartmentUserEntity nxDepartmentUserEntity = nxDepartmentUserService.queryObject(nxGroupUserId);
+		//用户信息
+		Integer nxDuDepartmentId = nxDepartmentUserEntity.getNxDuDepartmentId();
+		NxDepartmentEntity nxDepartmentEntity = nxDepartmentDao.queryGroupInfo(nxDuDepartmentId);
+		//返回
+		Map<String, Object> map = new HashMap<>();
+		map.put("userInfo", nxDepartmentUserEntity);
+		map.put("depInfo", nxDepartmentEntity);
+		return  map;
+	}
+
+	@Override
+	public Map<String, Object> queryDepAndUserInfo(Integer nxDepartmentUserId) {
+		//订货群信息
+		NxDepartmentUserEntity nxDepartmentUserEntity = nxDepartmentUserService.queryObject(nxDepartmentUserId);
+		//用户信息
+		Integer nxDuDepartmentId = nxDepartmentUserEntity.getNxDuDepartmentId();
+		NxDepartmentEntity nxDepartmentEntity = nxDepartmentDao.queryDepInfo(nxDuDepartmentId);
+		//返回
+		Map<String, Object> map = new HashMap<>();
+		map.put("userInfo", nxDepartmentUserEntity);
+		map.put("depInfo", nxDepartmentEntity);
+		return  map;
+	}
+
+
+	@Override
+	public Integer saveNewRestraunt(NxDepartmentEntity dep) {
+
+		//1.保存餐馆
+		nxDepartmentDao.save(dep);
+
+		MyAPPIDConfig myAPPIDConfig = new MyAPPIDConfig();
+		String purchaseAppID = myAPPIDConfig.getPurchaseAppID();
+		String purchaseScreat = myAPPIDConfig.getPurchaseScreat();
+
+		//2，保存用户
+		Integer nxDepartmentId = dep.getNxDepartmentId();
+		NxDepartmentUserEntity nxDepartmentUserEntity = dep.getNxDepartmentUserEntity();
+		String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + purchaseAppID + "&secret=" + purchaseScreat + "&js_code=" + nxDepartmentUserEntity.getNxDuCode()+ "&grant_type=authorization_code";
+		// 发送请求，返回Json字符串
+		String str = WeChatUtil.httpRequest(url, "GET", null);
+		// 转成Json对象 获取openid
+		JSONObject jsonObject = JSONObject.parseObject(str);
+
+		// 我们需要的openid，在一个小程序中，openid是唯一的
+		String openid = jsonObject.get("openid").toString();
+		nxDepartmentUserEntity.setNxDuWxOpenId(openid);
+		nxDepartmentUserEntity.setNxDuDepartmentId(nxDepartmentId);
+		nxDepartmentUserEntity.setNxDuDepartmentFatherId(nxDepartmentId);
+		nxDepartmentUserEntity.setNxDuJoinDate(formatWhatDay(0));
+		nxDepartmentUserService.save(nxDepartmentUserEntity);
+		List<NxDepartmentEntity> nxDepartmentEntities1 = dep.getNxDepartmentEntities();
+		System.out.println(nxDepartmentEntities1);
+
+		if(dep.getNxDepartmentEntities().size() > 0){
+			//3,保存部门
+
+			List<NxDepartmentEntity> nxDepartmentEntities = dep.getNxDepartmentEntities();
+			for (NxDepartmentEntity subDep : nxDepartmentEntities) {
+				subDep.setNxDepartmentFatherId(nxDepartmentId);
+				subDep.setNxDepartmentDisId(dep.getNxDepartmentDisId());
+				nxDepartmentDao.save(subDep);
+			}
+		}
+
+		//3, 保存批发商客户
+		Integer nxDepartmentDisId = dep.getNxDepartmentDisId();
+		NxDistributerDepartmentEntity entity = new NxDistributerDepartmentEntity();
+		entity.setNxDdDistributerId(nxDepartmentDisId);
+		entity.setNxDdDepartmentId(nxDepartmentId);
+		nxDistributerDepartmentService.save(entity);
+
+		Integer nxDepartmentUserId = nxDepartmentUserEntity.getNxDepartmentUserId();
+		return nxDepartmentUserId;
+	}
+
+
+
+
+
 	@Override
 	public NxDepartmentEntity queryObject(Integer nxDepartmentId){
 		return nxDepartmentDao.queryObject(nxDepartmentId);
@@ -44,11 +129,11 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 	public int queryTotal(Map<String, Object> map){
 		return nxDepartmentDao.queryTotal(map);
 	}
-	
+
+
 	@Override
 	public void save(NxDepartmentEntity nxDepartment){
 		nxDepartmentDao.save(nxDepartment);
-
 		Integer nxDepartmentId = nxDepartment.getNxDepartmentId();
 		Integer nxDepUserId = nxDepartment.getNxDepUserId();
 		NxDepartmentUserEntity nxDepartmentUserEntity = nxDepartmentUserService.queryObject(nxDepUserId);
@@ -82,74 +167,36 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 		 nxDepartmentDao.save(dep);
 	}
 
-    @Override
-    public NxDepartmentEntity queryDepartmentInfo(Integer nxDuDepartmentId) {
-
-		return nxDepartmentDao.queryDepInfo(nxDuDepartmentId);
-    }
-
-	@Override
-	public Integer saveNewRestraunt(NxDepartmentEntity dep) {
-
-		//1.保存餐馆
-		nxDepartmentDao.save(dep);
-		System.out.println("new depdpeppepepeep");
-		System.out.println(dep);
-
-		//2，保存用户
-		Integer nxDepartmentId = dep.getNxDepartmentId();
-		NxDepartmentUserEntity nxDepartmentUserEntity = dep.getNxDepartmentUserEntity();
-		nxDepartmentUserEntity.setNxDuDepartmentId(nxDepartmentId);
-		nxDepartmentUserService.save(nxDepartmentUserEntity);
-		List<NxDepartmentEntity> nxDepartmentEntities1 = dep.getNxDepartmentEntities();
-		System.out.println(nxDepartmentEntities1);
-
-		if(dep.getNxDepartmentEntities().size() > 0){
-			System.out.println(dep.getNxDepartmentEntities() + "sisisisiis");
-			//3,保存部门
-
-			List<NxDepartmentEntity> nxDepartmentEntities = dep.getNxDepartmentEntities();
-			for (NxDepartmentEntity subDep : nxDepartmentEntities) {
-				subDep.setNxDepartmentFatherId(nxDepartmentId);
-				subDep.setNxDepartmentDisId(dep.getNxDepartmentDisId());
-				nxDepartmentDao.save(subDep);
-			}
-		}
-
-		//3, 保存批发商客户
-		Integer nxDepartmentDisId = dep.getNxDepartmentDisId();
-		NxDistributerDepartmentEntity entity = new NxDistributerDepartmentEntity();
-		entity.setNxDdDistributerId(nxDepartmentDisId);
-		entity.setNxDdDepartmentId(nxDepartmentId);
-		nxDistributerDepartmentService.save(entity);
+//    @Override
+//    public NxDepartmentEntity queryDepartmentInfo(Integer nxDuDepartmentId) {
+//
+//		return nxDepartmentDao.queryDepInfo(nxDuDepartmentId);
+//    }
 
 
-		Integer nxDepartmentUserId = nxDepartmentUserEntity.getNxDepartmentUserId();
-		return nxDepartmentUserId;
 
-	}
-
-	@Override
-	public Map<String, Object> queryGroupInfo(Integer userId) {
-		NxDepartmentUserEntity userEntity = nxDepartmentUserService.queryObject(userId);
-
-		Integer nxDuDepartmentId = userEntity.getNxDuDepartmentId();
-		NxDepartmentEntity group =  nxDepartmentDao.queryObject(nxDuDepartmentId);
-
-		List<NxDepartmentOrdersEntity> ordersEntities = nxDepartmentOrdersService.queryGroupTodayOrders(nxDuDepartmentId);
-
-	   List<NxDepartmentIndependentOrderEntity>  indepenOrder =	nxDepIndependentOrderService.queryGroupTodayIndependentOrders(nxDuDepartmentId);
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("userInfo", userEntity);
-		map.put("groupInfo", group);
-		map.put("orders", ordersEntities);
-		map.put("independentOrders", indepenOrder);
-
-
-		return map;
-
-	}
+//	@Override
+//	public Map<String, Object> queryGroupInfo(Integer userId) {
+//		NxDepartmentUserEntity userEntity = nxDepartmentUserService.queryObject(userId);
+//
+//		Integer nxDuDepartmentId = userEntity.getNxDuDepartmentId();
+//		System.out.println(nxDuDepartmentId + "dudududuudududiddididi");
+////		NxDepartmentEntity group =  nxDepartmentDao.queryObject(nxDuDepartmentId);
+//		NxDepartmentEntity nxDepartmentEntity = nxDepartmentDao.queryDepInfo(nxDuDepartmentId);
+////		List<NxDepartmentOrdersEntity> ordersEntities = nxDepartmentOrdersService.queryGroupTodayOrders(nxDuDepartmentId);
+//
+////	   List<NxDepartmentIndependentOrderEntity>  indepenOrder =	nxDepIndependentOrderService.queryGroupTodayIndependentOrders(nxDuDepartmentId);
+//
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("userInfo", userEntity);
+//		map.put("groupInfo", nxDepartmentEntity);
+////		map.put("orders", ordersEntities);
+////		map.put("independentOrders", indepenOrder);
+//
+//
+//		return map;
+//
+//	}
 
 	@Override
 	public void saveJustDepartment(NxDepartmentEntity nxDepartmentEntity) {

@@ -27,4 +27,10 @@ public interface NxDepartmentUserService {
 	void delete(Integer nxDepartmentUserId);
 	
 	void deleteBatch(Integer[] nxDepartmentUserIds);
+
+    List<NxDepartmentUserEntity> queryAllUsersByDepId(Integer depId);
+
+    List<NxDepartmentUserEntity> queryDepUserByOpenId(String openId);
+
+    List<NxDepartmentUserEntity> queryGroupAdminUserAmount(Integer nxDuDepartmentId);
 }

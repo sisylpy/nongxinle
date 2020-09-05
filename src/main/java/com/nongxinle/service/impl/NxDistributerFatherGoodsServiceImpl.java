@@ -1,5 +1,7 @@
 package com.nongxinle.service.impl;
 
+import com.nongxinle.entity.NxDistributerGoodsEntity;
+import com.nongxinle.entity.NxGoodsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,10 +54,23 @@ public class NxDistributerFatherGoodsServiceImpl implements NxDistributerFatherG
 		nxDistributerFatherGoodsDao.deleteBatch(nxDistributerFatherGoodsIds);
 	}
 
-    @Override
-    public List<NxDistributerFatherGoodsEntity> queryDisFatherGoods(Map<String, Object> map) {
 
-		return nxDistributerFatherGoodsDao.queryDistFatherGoods(map);
+
+    @Override
+    public List<NxDistributerFatherGoodsEntity> queryDistributerGoodsCata(Integer disId) {
+
+		return nxDistributerFatherGoodsDao.queryDisGoodsCata(disId);
+    }
+
+    @Override
+    public List<NxDistributerFatherGoodsEntity> queryHasDisGrandGoodsFather(Map<String, Object> map2) {
+
+		return nxDistributerFatherGoodsDao.queryHasDisGrandFather(map2);
+    }
+
+    @Override
+    public List<NxDistributerFatherGoodsEntity> queryHasDisGreatGrandGoodsFather(Map<String, Object> map3) {
+        return nxDistributerFatherGoodsDao.queryHasGreatGrandGoods(map3);
     }
 
 }
