@@ -15,7 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 public interface NxDistributerDepartmentService {
-	
+
+	List<NxDepartmentEntity> queryAllDisDepartments(Integer disId);
+
+
+//	/////////
+
+
 	NxDistributerDepartmentEntity queryObject(Integer nxDistributerDepId);
 	
 	List<NxDistributerDepartmentEntity> queryList(Map<String, Object> map);
@@ -30,7 +36,5 @@ public interface NxDistributerDepartmentService {
 	
 	void deleteBatch(Integer[] nxDistributerDepIds);
 
-    List<NxDistributerDepartmentEntity> queryAllCustomer(Integer disId);
 
-	List<NxDepartmentEntity> queryAllDisDepartments(Integer disId);
 }

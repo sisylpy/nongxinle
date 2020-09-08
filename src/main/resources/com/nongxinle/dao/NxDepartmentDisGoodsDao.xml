@@ -20,6 +20,12 @@
 <!--        <collection property="nxDepartmentStandardEntities" resultMap="depStandard"/>-->
     </resultMap>
 
+    <select id="queryDepartmentsByDisGoodsId" resultMap="departments">
+        select * from nx_department_dis_goods as ddg
+        left join nx_department as d on d.nx_department_id = ddg.nx_DDG_department_father_id
+        where nx_DDG_dis_goods_id = #{disGoodsId}
+    </select>
+
     <select id="depGetDepDisGoodsCata" resultMap="depDisGoodsCata">
         select gg.nx_distributer_father_goods_id 'gg_nx_distributer_father_goods_id',
                gg.nx_dfg_fathers_father_id   'gg_nx_dfg_fathers_father_id',
@@ -71,13 +77,6 @@
 <!--    ///////////   -->
 
 
-<!--    <select id="queryResGoodsDetail" resultMap="depGoods">-->
-<!--        select *-->
-<!--        from nx_department_dis_goods as ddg-->
-<!--                 left join nx_distributer_goods as dg on dg.nx_distributer_goods_id = ddg.nx_DDG_dis_goods_id-->
-<!--                 left join nx_department_standard as ds on ds.nx_DDS_dds_goods_id = ddg.nx_department_dis_goods_id-->
-<!--        where nx_DDG_dis_goods_id = #{depDisGoodsId}-->
-<!--    </select>-->
 
 
 
@@ -190,32 +189,7 @@
         <result property="nxDepartmentIsGroupDep" column="nx_department_is_group_dep"/>
     </resultMap>
 
-    <select id="queryDepartmentsByDisGoodsId" resultMap="departments">
-        select * from nx_department_dis_goods as ddg
-        left join nx_department as d on d.nx_department_id = ddg.nx_DDG_department_father_id
-        where nx_DDG_dis_goods_id = #{disGoodsId}
-    </select>
 
-
-
-    <resultMap id="depGoodsWithDepStandard" type="NxDepartmentDisGoodsEntity">
-        <id property="nxDepartmentDisGoodsId" column="nx_department_dis_goods_id"/>
-        <result property="nxDdgDisGoodsId" column="nx_DDG_dis_goods_id"/>
-        <association property="nxDistributerGoodsEntity" resultMap="disGoods"/>
-        <collection property="nxDepStandardEntities" resultMap="depStandard"/>
-
-    </resultMap>
-
-
-
-
-    <select id="queryDepGoodsByDisGoodsFatherId" resultMap="depGoodsWithDepStandard">
-        select * from nx_department_dis_goods as ddg
-        left join nx_distributer_goods as dg on ddg.nx_DDG_dis_goods_id = dg.nx_distributer_goods_id
-        left join nx_department_standard as ds on ds.nx_DDS_dds_goods_id = ddg.nx_department_dis_goods_id
-         where ddg.nx_DDG_department_father_id = #{depId} and dg.nx_dg_dfg_goods_father_id = #{disGoodsFatherId}
-
-    </select>
 
 
     <insert id="save" parameterType="com.nongxinle.entity.NxDepartmentDisGoodsEntity" useGeneratedKeys="true"

@@ -13,10 +13,8 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.nongxinle.entity.NxDepartmentEntity;
-import com.nongxinle.entity.NxDistributerUserEntity;
 import com.nongxinle.service.NxDepartmentService;
 import com.nongxinle.utils.*;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -212,9 +210,9 @@ public class NxDepartmentUserController {
 			nxDepartmentUser.setNxDuJoinDate(formatWhatDay(0));
 			nxDepartmentUserService.save(nxDepartmentUser);
 			Integer nxDepartmentUserId = nxDepartmentUser.getNxDepartmentUserId();
-			Map<String, Object> stringObjectMap = nxDepartmentService.queryGroupAndUserInfo(nxDepartmentUserId);
+//			Map<String, Object> stringObjectMap = nxDepartmentService.queryGroupAndUserInfo(nxDepartmentUserId);
 
-			return R.ok().put("data",stringObjectMap);
+			return R.ok().put("data",nxDepartmentUserId);
 		}
 	}
 
@@ -335,7 +333,7 @@ public class NxDepartmentUserController {
 
 
 	/**
-	 * PURCHASE
+	 * PURCHASE，DISTRIBUTE
 	 * 获取群用户
 	 * @param depId 群id
 	 * @return 用户列表
@@ -347,6 +345,12 @@ public class NxDepartmentUserController {
 	    return R.ok().put("data", userEntities);
 	}
 
+	/**
+	 * ORDER
+	 * 获取群用户部门和用户信息
+	 * @param userId 群用户id
+	 * @return 部门用户
+	 */
 	@RequestMapping(value = "/getDepUserInfo/{userId}")
 	@ResponseBody
 	public R getDepUserInfo(@PathVariable Integer userId) {
@@ -355,6 +359,12 @@ public class NxDepartmentUserController {
 	}
 
 
+	/**
+	 * PURCHASE
+	 * 删除群用户
+	 * @param userId 用户id
+	 * @return ok
+	 */
 	@RequestMapping(value = "/deleteDepUser/{userId}")
 	@ResponseBody
 	public R deleteDepUser(@PathVariable Integer userId) {

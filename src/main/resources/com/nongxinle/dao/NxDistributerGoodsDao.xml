@@ -37,8 +37,17 @@
         and nx_dg_dfg_goods_father_id = #{fatherId}
     </select>
 
+    <select id="queryDisGoodsListByDisFatherId" resultMap="disGoodsWithStandards">
+        select * from nx_distributer_goods as dg
+        left join nx_distributer_standard as ds on ds.nx_DS_dis_goods_id = dg.nx_distributer_goods_id
+        where nx_dg_dfg_goods_father_id = #{nxDgDfgGoodsFatherId} order by dg.nx_dg_goods_py
+    </select>
 
-<!--    ////////-->
+
+
+
+
+<!--    ///////////////   -->
 
 
 
@@ -287,11 +296,7 @@
     </select>
 
 
-    <select id="queryDisGoodsListByDisFatherId" resultMap="disGoodsWithStandards">
-        select * from nx_distributer_goods as dg
-        left join nx_distributer_standard as ds on ds.nx_DS_dis_goods_id = dg.nx_distributer_goods_id
-        where nx_dg_dfg_goods_father_id = #{nxDgDfgGoodsFatherId} order by dg.nx_dg_goods_py
-    </select>
+
 
 
 

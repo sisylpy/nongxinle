@@ -14,6 +14,8 @@ import java.util.Map;
 
 public interface NxDepartmentDisGoodsService {
 
+	List<NxDepartmentEntity> queryDepartmentsByDisGoodsId(Integer disGoodsId);
+
 	List<NxDistributerFatherGoodsEntity> depGetDepDisGoodsCata(Integer depId);
 
 	List<NxDepartmentDisGoodsEntity> queryDepGoodsByFatherId(Map<String, Object> map);
@@ -25,7 +27,7 @@ public interface NxDepartmentDisGoodsService {
 
 
 //	/////
-List<NxGoodsEntity> queryResGoodsDetail(Integer depDisGoodsId);
+
 
 
 	NxDepartmentDisGoodsEntity queryObject(Integer nxDepartmentDisGoodsId);
@@ -43,13 +45,8 @@ List<NxGoodsEntity> queryResGoodsDetail(Integer depDisGoodsId);
 	void deleteBatch(Integer[] nxDepartmentDisGoodsIds);
 
 
-
     List<NxGoodsEntity> querySearchStr(Map<String, Object> map);
 
 
-
-	List<NxDepartmentEntity> queryDepartmentsByDisGoodsId(Integer disGoodsId);
-
-	List<NxDepartmentDisGoodsEntity> queryDepGoodsByDisGoodsFatherId(Map<String, Object> map);
 
 }

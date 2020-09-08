@@ -32,7 +32,8 @@
 			`nx_community_lng`,
 		 	`nx_community_route_id`,
 		 	`nx_community_dis_id`,
-		 	`nx_community_polygon`
+		 	`nx_community_polygon`,
+		 	`nx_community_region`
 		)
 		values
 		(
@@ -42,7 +43,8 @@
 			#{nxCommunityLng},
 		 	#{nxCommunityRouteId},
 		 	#{nxCommunityDisId},
-		 	#{nxCommunityPolygon}
+		 	#{nxCommunityPolygon},
+		 	#{nxCommunityRegion}
 		)
 	</insert>
 	 
@@ -54,6 +56,7 @@
 			<if test="nxCommunityRouteId != null">`nx_community_route_id` = #{nxCommunityRouteId}, </if>
 			<if test="nxCommunityDisId != null">`nx_community_dis_id` = #{nxCommunityDisId}, </if>
 			<if test="nxCommunityPolygon != null">`nx_community_polygon` = #{nxCommunityPolygon}, </if>
+			<if test="nxCommunityRegion != null">`nx_community_region` = #{nxCommunityRegion}, </if>
 			<if test="nxCommunityLng != null">`nx_community_lng` = #{nxCommunityLng}</if>
 		</set>
 		where nx_community_id = #{nxCommunityId}

@@ -20,6 +20,7 @@ public interface NxDistributerGoodsDao extends BaseDao<NxDistributerGoodsEntity>
 
     int queryDisGoodsTotal(Map<String, Object> map3);
 
+    List<NxDistributerGoodsEntity> queryDisGoodsListByDisFatherId(Integer nxDgDfgGoodsFatherId);
 
 
 
@@ -51,7 +52,6 @@ public interface NxDistributerGoodsDao extends BaseDao<NxDistributerGoodsEntity>
 
     NxDistributerGoodsEntity queryDisGoodsWithStandards(Integer nxDdgDisGoodsId);
 
-    List<NxDistributerGoodsEntity> queryDisGoodsListByDisFatherId(Integer nxDgDfgGoodsFatherId);
 
 
 

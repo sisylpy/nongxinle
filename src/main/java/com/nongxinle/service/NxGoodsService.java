@@ -13,7 +13,16 @@ import java.util.List;
 import java.util.Map;
 
 public interface NxGoodsService {
-	
+
+	List<NxGoodsEntity> queryNxGoodsByParams(Map<String, Object> map);
+
+
+
+//	///////
+
+
+
+
 	NxGoodsEntity queryObject(Integer nxGoodsId);
 	
 	List<NxGoodsEntity> queryList(Map<String, Object> map);
@@ -48,4 +57,5 @@ public interface NxGoodsService {
     List<NxGoodsEntity> queryGoodsByFatherId(Integer fatherId);
 
     List<NxGoodsEntity> queryQuickSearch(String str);
+
 }

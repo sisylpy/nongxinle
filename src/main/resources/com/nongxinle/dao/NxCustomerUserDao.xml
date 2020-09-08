@@ -47,8 +47,7 @@
 			#{nxCuWxPhoneNumber},
 		 	#{nxCuJoinDate},
 		 	#{nxCuOrderAmount},
-		 	#{nxCuOrderTimes},
-
+		 	#{nxCuOrderTimes}
 		)
 	</insert>
 	 

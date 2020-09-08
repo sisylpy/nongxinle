@@ -21,6 +21,12 @@ public interface NxDistributerGoodsService {
 
 	int queryDisGoodsTotal(Map<String, Object> map3);
 
+	List<NxDistributerGoodsEntity> queryDisGoodsListByDisFatherId(Integer nxDgDfgGoodsFatherId);
+
+
+
+
+
 //	///////////
 
 
@@ -63,7 +69,6 @@ public interface NxDistributerGoodsService {
 
     NxDistributerGoodsEntity queryObjectWithStandards(Integer nxDdgDisGoodsId);
 
-	List<NxDistributerGoodsEntity> queryDisGoodsListByDisFatherId(Integer nxDgDfgGoodsFatherId);
 
 
 

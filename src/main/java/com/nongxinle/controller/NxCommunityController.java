@@ -56,28 +56,21 @@ public class NxCommunityController {
 	 * 微信二维码扫描校验文件内容
 	 * @return 文件内容
 	 */
-	@RequestMapping(value = "/newCustomerRegist/i7948FzJJ6.txt")
+	@RequestMapping(value = "/i7948FzJJ6.txt")
 	@ResponseBody
-
-	public String newCustomerRegist( ) {
-//
-		return "bb7a0c73e61112c45ebd6ad3743bb05e"; }
+	public String newCustomerRegist( ) { return "bb7a0c73e61112c45ebd6ad3743bb05e"; }
 
 	/**
-	 * 二维码扫描打开固定页面
+	 *
 	 * @param communityId 社区id
 	 * @return 社区列表
 	 */
 	@RequestMapping(value = "/newCustomerRegist/{communityId}")
 	@ResponseBody
 	public R newCustomerRegist(@PathVariable Integer communityId) {
-		NxCommunityEntity nxCommunity = nxCommunityService.queryObject(communityId);
-
-		return R.ok().put("data", nxCommunity);
+		return R.ok().put("data", nxCommunityService.queryObject(communityId));
 	}
-	
 
-	
 	/**
 	 * 列表
 	 */

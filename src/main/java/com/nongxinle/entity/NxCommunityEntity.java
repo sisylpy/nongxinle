@@ -44,4 +44,6 @@ public class NxCommunityEntity implements Serializable {
 
 	private String nxCommunityPolygon;
 
+	private String nxCommunityRegion;
+
 }

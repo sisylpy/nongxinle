@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nongxinle.entity.*;
 import com.nongxinle.service.NxDistributerUserRoleService;
 import com.nongxinle.service.NxDistributerUserService;
+import com.nongxinle.utils.MyAPPIDConfig;
 import com.nongxinle.utils.WeChatUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,20 +43,102 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("api/nxdistributer")
 public class NxDistributerController {
+
 	@Autowired
 	private NxDistributerService nxDistributerService;
-
 	@Autowired
 	private NxDistributerUserService nxDistributerUserService;
 
-	@Autowired
-	private NxDistributerUserRoleService nxDistributerUserRoleService;
 
-	private static String Fang_APP_ID = "wxbc686226ccc443f1";
+	/**
+	 * 批发商登陆
+	 * @param distributerUserEntity 批发商
+	 * @return 批发商
+	 */
+	@RequestMapping(value = "/disLogin", method = RequestMethod.POST)
+	@ResponseBody
+	public R disLogin (@RequestBody NxDistributerUserEntity distributerUserEntity ) {
 
-	private  static  String Fang_SECRET = "cefb0c474497e74879687862b0d8733e";
+		MyAPPIDConfig myAPPIDConfig = new MyAPPIDConfig();
+		String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + myAPPIDConfig.getCaidiAppID() + "&secret=" +
+				myAPPIDConfig.getCaidiScreat() + "&js_code=" + distributerUserEntity.getNxDiuCode() +
+				"&grant_type=authorization_code";
+		// 发送请求，返回Json字符串
+		String str = WeChatUtil.httpRequest(url, "GET", null);
+		// 转成Json对象 获取openid
+		JSONObject jsonObject = JSONObject.parseObject(str);
 
-	
+		// 我们需要的openid，在一个小程序中，openid是唯一的
+		String openid = jsonObject.get("openid").toString();
+		List<NxDistributerUserEntity> distributerUserEntities = nxDistributerUserService.queryUserByOpenId(openid);
+		if(distributerUserEntities.size() > 0){
+			NxDistributerUserEntity nxDistributerUserEntity = distributerUserEntities.get(0);
+			Integer nxDistributerUserId = nxDistributerUserEntity.getNxDistributerUserId();
+			NxDistributerUserEntity nxDistributerEntity = nxDistributerUserService.queryUserInfo(nxDistributerUserId);
+
+			return R.ok().put("data", nxDistributerEntity);
+		}else {
+			return R.error(-1,"用户不存在");
+		}
+	}
+
+	/**
+	 * 批发商注册
+	 * @param distributerEntity 批发商
+	 * @return 批发商
+	 */
+	@RequestMapping(value = "/disAndUserSave", method = RequestMethod.POST)
+	@ResponseBody
+	public R disAndUserSave (@RequestBody NxDistributerEntity distributerEntity) {
+
+		MyAPPIDConfig myAPPIDConfig = new MyAPPIDConfig();
+
+		// 1, 先检查微信号是否以前注册过
+		String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + myAPPIDConfig.getCaidiAppID() + "&secret=" +
+				myAPPIDConfig.getCaidiScreat() + "&js_code=" + distributerEntity.getNxDistributerUserEntity().getNxDiuCode() +
+				"&grant_type=authorization_code";
+		// 发送请求，返回Json字符串
+		String str = WeChatUtil.httpRequest(url, "GET", null);
+		// 转成Json对象 获取openid
+		JSONObject jsonObject = JSONObject.parseObject(str);
+
+		// 我们需要的openid，在一个小程序中，openid是唯一的
+		String openid = jsonObject.get("openid").toString();
+		System.out.println(openid + "openididiiddi");
+
+		List<NxDistributerUserEntity> distributerUserEntities = nxDistributerUserService.queryUserByOpenId(openid);
+		//2，如果注册过，则返回提示。
+		if(distributerUserEntities.size() > 0){
+			return R.error(-1,"微信号已注册!");
+		}else {
+
+			// 3，如果没有注册过
+			// 3.1保存批发商
+			nxDistributerService.save(distributerEntity);
+
+			// 3.2，保存批发商用户
+			Integer nxDistributerId = distributerEntity.getNxDistributerId();
+			NxDistributerUserEntity nxDistributerUserEntity = distributerEntity.getNxDistributerUserEntity();
+
+			nxDistributerUserEntity.setNxDiuDistributerId(nxDistributerId);
+			nxDistributerUserEntity.setNxDiuWxOpenId(openid);
+			nxDistributerUserService.save(nxDistributerUserEntity);
+
+			//3..3 返回用户id
+			Integer nxDistributerUserId = nxDistributerUserEntity.getNxDistributerUserId();
+			NxDistributerUserEntity nxDistributerEntity = nxDistributerUserService.queryUserInfo(nxDistributerUserId);
+
+			return R.ok().put("data", nxDistributerEntity);
+		}
+	}
+
+
+
+
+//	/////////////////////////////////////////
+
+
+
 	@RequestMapping(value = "/downLoadFragment/{fragmentId}")
 	public ResponseEntity downLoadFragment (@PathVariable Integer fragmentId, HttpSession session) throws Exception {
 
@@ -90,87 +173,10 @@ public class NxDistributerController {
 
 
 
-	 @RequestMapping(value = "/disLogin", method = RequestMethod.POST)
-	  @ResponseBody
-	  public R disLogin (@RequestBody NxDistributerUserEntity distributerUserEntity ) {
-
-		 String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + Fang_APP_ID + "&secret=" +
-				 Fang_SECRET + "&js_code=" + distributerUserEntity.getNxDiuCode() +
-				 "&grant_type=authorization_code";
-		 // 发送请求，返回Json字符串
-		 String str = WeChatUtil.httpRequest(url, "GET", null);
-		 // 转成Json对象 获取openid
-		 JSONObject jsonObject = JSONObject.parseObject(str);
-
-		 // 我们需要的openid，在一个小程序中，openid是唯一的
-		 String openid = jsonObject.get("openid").toString();
-		List<NxDistributerUserEntity> distributerUserEntities = nxDistributerUserService.queryUserByOpenId(openid);
-		if(distributerUserEntities.size() > 0){
-			NxDistributerUserEntity nxDistributerUserEntity = distributerUserEntities.get(0);
-			Integer nxDistributerUserId = nxDistributerUserEntity.getNxDistributerUserId();
-			NxDistributerUserEntity nxDistributerEntity = nxDistributerUserService.queryUserInfo(nxDistributerUserId);
-
-			return R.ok().put("data", nxDistributerEntity);
-		}else {
-			return R.error(-1,"用户不存在");
-
-		}
-
-	  }
 
 
 
-	
-	 @RequestMapping(value = "/disAndUserSave", method = RequestMethod.POST)
-	  @ResponseBody
-	  public R disAndUserSave (@RequestBody NxDistributerEntity distributerEntity) {
 
-
-		// 1, 先检查微信号是否以前注册过
-		 String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + Fang_APP_ID + "&secret=" +
-				 Fang_SECRET + "&js_code=" + distributerEntity.getNxDistributerUserEntity().getNxDiuCode() +
-				 "&grant_type=authorization_code";
-		 // 发送请求，返回Json字符串
-		 String str = WeChatUtil.httpRequest(url, "GET", null);
-		 // 转成Json对象 获取openid
-		 JSONObject jsonObject = JSONObject.parseObject(str);
-
-		 // 我们需要的openid，在一个小程序中，openid是唯一的
-		 String openid = jsonObject.get("openid").toString();
-		 System.out.println(openid + "openididiiddi");
-
-		 List<NxDistributerUserEntity> distributerUserEntities = nxDistributerUserService.queryUserByOpenId(openid);
-		//2，如果注册过，则返回提示。
-		 if(distributerUserEntities.size() > 0){
-			 return R.error(-1,"微信号已注册!");
-		 }else {
-
-
-
-			 // 3，如果没有注册过
-			 // 3.1保存批发商
-			 nxDistributerService.save(distributerEntity);
-
-			 // 3.2，保存批发商用户
-			 Integer nxDistributerId = distributerEntity.getNxDistributerId();
-			 NxDistributerUserEntity nxDistributerUserEntity = distributerEntity.getNxDistributerUserEntity();
-
-
-			 nxDistributerUserEntity.setNxDiuDistributerId(nxDistributerId);
-			 nxDistributerUserEntity.setNxDiuWxOpenId(openid);
-			 nxDistributerUserService.save(nxDistributerUserEntity);
-
-			 //3..3 返回用户id
-			 Integer nxDistributerUserId = nxDistributerUserEntity.getNxDistributerUserId();
-			 NxDistributerUserEntity nxDistributerEntity = nxDistributerUserService.queryUserInfo(nxDistributerUserId);
-
-
-
-			 return R.ok().put("data", nxDistributerEntity);
-		 }
-
-
-	  }
 
 	
 	/**

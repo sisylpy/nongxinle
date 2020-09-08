@@ -40,6 +40,7 @@
 				/sys/login=anon
 				/api/**=anon
 				/uploadImage/**=anon
+				/goodsImage/**=anon
 	        	/captcha.jpg=anon
 				/i7948FzJJ6.txt=anon
 	        	/**=authc

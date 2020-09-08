@@ -22,22 +22,35 @@ import com.nongxinle.utils.R;
 public class NxDepartmentDisGoodsController {
     @Autowired
     private NxDepartmentDisGoodsService nxDepartmentDisGoodsService;
-
     @Autowired
     private NxDistributerGoodsService nxDistributerGoodsService;
     @Autowired
     private NxDepartmentStandardService nxDepartmentStandardService;
     @Autowired
     private NxDistributerStandardService nxDistributerStandardService;
-
     @Autowired
     private NxDistributerDepartmentService nxDisDepartmentService;
 
+    /**
+     * DISTRBUTE
+     * 获取不是批发商商品的客户列表
+     * @param disGoodsId 批发商商品id
+     * @param disId 批发商id
+     * @return 客户列表
+     */
+    @RequestMapping(value = "/getUnDisGoodsDepartments", method = RequestMethod.POST)
+    @ResponseBody
+    public R getUnDisGoodsDepartments(Integer disGoodsId, Integer disId) {
+        List<NxDepartmentEntity> addGoodsCustomer = nxDepartmentDisGoodsService.queryDepartmentsByDisGoodsId(disGoodsId);
+        List<NxDepartmentEntity> allCustomer = nxDisDepartmentService.queryAllDisDepartments(disId);
+        allCustomer.removeAll(addGoodsCustomer);
+        return R.ok().put("data", allCustomer);
+    }
 
 
 
     /**
-     * PURCHASE,ORDER
+     * PURCHASE,ORDER,DISTRIBUTE
      * 订货群获取自己群商品类别
      * @param depId 订货群id
      * @return 订货群商品类别列表
@@ -120,9 +133,9 @@ public class NxDepartmentDisGoodsController {
     }
 
     /**
-     * PURCHASE,
-     * 订货群保存群商品
-     * @param depDisGoods 批发商商品id
+     * DISTRIBUTE,
+     * 批发商添加批发商商品的客户
+     * @param depDisGoods 批发商商品
      * @return ok
      */
     @RequestMapping(value = "/disSaveDepartDisGoods", method = RequestMethod.POST)
@@ -189,27 +202,6 @@ public class NxDepartmentDisGoodsController {
 
 
 
-
-    ///////88888888
-
-    //todo
-    @RequestMapping(value = "/depGetResGoodsDetail/{depDisGoodsId}")
-    @ResponseBody
-    public R depGetResGoodsDetail(@PathVariable Integer depDisGoodsId) {
-        System.out.println(depDisGoodsId);
-        List<NxGoodsEntity> goodsEntitie = nxDepartmentDisGoodsService.queryResGoodsDetail(depDisGoodsId);
-        return R.ok().put("data", goodsEntitie);
-    }
-
-    @RequestMapping(value = "/getUnDisGoodsDepartments", method = RequestMethod.POST)
-    @ResponseBody
-    public R getUnDisGoodsDepartments(Integer disGoodsId, Integer disId) {
-        List<NxDepartmentEntity> addGoodsCustomer = nxDepartmentDisGoodsService.queryDepartmentsByDisGoodsId(disGoodsId);
-        List<NxDepartmentEntity> allCustomer = nxDisDepartmentService.queryAllDisDepartments(disId);
-
-        allCustomer.removeAll(addGoodsCustomer);
-        return R.ok().put("data", allCustomer);
-    }
 
 
 

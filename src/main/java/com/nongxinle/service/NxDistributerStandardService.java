@@ -13,10 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface NxDistributerStandardService {
+
 	List<NxDistributerStandardEntity> queryDisStandardByDisGoodsId(Integer nxDdgDisGoodsId);
-
-
-
 
 	NxDistributerStandardEntity queryObject(Integer nxDistributerStandardId);
 	

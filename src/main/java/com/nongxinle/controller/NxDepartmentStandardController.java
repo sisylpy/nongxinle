@@ -53,16 +53,19 @@ public class NxDepartmentStandardController {
 		return R.ok().put("data", nxDepartmentStandard);
 	}
 
-//	///////////
 
+	/**
+	 * ORDER
+	 * 群订货单位
+	 * @param depGoodsId 群商品id
+	 * @return 订单单位
+	 */
 	@RequestMapping(value = "/getDepGoodsStandard/{depGoodsId}")
 	@ResponseBody
 	public R getDepGoodsStandards(@PathVariable Integer depGoodsId) {
-		System.out.println(depGoodsId + "diegiigiiggiigigii");
 	    List<NxDepartmentStandardEntity> standardEntities = nxDepartmentStandardService.queryDepGoodsStandards(depGoodsId);
 	    return R.ok().put("data", standardEntities);
 	}
-
 
 	
 	/**
@@ -72,7 +75,6 @@ public class NxDepartmentStandardController {
 	@RequestMapping("/delete/{id}")
 	public R delete(@PathVariable Integer id){
 		nxDepartmentStandardService.delete(id);
-		
 		return R.ok();
 	}
 	

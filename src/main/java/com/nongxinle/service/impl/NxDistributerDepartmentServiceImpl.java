@@ -54,11 +54,7 @@ public class NxDistributerDepartmentServiceImpl implements NxDistributerDepartme
 		nxDistributerDepartmentDao.deleteBatch(nxDistributerDepIds);
 	}
 
-    @Override
-    public List<NxDistributerDepartmentEntity> queryAllCustomer(Integer disId) {
 
-		return nxDistributerDepartmentDao.queryAllCustomer(disId);
-    }
 
 	@Override
 	public List<NxDepartmentEntity> queryAllDisDepartments(Integer disId) {

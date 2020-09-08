@@ -57,21 +57,92 @@ public class NxGoodsController {
     @Autowired
     private NxStandardService standardService;
 
-    @Autowired
-    private NxPurchaseStandardService purchaseStandardService;
 
 
+    /**
+     * ok
+     * 获取ibook书皮数据
+     * @return 封皮数据
+     */
+    @RequestMapping(value = "/getiBookCover")
+    @ResponseBody
+    public R getiBookCover() {
 
+        List<NxGoodsEntity> nxGoodsEntities = nxGoodsService.getiBookCoverData();
+
+        for (NxGoodsEntity goods : nxGoodsEntities) {
+            if (goods.getNxGoodsId().equals(1)) {
+                goods.setColor("#20afb8");
+            }
+            if (goods.getNxGoodsId().equals(2)) {
+                goods.setColor("#f5c832");
+            }
+            if (goods.getNxGoodsId().equals(3)) {
+                goods.setColor("#3cc36e");
+            }
+            if (goods.getNxGoodsId().equals(4)) {
+                goods.setColor("#1ebaee");
+            }
+            if (goods.getNxGoodsId().equals(5)) {
+                goods.setColor("#f09628");
+            }
+            if (goods.getNxGoodsId().equals(6)) {
+                goods.setColor("#f05a32");
+            }
+            if (goods.getNxGoodsId().equals(7)) {
+                goods.setColor("#20afb8");
+            }
+            if (goods.getNxGoodsId().equals(8)) {
+                goods.setColor("#969696");
+            }
+        }
+
+        return R.ok().put("data", nxGoodsEntities);
+    }
+
+    /**
+     * ibook大类列表
+     * @param fatherId 父级id
+     * @return 商品列表
+     */
+    @RequestMapping(value = "/getGoodsSubNamesByFatherId/{fatherId}")
+    @ResponseBody
+    public R getGoodsSubNamesByFatherid(@PathVariable  Integer fatherId) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("fatherId", fatherId);
+
+        List<NxGoodsEntity> goodsEntities1 =   nxGoodsService.queryNxGoodsByParams(map);
+
+        List<NxGoodsEntity> newList = new ArrayList<>();
+
+        for (NxGoodsEntity fatherGoods:goodsEntities1) {
+            StringBuilder builder = new StringBuilder();
+            List<NxGoodsEntity> goodsEntities =   nxGoodsService.querySubNameByFatherId(fatherGoods.getNxGoodsId());
+            for (NxGoodsEntity goods : goodsEntities) {
+                String nxGoodsName = goods.getNxGoodsName();
+                builder.append(nxGoodsName);
+                builder.append(',');
+            }
+
+            fatherGoods.setNxGoodsSubNames(builder.toString());
+            newList.add(fatherGoods);
+        }
+
+
+//        int total = nxGoodsService.queryTotalByFatherId(fatherId);
+//        PageUtils pageUtil = new PageUtils(newList, total, limit, page);
+
+        return R.ok().put("data",newList);
+    }
+
+////////////////////////////////////////
 
 
     @RequestMapping(value = "/queryGoodsByQuickSearch/{str}")
     @ResponseBody
     public R queryGoodsByQuickSearch(@PathVariable  String str) {
-        System.out.println(str);
         List<NxGoodsEntity> goodsEntities = nxGoodsService.queryQuickSearch(str);
-//        System.out.println(goodsEntities);
-
-
         return R.ok().put("data", goodsEntities);
     }
 
@@ -110,36 +181,6 @@ public class NxGoodsController {
     }
 
 
-
-
-
-    @RequestMapping(value = "/getGoodsSubNamesByFatherId", method = RequestMethod.POST)
-    @ResponseBody
-    public R getGoodsSubNamesByFatherid(Integer limit, Integer page, Integer fatherId) {
-
-
-        List<NxGoodsEntity> nxGoodsEntities1 = queryByFatherIdwithLimit(limit, page, fatherId);
-        List<NxGoodsEntity> newList = new ArrayList<>();
-
-        for (NxGoodsEntity fatherGoods:nxGoodsEntities1) {
-            StringBuilder builder = new StringBuilder();
-            List<NxGoodsEntity> goodsEntities =   nxGoodsService.querySubNameByFatherId(fatherGoods.getNxGoodsId());
-         for (NxGoodsEntity goods : goodsEntities) {
-             String nxGoodsName = goods.getNxGoodsName();
-             builder.append(nxGoodsName);
-             builder.append(',');
-            }
-
-            fatherGoods.setNxGoodsSubNames(builder.toString());
-            newList.add(fatherGoods);
-        }
-
-
-        int total = nxGoodsService.queryTotalByFatherId(fatherId);
-        PageUtils pageUtil = new PageUtils(newList, total, limit, page);
-
-        return R.ok().put("page",pageUtil);
-    }
 
 
       private List<NxGoodsEntity>  queryByFatherIdwithLimit(Integer limit, Integer page, Integer fatherId){
@@ -232,46 +273,6 @@ public class NxGoodsController {
 //    }
 
 
-    /**
-     * ok
-     * 获取ibook书皮数据
-     * @return 封皮数据
-     */
-    @RequestMapping(value = "/getiBookCover")
-    @ResponseBody
-    public R getiBookCover() {
-
-        List<NxGoodsEntity> nxGoodsEntities = nxGoodsService.getiBookCoverData();
-
-        for (NxGoodsEntity goods : nxGoodsEntities) {
-            if (goods.getNxGoodsId().equals(1)) {
-                goods.setColor("#20afb8");
-            }
-            if (goods.getNxGoodsId().equals(2)) {
-                goods.setColor("#f5c832");
-            }
-            if (goods.getNxGoodsId().equals(3)) {
-                goods.setColor("#3cc36e");
-            }
-            if (goods.getNxGoodsId().equals(4)) {
-                goods.setColor("#1ebaee");
-            }
-            if (goods.getNxGoodsId().equals(5)) {
-                goods.setColor("#f09628");
-            }
-            if (goods.getNxGoodsId().equals(6)) {
-                goods.setColor("#f05a32");
-            }
-            if (goods.getNxGoodsId().equals(7)) {
-                goods.setColor("#20afb8");
-            }
-            if (goods.getNxGoodsId().equals(8)) {
-                goods.setColor("#969696");
-            }
-        }
-
-        return R.ok().put("data", nxGoodsEntities);
-    }
 
 
 
@@ -547,7 +548,7 @@ public class NxGoodsController {
         System.out.println(nxGoodsId);
 
         //1,上传图片
-        String newUploadName = "uploadImage";
+        String newUploadName = "goodsImage";
         String realPath = UploadFile.upload(session, newUploadName, file);
 
         String filename = file.getOriginalFilename();

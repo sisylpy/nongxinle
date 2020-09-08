@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface NxDistributerDepartmentDao extends BaseDao<NxDistributerDepartmentEntity> {
 
-    List<NxDistributerDepartmentEntity> queryAllCustomer(Integer disId);
+//    List<NxDistributerDepartmentEntity> queryAllCustomer(Integer disId);
 
     List<NxDepartmentEntity> queryAllDisDepartments(Integer disId);
 }

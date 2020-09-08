@@ -31,49 +31,24 @@ public class NxDistributerUserController {
 
 
 
-
-
-	@RequestMapping(value = "/getDisInfoByUserId/{userId}")
-	@ResponseBody
-	public R getDisInfoByUserId(@PathVariable Integer userId) {
-
-		NxDistributerUserEntity nxDistributerUserEntity = nxDistributerUserService.queryObject(userId);
-
-		return R.ok().put("data", nxDistributerUserEntity);
-	}
-
-
-	@RequestMapping(value = "/disGetUserByRole", method = RequestMethod.POST)
-	@ResponseBody
-	public R disGetUser (Integer disId, Integer roleNumber) {
-		System.out.println(disId + "dddd");
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("nxDisId", disId);
-
-		List<NxDistributerUserEntity> userEntities =  nxDistributerUserService.queryUser(disId);
-		System.out.println(userEntities);
-		List<NxDistributerUserEntity> result = new ArrayList<>();
-		for (NxDistributerUserEntity user : userEntities) {
-			System.out.println(user + "uuuuu");
-			List<NxDistributerUserRoleEntity> roleEntities = user.getRoleEntities();
-
-
-			for (NxDistributerUserRoleEntity roleEntity: roleEntities) {
-				System.out.println(roleEntity.getNxDurRoleId() + "rrrororo");
-				System.out.println(roleNumber + "aaaaa");
-
-				if (roleEntity.getNxDurRoleId().equals(roleNumber)){
-					System.out.println("0000" + result);
-					result.add(user);
-					System.out.println("11111" + result);
-
-				}
-			}
-		}
-		System.out.println(result + "resultlttt");
-
-		return R.ok().put("data", result);
-	}
+//
+//	@RequestMapping(value = "/disGetUserByRole", method = RequestMethod.POST)
+//	@ResponseBody
+//	public R disGetUser (Integer disId, Integer roleNumber) {
+//
+//		List<NxDistributerUserEntity> userEntities =  nxDistributerUserService.queryUser(disId);
+//		System.out.println(userEntities);
+//		List<NxDistributerUserEntity> result = new ArrayList<>();
+//		for (NxDistributerUserEntity user : userEntities) {
+//			List<NxDistributerUserRoleEntity> roleEntities = user.getRoleEntities();
+//			for (NxDistributerUserRoleEntity roleEntity: roleEntities) {
+//				if (roleEntity.getNxDurRoleId().equals(roleNumber)){
+//					result.add(user);
+//				}
+//			}
+//		}
+//		return R.ok().put("data", result);
+//	}
 
 
 	/**

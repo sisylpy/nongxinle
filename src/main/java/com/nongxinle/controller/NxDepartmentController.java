@@ -32,12 +32,19 @@ public class NxDepartmentController {
 	private NxDepartmentService nxDepartmentService;
 
 
+	/**
+	 * PURCHASE
+	 * 修改群名称
+	 * @param departmentEntity 群
+	 * @return ok
+	 */
 	@RequestMapping(value = "/updateGroupName", method = RequestMethod.POST)
 	@ResponseBody
 	public R updateGroupName (@RequestBody  NxDepartmentEntity departmentEntity ) {
 		nxDepartmentService.update(departmentEntity);
 	    return R.ok();
 	}
+
 	/**
 	 * 微信小程序扫描二维码校验文件
 	 * @return 校验内容
@@ -50,7 +57,7 @@ public class NxDepartmentController {
 	}
 
 	/**
-	 * PCS
+	 * PURCHASE
 	 * 采购员注册
 	 * @param dep 订货客户
 	 * @return 客户信息
@@ -79,78 +86,64 @@ public class NxDepartmentController {
 
 
 
+	/**
+	 * ORDER
+	 * @param depId
+	 * @return
+	 */
+	@RequestMapping(value = "/getDepInfo/{depId}")
+	@ResponseBody
+	public R getDepInfo(@PathVariable Integer depId) {
+		NxDepartmentEntity nxDepartmentEntity = nxDepartmentService.queryObject(depId);
+		return R.ok().put("data", nxDepartmentEntity);
+	}
 
 
 
 
 //	//////////////////
 
-	/**
-	 * 微信二维码扫描校验文件内容
-	 * @return 文件内容
-	 */
-//	@RequestMapping(value = "/depRegist/i7948FzJJ6.txt")
-//	@ResponseBody
+
 //
-//	public String depRegist( ) {
-////
-//		return "bb7a0c73e61112c45ebd6ad3743bb05e";
+//	@RequestMapping(value = "/getFatherDep/{depId}")
+//	@ResponseBody
+//	public R getFatherDep(@PathVariable Integer depId) {
+//		List<NxDepartmentEntity> departmentEntities = nxDepartmentService.queryFatherDep(depId);
+//	    return R.ok().put("data", departmentEntities.get(0));
 //	}
 
-	/**
-	 * 二维码扫描打开固定页面
-	 * @param disId 社区id
-	 * @return 社区列表
-	 */
-	@RequestMapping(value = "/depRegist/{disId}")
-	@ResponseBody
-	public R customerRegist(@PathVariable Integer disId) {
 
-//		NxCommunityEntity nxCommunity = nxCommunityService.queryObject(disId);
-
-		return R.ok().put("data", "a");
-	}
-
-
-	@RequestMapping(value = "/getFatherDep/{depId}")
-	@ResponseBody
-	public R getFatherDep(@PathVariable Integer depId) {
-		List<NxDepartmentEntity> departmentEntities = nxDepartmentService.queryFatherDep(depId);
-	    return R.ok().put("data", departmentEntities.get(0));
-	}
+//
+//	/**
+//	 * 保存
+//	 */
+//	@ResponseBody
+//	@RequestMapping("/saveSubDepartment")
+//	public R saveSubDepartment(@RequestBody NxDepartmentEntity nxDepartment){
+//		List<NxDepartmentEntity> nxDepartmentEntities = nxDepartment.getNxDepartmentEntities();
+//		for (NxDepartmentEntity dep : nxDepartmentEntities) {
+//		nxDepartmentService.saveSubDepartment(dep);
+//		}
+//		Integer nxDepartmentId = nxDepartment.getNxDepartmentId();
+//		NxDepartmentEntity nxDepartmentEntity = nxDepartmentService.queryObject(nxDepartmentId);
+//		Integer nxDepartmentSubAmount = nxDepartmentEntity.getNxDepartmentSubAmount();
+//		nxDepartmentEntity.setNxDepartmentSubAmount(nxDepartmentSubAmount + nxDepartment.getNxDepartmentEntities().size());
+//		nxDepartmentService.update(nxDepartmentEntity);
+//		return R.ok();
+//	}
 
 
-
-	/**
-	 * 保存
-	 */
-	@ResponseBody
-	@RequestMapping("/saveSubDepartment")
-	public R saveSubDepartment(@RequestBody NxDepartmentEntity nxDepartment){
-		List<NxDepartmentEntity> nxDepartmentEntities = nxDepartment.getNxDepartmentEntities();
-		for (NxDepartmentEntity dep : nxDepartmentEntities) {
-		nxDepartmentService.saveSubDepartment(dep);
-		}
-		Integer nxDepartmentId = nxDepartment.getNxDepartmentId();
-		NxDepartmentEntity nxDepartmentEntity = nxDepartmentService.queryObject(nxDepartmentId);
-		Integer nxDepartmentSubAmount = nxDepartmentEntity.getNxDepartmentSubAmount();
-		nxDepartmentEntity.setNxDepartmentSubAmount(nxDepartmentSubAmount + nxDepartment.getNxDepartmentEntities().size());
-		nxDepartmentService.update(nxDepartmentEntity);
-		return R.ok();
-	}
-
-
-
-	 @RequestMapping(value = "/getDisDepartments", method = RequestMethod.POST)
-	  @ResponseBody
-	  public R getDisDepartments (Integer disId, String type) {
-
-		 Map<String, Object> map = new HashMap<>();
-		 map.put("disId", disId);
-		 map.put("type", type);
-		 List<NxDepartmentEntity> list =  nxDepartmentService.queryDisDepartments(map);
-		 return R.ok().put("data", list);
-	  }
+//
+//	 @RequestMapping(value = "/getDisDepartments", method = RequestMethod.POST)
+//	  @ResponseBody
+//	  public R getDisDepartments (Integer disId, String type) {
+//
+//		 Map<String, Object> map = new HashMap<>();
+//		 map.put("disId", disId);
+//		 map.put("type", type);
+//		 List<NxDepartmentEntity> list =  nxDepartmentService.queryDisDepartments(map);
+//		 return R.ok().put("data", list);
+//	  }
 
 
 	/**
@@ -163,12 +156,6 @@ public class NxDepartmentController {
 		return R.ok();
 	}
 
-	@RequestMapping(value = "/getDepInfo/{depId}")
-	@ResponseBody
-	public R getDepInfo(@PathVariable Integer depId) {
-		NxDepartmentEntity nxDepartmentEntity = nxDepartmentService.queryObject(depId);
-		return R.ok().put("data", nxDepartmentEntity);
-	}
 
 	
 

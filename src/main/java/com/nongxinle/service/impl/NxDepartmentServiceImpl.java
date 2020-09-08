@@ -112,9 +112,6 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 	}
 
 
-
-
-
 	@Override
 	public NxDepartmentEntity queryObject(Integer nxDepartmentId){
 		return nxDepartmentDao.queryObject(nxDepartmentId);
@@ -157,46 +154,7 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 		nxDepartmentDao.deleteBatch(nxDepartmentIds);
 	}
 
-    @Override
-    public List<NxDepartmentEntity> queryDisDepartments(Map<String, Object> map) {
-        return  nxDepartmentDao.queryDisDepartments(map);
-    }
 
-	@Override
-	public void saveSubDepartment(NxDepartmentEntity dep) {
-		 nxDepartmentDao.save(dep);
-	}
-
-//    @Override
-//    public NxDepartmentEntity queryDepartmentInfo(Integer nxDuDepartmentId) {
-//
-//		return nxDepartmentDao.queryDepInfo(nxDuDepartmentId);
-//    }
-
-
-
-//	@Override
-//	public Map<String, Object> queryGroupInfo(Integer userId) {
-//		NxDepartmentUserEntity userEntity = nxDepartmentUserService.queryObject(userId);
-//
-//		Integer nxDuDepartmentId = userEntity.getNxDuDepartmentId();
-//		System.out.println(nxDuDepartmentId + "dudududuudududiddididi");
-////		NxDepartmentEntity group =  nxDepartmentDao.queryObject(nxDuDepartmentId);
-//		NxDepartmentEntity nxDepartmentEntity = nxDepartmentDao.queryDepInfo(nxDuDepartmentId);
-////		List<NxDepartmentOrdersEntity> ordersEntities = nxDepartmentOrdersService.queryGroupTodayOrders(nxDuDepartmentId);
-//
-////	   List<NxDepartmentIndependentOrderEntity>  indepenOrder =	nxDepIndependentOrderService.queryGroupTodayIndependentOrders(nxDuDepartmentId);
-//
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("userInfo", userEntity);
-//		map.put("groupInfo", nxDepartmentEntity);
-////		map.put("orders", ordersEntities);
-////		map.put("independentOrders", indepenOrder);
-//
-//
-//		return map;
-//
-//	}
 
 	@Override
 	public void saveJustDepartment(NxDepartmentEntity nxDepartmentEntity) {
@@ -206,14 +164,7 @@ public class NxDepartmentServiceImpl implements NxDepartmentService {
 	@Override
 	public List<NxDepartmentEntity> querySubDepartments(Integer depId) {
 		return nxDepartmentDao.querySubDepartments(depId);
-
 	}
-
-	@Override
-	public List<NxDepartmentEntity> queryFatherDep(Integer depId) {
-		return nxDepartmentDao.queryFatherDep(depId);
-	}
-
 
 
 

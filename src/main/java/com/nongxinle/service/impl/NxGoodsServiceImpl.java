@@ -16,7 +16,12 @@ import com.nongxinle.service.NxGoodsService;
 public class NxGoodsServiceImpl implements NxGoodsService {
 	@Autowired
 	private NxGoodsDao nxGoodsDao;
-	
+
+	@Override
+	public List<NxGoodsEntity> queryNxGoodsByParams(Map<String, Object> map) {
+		return nxGoodsDao.queryNxGoodsByParams(map);
+	}
+
 	@Override
 	public NxGoodsEntity queryObject(Integer nxGoodsId){
 		return nxGoodsDao.queryObject(nxGoodsId);

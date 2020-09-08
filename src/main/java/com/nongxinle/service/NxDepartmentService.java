@@ -20,6 +20,11 @@ public interface NxDepartmentService {
 
 	Map<String, Object> queryDepAndUserInfo(Integer nxDepartmentUserId);
 
+	void saveJustDepartment(NxDepartmentEntity nxDepartmentEntity);
+
+
+
+
 
 	NxDepartmentEntity queryObject(Integer nxDepartmentId);
 	
@@ -35,17 +40,9 @@ public interface NxDepartmentService {
 	
 	void deleteBatch(Integer[] nxDepartmentIds);
 
-	List<NxDepartmentEntity> queryDisDepartments(Map<String, Object> map);
-
-	void saveSubDepartment(NxDepartmentEntity dep);
-
-
-
-	void saveJustDepartment(NxDepartmentEntity nxDepartmentEntity);
 
 	List<NxDepartmentEntity> querySubDepartments(Integer depId);
 
-	List<NxDepartmentEntity> queryFatherDep(Integer depId);
 
 
 

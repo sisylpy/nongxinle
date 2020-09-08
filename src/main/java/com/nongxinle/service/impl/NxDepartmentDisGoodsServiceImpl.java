@@ -18,8 +18,11 @@ public class NxDepartmentDisGoodsServiceImpl implements NxDepartmentDisGoodsServ
 	@Autowired
 	private NxDepartmentDisGoodsDao nxDepartmentDisGoodsDao;
 
-	@Autowired
-	private NxDepartmentStandardService nxDepartmentStandardService;
+
+	@Override
+	public List<NxDepartmentEntity> queryDepartmentsByDisGoodsId(Integer disGoodsId) {
+		return nxDepartmentDisGoodsDao.queryDepartmentsByDisGoodsId(disGoodsId);
+	}
 
 	@Override
 	public List<NxDistributerFatherGoodsEntity> depGetDepDisGoodsCata(Integer depId) {
@@ -37,7 +40,6 @@ public class NxDepartmentDisGoodsServiceImpl implements NxDepartmentDisGoodsServ
 
     @Override
     public int queryDepGoodsTotal(Map<String, Object> map3) {
-
 		return nxDepartmentDisGoodsDao.queryDisGoodsTotal(map3);
     }
 
@@ -45,10 +47,6 @@ public class NxDepartmentDisGoodsServiceImpl implements NxDepartmentDisGoodsServ
 //	///////
 
 
-	@Override
-	public List<NxGoodsEntity> queryResGoodsDetail(Integer depDisGoodsId) {
-		return nxDepartmentDisGoodsDao.queryResGoodsDetail(depDisGoodsId);
-	}
 
 	@Override
 	public NxDepartmentDisGoodsEntity queryObject(Integer nxDepartmentDisGoodsId){
@@ -96,17 +94,6 @@ public class NxDepartmentDisGoodsServiceImpl implements NxDepartmentDisGoodsServ
 		return nxDepartmentDisGoodsDao.querySearchStr (map);
     }
 
-
-	@Override
-	public List<NxDepartmentEntity> queryDepartmentsByDisGoodsId(Integer disGoodsId) {
-
-		return nxDepartmentDisGoodsDao.queryDepartmentsByDisGoodsId(disGoodsId);
-	}
-
-	@Override
-	public List<NxDepartmentDisGoodsEntity> queryDepGoodsByDisGoodsFatherId(Map<String, Object> map) {
-		return nxDepartmentDisGoodsDao.queryDepGoodsByDisGoodsFatherId(map);
-	}
 
 
 }

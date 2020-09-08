@@ -4,6 +4,20 @@
 <mapper namespace="com.nongxinle.dao.NxGoodsDao">
 
 
+	<select id="queryNxGoodsByParams" resultType="com.nongxinle.entity.NxGoodsEntity">
+     select * from nx_goods
+   <where>
+	   <if test="fatherId != null">
+		   and  nx_goods_father_id  = #{fatherId}
+	   </if>
+	   <if test="disId != null">
+		   and dor.nx_DO_distributer_id  = #{disId}
+	   </if>
+
+   </where>
+
+	</select>
+
 
 
 	<resultMap id="standardList" type="NxStandardEntity">
@@ -183,7 +197,9 @@
 	</select>
 
 
-    <insert id="save" parameterType="com.nongxinle.entity.NxGoodsEntity">
+
+
+	<insert id="save" parameterType="com.nongxinle.entity.NxGoodsEntity">
 		insert into nx_goods
 		(
 			`nx_goods_id`, 
